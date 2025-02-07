@@ -1,0 +1,142 @@
+{
+  "name": "frontend-admin",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "electron/main.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite --host",
+    "build:prod": "vite build",
+    "build:stage": "vite build --mode staging",
+    "preview": "vite preview",
+    "postinstall": "patch-package",
+    "dev:electron": "electron .",
+    "packagerMac": "electron-packager ./ --platform=darwin --arch=x64 --out=../ --asar --app-version=2.0.1 --icon=./public/favicon.icns --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config*|node_modules)\"",
+    "packagerWin": "electron-packager ./ --platform=win32 --arch=x64 --out=../ --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\"",
+    "packagerLinux": "electron-packager ./ --platform=linux --arch=x64 --out=../ --asar --app-version=2.0.1 --icon=./public/favicon.icns --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\"",
+    "builderMac": "electron-builder --mac --x64",
+    "builderWin": "electron-builder --win --x64",
+    "builderLinux": "electron-builder --linux --x64"
+  },
+  "build": {
+    "appId": "luOne",
+    "productName": "frontendAdmin",
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "electron-dist"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "./favicon.png"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "./favicon1.png"
+    },
+    "linux": {
+      "target": [
+        "zip"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "deleteAppDataOnUninstall": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "frontendAdmin"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 11"
+  ],
+  "dependencies": {
+    "@antv/x6": "^2.5.5",
+    "@babel/polyfill": "^7.12.1",
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "@types/dagre": "^0.7.48",
+    "@vueup/vue-quill": "^1.0.0-alpha.40",
+    "ali-oss": "^6.21.0",
+    "axios": "^1.2.2",
+    "core-js": "^3.27.1",
+    "crypto-js": "^4.1.1",
+    "echarts": "^5.4.1",
+    "element-plus": "^2.2.27",
+    "file-saver": "^2.0.5",
+    "fuse.js": "^6.6.2",
+    "highlight.js": "^11.7.0",
+    "html2canvas": "^1.4.1",
+    "insert-css": "^2.0.0",
+    "js-cookie": "^3.0.1",
+    "jsencrypt": "^3.3.1",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
+    "jsplumb": "^2.15.6",
+    "nanoid": "^4.0.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.28",
+    "qs": "^6.11.2",
+    "sass": "^1.57.1",
+    "screenfull": "^6.0.2",
+    "vite-plugin-compression": "^0.5.1",
+    "vue": "^3.2.45",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.1.6",
+    "vuedraggable": "^4.1.0",
+    "vuex": "^4.1.0",
+    "xlsx-js-style": "^1.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/plugin-transform-runtime": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@types/crypto-js": "^4.1.1",
+    "@types/file-saver": "^2.0.5",
+    "@types/js-cookie": "^3.0.2",
+    "@types/node": "^18.11.18",
+    "@types/nprogress": "^0.2.0",
+    "@types/qs": "^6.9.11",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vitejs/plugin-vue-jsx": "^3.0.0",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vueuse/core": "^9.12.0",
+    "babel-polyfill": "^6.26.0",
+    "consola": "^2.15.3",
+    "cron-validator": "^1.3.1",
+    "dagre": "^0.8.5",
+    "electron": "^32.0.1",
+    "electron-builder": "^24.13.3",
+    "electron-packager": "^17.1.2",
+    "es6-promise": "^4.2.8",
+    "eslint": "^8.33.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "fast-glob": "^3.2.12",
+    "sortablejs": "^1.15.0",
+    "terser": "^5.19.3",
+    "typescript": "^4.9.3",
+    "unplugin-auto-import": "^0.14.2",
+    "unplugin-vue-components": "^0.23.0",
+    "vite": "^4.0.0",
+    "vite-plugin-require-transform": "^1.0.21",
+    "vite-plugin-style-import": "^2.0.0",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vite-plugin-vue-setup-extend": "^0.4.0",
+    "vite-svg-loader": "^4.0.0",
+    "vue-clipboard3": "^2.0.0",
+    "vue-cropper": "^1.0.5",
+    "vue-tsc": "^1.0.11"
+  }
+}
