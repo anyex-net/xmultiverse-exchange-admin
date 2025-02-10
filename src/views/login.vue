@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <div class="titleSize">Exchange</div>
+        <div class="titleSize">Exchange运营管理平台</div>
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login-form">
             <el-form-item prop="username">
                 <el-input class="user-input" v-model="loginForm.username" type="text" auto-complete="on"
