@@ -18,16 +18,16 @@
         </el-form>
         <el-row :gutter="10" class="mb8">
             <el-col :span="1.5">
-                <el-button v-hasPermi="['system:user:operator']" type="primary" plain size="small"
+                <el-button v-hasPermi="['system:userInfo:operator']" type="primary" plain size="small"
                     @click="handleAdd">新增</el-button>
             </el-col>
 <!--            <el-col :span="1.5">-->
 <!--                <el-button type="success" plain  size="small" :disabled="single" @click="handleUpdate"-->
-<!--                    v-hasPermi="['system:user:operator']">修改</el-button>-->
+<!--                    v-hasPermi="['system:userInfo:operator']">修改</el-button>-->
 <!--            </el-col>-->
             <el-col :span="1.5">
                 <el-button type="danger" plain  size="small" :disabled="multiple" @click="handleDelete"
-                    v-hasPermi="['system:user:operator']">删除</el-button>
+                    v-hasPermi="['system:userInfo:operator']">删除</el-button>
             </el-col>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="handleQuery()" />
         </el-row>
@@ -79,11 +79,11 @@
             <el-table-column label="操作" fixed="right" min-width="180"  class-name="small-padding fixed-width">
                 <template #default="scope">
                     <el-link class="table_link_btn" :underline="false" type="primary"
-                        @click="handleUpdate(scope.row)" v-hasPermi="['system:user:operator']"><span
+                        @click="handleUpdate(scope.row)" v-hasPermi="['system:userInfo:operator']"><span
                             class="table_link_text">修改</span></el-link>
-                    <el-link class="table_link_btn" :underline="false" size="small" type="primary" @click="handleDelete(scope.row)" v-hasPermi="['system:user:operator']"><span
+                    <el-link class="table_link_btn" :underline="false" size="small" type="primary" @click="handleDelete(scope.row)" v-hasPermi="['system:userInfo:operator']"><span
                             class="table_link_text">删除</span></el-link>
-                    <el-link class="table_link_btn" :underline="false" size="small" type="primary" @click="handleResetPwd(scope.row)" v-hasPermi="['system:user:operator']">
+                    <el-link class="table_link_btn" :underline="false" size="small" type="primary" @click="handleResetPwd(scope.row)" v-hasPermi="['system:userInfo:operator']">
                         <span class="table_link_text">重置密码</span>
                     </el-link>
                 </template>
@@ -165,7 +165,7 @@
 </template>
 
 <script lang='ts' name="user" setup>
-import User from "@/api/request/system/user";
+import User from "@/api/request/system/userInfo";
 import stacky from "../../../utils/table-sticky";
 
 const {getContainer,clearListener,initFixedHeader,updateFixedRight,resizeChange,getFixedDom,setFixedStyle,clearFixedStyle,headerDragend,scrollEvent,getTableXy,getDom,updateHeaderHeight,tablexy,fixedRightDom,fixedLeftDom,scrollDom,parentDom,tableWidth,timerList,tableDom,containerDom,__opened,parent,setScrollXWidth} =stacky();
