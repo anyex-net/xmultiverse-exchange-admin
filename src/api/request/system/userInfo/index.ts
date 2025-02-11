@@ -7,7 +7,7 @@ import {
     addUser,
     delUser,
     changeUserStatus,
-} from "@/api/system/user";
+} from "@/api/system/userInfo";
 import { roleAll} from "@/api/system/role";
 import { listDept } from "@/api/system/organization";
 import { isStrings } from "@/utils/validate";

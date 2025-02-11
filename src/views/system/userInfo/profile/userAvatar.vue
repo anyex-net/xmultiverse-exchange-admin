@@ -53,7 +53,7 @@
 <script lang='ts' name="userAvatar" setup>
 import useUserStore from '@/store/modules/user';
 import { ref, getCurrentInstance, reactive,watch } from 'vue'
-import { uploadAvatar, updateUserProfile } from "@/api/system/user";
+import { uploadAvatar, updateUserProfile } from "@/api/system/userInfo";
 import {useI18n} from 'vue-i18n';
 const i18n=useI18n();
 const props = defineProps({

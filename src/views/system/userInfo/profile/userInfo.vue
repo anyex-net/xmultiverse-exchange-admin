@@ -26,7 +26,7 @@
 
 <script lang='ts' setup>
 import { ref, getCurrentInstance, watch } from 'vue'
-import { updateUserProfile } from "@/api/system/user";
+import { updateUserProfile } from "@/api/system/userInfo";
 import { ElForm } from "element-plus";
 import useTagsViewStore from '@/store/modules/tagsView';
 import { useI18n } from 'vue-i18n';

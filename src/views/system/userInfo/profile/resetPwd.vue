@@ -19,7 +19,7 @@
 </template>
 
 <script lang='ts' name="restpwd" setup>
-import { updateUserPwd } from "@/api/system/user";
+import { updateUserPwd } from "@/api/system/userInfo";
 import { ElForm } from "element-plus";
 import { ref, getCurrentInstance, defineExpose ,watch} from 'vue'
 import useTagsViewStore from "@/store/modules/tagsView";

@@ -45,14 +45,14 @@ export const constantRoutes=[
         ]
     },
     {
-        path:"/user",
+        path:"/userInfo",
         component:Layout,
         hidden: true,
         redirect:"noredirect",
         children:[
             {
                 path:"profile",
-                component:()=>import("@/views/system/user/profile/index.vue"),
+                component:()=>import("@/views/system/userInfo/profile/index.vue"),
                 name:"Profile",
                 icon:"user",
                 meta:{title:"个人中心"},

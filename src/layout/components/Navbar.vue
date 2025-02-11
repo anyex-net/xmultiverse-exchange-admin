@@ -23,7 +23,7 @@
                     </div>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <router-link to="/user/profile">
+                            <router-link to="/userInfo/profile">
                                 <el-dropdown-item>{{$t('Profile')}}</el-dropdown-item>
                             </router-link>
                             <el-dropdown-item command="setLayout">
