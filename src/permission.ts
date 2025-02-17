@@ -33,7 +33,7 @@ router.beforeEach((to: any, from, next) => {
                     ...route,
                     children: route.children.map((i: any) => ({
                       ...i,
-                      name: route.name + "-" + i.name,
+                      // name: route.name + "-" + i.name,
                     })),
                   };
                   if (!isHttp(route2.path)) {

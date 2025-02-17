@@ -146,7 +146,7 @@
 </template>
 
 <script lang="ts" name="log" setup>
-import logaa from "@/api/request/openim/log";
+import logaa from "@/hooks/openim/log";
 import stacky from "@/utils/table-sticky";
 
 const {

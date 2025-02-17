@@ -12,20 +12,22 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,//默认导入
+    "allowSyntheticDefaultImports": true, //默认导入
     "suppressImplicitAnyIndexErrors": true, //加入这段代码解决main.ts报错问题,
     "baseUrl": ".",
     "paths": {
-      "@/*":[
-        "src/*"
-      ],
-      "#/*":[
-        "types/*"
-      ]
+      "@/*": ["src/*"],
+      "#/*": ["types/*"]
     },
     "types": ["vite/client", "element-plus/global"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.js"],
-  "exclude": ["node_modules","dist","script"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.js"
+  ],
+  "exclude": ["node_modules", "dist", "script"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

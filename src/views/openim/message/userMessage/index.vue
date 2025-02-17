@@ -69,7 +69,7 @@
             <span v-if="JSON.parse(scope.row.content).bigPicture?.url">
               <el-image
                 v-if="JSON.parse(scope.row.content).bigPicture?.url"
-                style="width:30px; height: 30px;border-radius: 5px"
+                style="width: 30px; height: 30px; border-radius: 5px"
                 :src="JSON.parse(scope.row.content).bigPicture?.url"
                 :preview-src-list="[
                   JSON.parse(scope.row.content).bigPicture?.url,
@@ -79,7 +79,11 @@
                 :preview-teleported="true"
               />
             </span>
-            <span v-if="JSON.parse(scope.row.content).sourceUrl" style="color:#1677ff;font-weight: 600;cursor: pointer;" @click="gotoOpen(JSON.parse(scope.row.content).sourceUrl)">
+            <span
+              v-if="JSON.parse(scope.row.content).sourceUrl"
+              style="color: #1677ff; font-weight: 600; cursor: pointer"
+              @click="gotoOpen(JSON.parse(scope.row.content).sourceUrl)"
+            >
               [文件下载]
             </span>
           </template>
@@ -130,7 +134,7 @@
 </template>
 
 <script lang="ts" name="userMessage" setup>
-import userMessage from "@/api/request/openim/message/userMessage";
+import userMessage from "@/hooks/openim/message/userMessage";
 import stacky from "@/utils/table-sticky";
 
 const {

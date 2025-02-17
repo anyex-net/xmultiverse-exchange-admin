@@ -45,9 +45,12 @@
             <div v-else>
               <div
                 v-if="
-                  JSON.parse(scope.row.content).sourceUrl.indexOf('png') == -1 && JSON.parse(scope.row.content).sourceUrl.indexOf('jpg') == -1
+                  JSON.parse(scope.row.content).sourceUrl.indexOf('png') ==
+                    -1 &&
+                  JSON.parse(scope.row.content).sourceUrl.indexOf('jpg') == -1
                 "
-              >文件
+              >
+                文件
               </div>
               <el-image
                 v-else
@@ -132,7 +135,7 @@
 </template>
 
 <script lang="ts" name="groupMessage" setup>
-import groupMessagea1 from "@/api/request/openim/message/groupMessage";
+import groupMessagea1 from "@/hooks/openim/message/groupMessage";
 import stacky from "@/utils/table-sticky";
 
 const {

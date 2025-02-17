@@ -67,22 +67,24 @@
       >
         <!-- <el-table-column type="selection" width="55" align="center" /> -->
         <el-table-column label="ID" fixed prop="id" />
-        <el-table-column label="用户头像" >
+        <el-table-column label="用户头像">
           <template #default="scope">
             <!-- :src="uploadUrl + scope.row.headUrl"
               :preview-src-list="[uploadUrl + scope.row.headUrl]" -->
-              <img v-if="scope.row.headUrl=='headUrl'" src="../../../assets/images/touxiang.png"
-                   style="width: 30px; height: 30px;border-radius: 5px" />
+            <img
+              v-if="scope.row.headUrl == 'headUrl'"
+              src="../../../assets/images/touxiang.png"
+              style="width: 30px; height: 30px; border-radius: 5px"
+            />
             <el-image
-               v-else
-               style="width: 30px; height: 30px;border-radius: 5px"
+              v-else
+              style="width: 30px; height: 30px; border-radius: 5px"
               :src="scope.row.headUrl"
               :preview-src-list="[scope.row.headUrl]"
               :initial-index="1"
               :z-index="99999"
               :preview-teleported="true"
             />
-
           </template>
         </el-table-column>
         <el-table-column label="用户昵称" prop="accountName" />
@@ -233,7 +235,7 @@
           <el-table-column label="用户头像" prop="">
             <template #default="scope">
               <el-image
-                  v-if="scope.row.friendUser.faceURL!='headUrl'"
+                v-if="scope.row.friendUser.faceURL != 'headUrl'"
                 style="width: 40px; height: 40px"
                 :src="scope.row.friendUser.faceURL"
                 :preview-src-list="[scope.row.friendUser.faceURL]"
@@ -255,7 +257,9 @@
                 class="table_link_btn"
                 :underline="false"
                 type="primary"
-                @click="deleUser(scope.row.friendUser.userID,scope.row.ownerUserID)"
+                @click="
+                  deleUser(scope.row.friendUser.userID, scope.row.ownerUserID)
+                "
                 v-hasPermi="['openim:imuser:operator']"
                 ><span class="table_link_text">删除</span></el-link
               >
@@ -275,7 +279,7 @@
 </template>
 
 <script lang="ts" name="imuser" setup>
-import imuserList from "@/api/request/openim/imuser";
+import imuserList from "@/hooks/openim/imuser";
 import stacky from "@/utils/table-sticky";
 
 const {

@@ -1,31 +1,31 @@
 <template>
   <div class="app-container">
     <el-form
-        size="small"
-        :model="queryParams"
-        ref="queryFormRef"
-        :inline="true"
-        v-show="showSearch"
-        label-width="70px"
+      size="small"
+      :model="queryParams"
+      ref="queryFormRef"
+      :inline="true"
+      v-show="showSearch"
+      label-width="70px"
     >
       <el-form-item label="品牌ID" prop="id">
         <el-input
-            v-model="queryParams.id"
-            placeholder="请输入"
-            clearable
-            style="width: 240px"
-            @keyup.enter.native="handleQuery()"
-            @change="handleQuery()"
+          v-model="queryParams.id"
+          placeholder="请输入"
+          clearable
+          style="width: 240px"
+          @keyup.enter.native="handleQuery()"
+          @change="handleQuery()"
         />
       </el-form-item>
       <el-form-item label="品牌名称" prop="name">
         <el-input
-            v-model="queryParams.name"
-            placeholder="请输入"
-            clearable
-            style="width: 240px"
-            @keyup.enter.native="handleQuery()"
-            @change="handleQuery()"
+          v-model="queryParams.name"
+          placeholder="请输入"
+          clearable
+          style="width: 240px"
+          @keyup.enter.native="handleQuery()"
+          @change="handleQuery()"
         />
       </el-form-item>
       <!-- prettier-ignore -->
@@ -35,173 +35,151 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-            type="primary"
-            plain
-            size="small"
-            @click="handleAdd"
-            v-hasPermi="['goods:goodsBrand:operator']"
-        >新增
-        </el-button
-        >
+          type="primary"
+          plain
+          size="small"
+          @click="handleAdd"
+          v-hasPermi="['goods:goodsBrand:operator']"
+          >新增
+        </el-button>
       </el-col>
 
       <el-col :span="1.5">
         <el-button
-            type="danger"
-            plain
-            size="small"
-            :disabled="multiple"
-            @click="handleDelete"
-            v-hasPermi="['goods:goodsBrand:operator']"
-        >删除
-        </el-button
-        >
+          type="danger"
+          plain
+          size="small"
+          :disabled="multiple"
+          @click="handleDelete"
+          v-hasPermi="['goods:goodsBrand:operator']"
+          >删除
+        </el-button>
       </el-col>
       <!-- prettier-ignore -->
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList()"/>
     </el-row>
     <div class="self-table">
       <el-table
-          size="small"
-          stripe
-          v-loading="loading"
-          ref="pageTableRef"
-          :data="configList"
-          @selection-change="handleSelectionChange"
+        size="small"
+        stripe
+        v-loading="loading"
+        ref="pageTableRef"
+        :data="configList"
+        @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center"/>
-        <el-table-column
-            label="品牌ID"
-            prop="id"
-            min-width="150px"
-        />
-        <el-table-column
-            label="品牌名称"
-            prop="name"
-            min-width="120px"
-        />
-        <el-table-column
-            label="品牌首字母"
-            prop="letter"
-            min-width="120px"
-        />
-        <el-table-column
-            label="品牌Logo"
-            prop="logoImageUrl"
-            min-width="120px"
-        >
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column label="品牌ID" prop="id" min-width="150px" />
+        <el-table-column label="品牌名称" prop="name" min-width="120px" />
+        <el-table-column label="品牌首字母" prop="letter" min-width="120px" />
+        <el-table-column label="品牌Logo" prop="logoImageUrl" min-width="120px">
           <template #default="scope">
             <el-image
-                v-if="scope.row.logoImageUrl!=''"
-                style="width: 40px; height: 40px"
-                :src="uploadUrl+scope.row.logoImageUrl"
-                :preview-src-list="[uploadUrl+scope.row.logoImageUrl]"
-                :initial-index="1"
-                :z-index="99999"
-                :preview-teleported="true"
+              v-if="scope.row.logoImageUrl != ''"
+              style="width: 40px; height: 40px"
+              :src="uploadUrl + scope.row.logoImageUrl"
+              :preview-src-list="[uploadUrl + scope.row.logoImageUrl]"
+              :initial-index="1"
+              :z-index="99999"
+              :preview-teleported="true"
             />
           </template>
         </el-table-column>
-        <el-table-column
-            label="状态"
-            prop="status"
-            min-width="120px"
-        >
+        <el-table-column label="状态" prop="status" min-width="120px">
           <template #default="scope">
             <el-switch
-                v-model="scope.row.status"
-                class="mb-2"
-                :active-value="true"
-                :inactive-value="false"
-                style="--el-switch-on-color: #00CD00; --el-switch-off-color: #CDBA96"
-                @change="handleStatusChange($event, scope.row)"
+              v-model="scope.row.status"
+              class="mb-2"
+              :active-value="true"
+              :inactive-value="false"
+              style="
+                --el-switch-on-color: #00cd00;
+                --el-switch-off-color: #cdba96;
+              "
+              @change="handleStatusChange($event, scope.row)"
             />
           </template>
         </el-table-column>
-        <el-table-column
-            label="创建时间"
-            prop="createTime"
-            min-width="150px"
-        >
+        <el-table-column label="创建时间" prop="createTime" min-width="150px">
           <template #default="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
         <el-table-column
-            label="操作"
-            min-width="120px"
-            class-name="small-padding fixed-width"
+          label="操作"
+          min-width="120px"
+          class-name="small-padding fixed-width"
         >
           <template #default="scope">
             <el-link
-                class="table_link_btn"
-                :underline="false"
-                type="primary"
-                @click="handleUpdate(scope.row)"
-                v-hasPermi="['goods:goodsBrand:operator']"
-            ><span class="table_link_text">修改</span></el-link
+              class="table_link_btn"
+              :underline="false"
+              type="primary"
+              @click="handleUpdate(scope.row)"
+              v-hasPermi="['goods:goodsBrand:operator']"
+              ><span class="table_link_text">修改</span></el-link
             >
             <el-link
-                class="table_link_btn"
-                :underline="false"
-                size="small"
-                type="primary"
-                @click="handleDelete(scope.row)"
-                v-hasPermi="['goods:goodsBrand:operator']"
-            ><span class="table_link_text">删除</span></el-link
+              class="table_link_btn"
+              :underline="false"
+              size="small"
+              type="primary"
+              @click="handleDelete(scope.row)"
+              v-hasPermi="['goods:goodsBrand:operator']"
+              ><span class="table_link_text">删除</span></el-link
             >
           </template>
         </el-table-column>
       </el-table>
     </div>
     <pagination
-        v-show="total > 0"
-        :total="total"
-        v-model:page="queryParams.current"
-        v-model:limit="queryParams.size"
-        @pagination="getList()"
+      v-show="total > 0"
+      :total="total"
+      v-model:page="queryParams.current"
+      v-model:limit="queryParams.size"
+      @pagination="getList()"
     />
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog
-        :title="title"
-        v-model="open"
-        width="500px"
-        append-to-body
-        @close="cleanSelect()"
+      :title="title"
+      v-model="open"
+      width="500px"
+      append-to-body
+      @close="cleanSelect()"
     >
       <el-form
-          size="small"
-          ref="formRef"
-          :model="form"
-          :rules="rules"
-          label-width="120px"
+        size="small"
+        ref="formRef"
+        :model="form"
+        :rules="rules"
+        label-width="120px"
       >
         <el-form-item label="品牌名称" prop="name">
-          <el-input
-              v-model="form.name"
-              placeholder="请输入"
-          />
+          <el-input v-model="form.name" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="品牌首字母" prop="letter">
-          <el-input
-              v-model="form.letter"
-              placeholder="请输入"
-          />
+          <el-input v-model="form.letter" placeholder="请输入" />
         </el-form-item>
 
         <el-form-item label="品牌Logo" prop="logoImageUrl">
           <!--                    :http-request="handleUpdateForm"-->
-          <el-upload ref="upload" class="upload-demo" accept=".png, .jpg,.jpeg,.gif,.webp,.jfif"
-                     :auto-upload="false" :on-change="doChange" :action="uploadUrl" :data="uploadParams"
-                     :show-file-list="false">
-            <div v-if="form.logoImageUrl ==''" class="img_upload">
+          <el-upload
+            ref="upload"
+            class="upload-demo"
+            accept=".png, .jpg,.jpeg,.gif,.webp,.jfif"
+            :auto-upload="false"
+            :on-change="doChange"
+            :action="uploadUrl"
+            :data="uploadParams"
+            :show-file-list="false"
+          >
+            <div v-if="form.logoImageUrl == ''" class="img_upload">
               <el-icon class="icon">
-                <Plus/>
+                <Plus />
               </el-icon>
             </div>
             <div v-else class="img_upload">
-              <img class="img1" :src="uploadUrl+form.logoImageUrl" alt="">
+              <img class="img1" :src="uploadUrl + form.logoImageUrl" alt="" />
             </div>
           </el-upload>
         </el-form-item>
@@ -224,7 +202,7 @@
 </template>
 
 <script lang="ts" name="goodsBrand" setup>
-import GoodsBrand from "@/api/request/business/luckybox/goods/goodsBrand";
+import GoodsBrand from "@/hooks/business/luckybox/goods/goodsBrand";
 import stacky from "@/utils/table-sticky";
 
 const {
@@ -252,7 +230,7 @@ const {
   containerDom,
   __opened,
   parent,
-  setScrollXWidth
+  setScrollXWidth,
 } = stacky();
 // prettier-ignore
 const {
@@ -309,13 +287,11 @@ const {
   .icon {
     font-size: 30px;
     color: #c1c1c1;
-
   }
 
   .img1 {
     width: 130px;
     height: 130px;
   }
-
 }
 </style>

@@ -485,7 +485,7 @@ import {
   addnewsNews,
   delnewsNews,
   uploadPolicy,
-} from "@/api/news/news/news";
+} from "@/api/news/news";
 import { isStrings } from "@/utils/validate";
 import { getSuffix, randomString } from "@/utils/dateTime";
 import { QuillEditor } from "@vueup/vue-quill";

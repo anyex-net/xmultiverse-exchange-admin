@@ -213,7 +213,7 @@
 </template>
 
 <script lang="ts" name="walletAssetTipGift" setup>
-import WalletAssetTipGift from "@/api/request/asset/walletAssetTipGift";
+import WalletAssetTipGift from "@/hooks/asset/walletAssetTipGift";
 import stacky from "@/utils/table-sticky";
 
 const {

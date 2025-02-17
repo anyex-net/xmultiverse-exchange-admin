@@ -3,12 +3,14 @@
     <div class="cardList">
       <div class="title1">
         <div class="leftTitle">需要邀请码注册</div>
-        <div class="rightTitle">{{ configList['needInvitationCodeRegister'] == '0' ? '否' : '是' }}</div>
+        <div class="rightTitle">
+          {{ configList["needInvitationCodeRegister"] == "0" ? "否" : "是" }}
+        </div>
       </div>
       <div class="title1">
         <div class="leftTitle">非好友发送消息</div>
         <div class="rightTitle">
-          {{ configList['allowSendMsgNotFriend'] == '0' ? '否' : '是' }}
+          {{ configList["allowSendMsgNotFriend"] == "0" ? "否" : "是" }}
         </div>
       </div>
     </div>
@@ -16,7 +18,7 @@
 </template>
 
 <script lang="ts" name="appConfig" setup>
-import appConfig1 from "@/api/request/openim/app/appConfig";
+import appConfig1 from "@/hooks/openim/app/appConfig";
 const {
   loading,
   open,

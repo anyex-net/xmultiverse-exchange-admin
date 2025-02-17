@@ -9,7 +9,7 @@
         :rules="rules"
         label-width="120px"
       >
-         <el-form-item label="通知账号" prop="sendID">
+        <el-form-item label="通知账号" prop="sendID">
           <el-select
             v-model="form.sendID"
             placeholder="选择账号"
@@ -117,7 +117,7 @@
         <el-table-column label="用户头像" prop="headUrl" min-width="120px">
           <template #default="scope">
             <el-image
-              style="width: 30px; height: 30px;border-radius: 5px"
+              style="width: 30px; height: 30px; border-radius: 5px"
               :src="scope.row.headUrl"
               :preview-src-list="[scope.row.headUrl]"
               :initial-index="1"
@@ -147,7 +147,7 @@
 </template>
 
 <script lang="ts" name="notificationPublish" setup>
-import NotificationPublish from "@/api/request/openim/notification/notificationPublish";
+import NotificationPublish from "@/hooks/openim/notification/notificationPublish";
 import stacky from "@/utils/table-sticky";
 
 const {
@@ -296,9 +296,9 @@ const {
   height: 40px;
   border-radius: 8px;
   font-weight: 400;
-    font-size: 20px;
+  font-size: 20px;
   border: 1px solid #c1c1c1;
-    color:#c1c1c1;
+  color: #c1c1c1;
 }
 
 .img_upload1 {

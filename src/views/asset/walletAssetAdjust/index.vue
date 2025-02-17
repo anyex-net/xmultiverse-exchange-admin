@@ -302,7 +302,7 @@
 </template>
 
 <script lang="ts" name="walletAssetAdjust" setup>
-import walletAssetAdjust from "@/api/request/asset/walletAssetAdjust/index";
+import walletAssetAdjust from "@/hooks/asset/walletAssetAdjust";
 import stacky from "../../../utils/table-sticky";
 
 const {

@@ -131,7 +131,11 @@
         <el-form-item label="资讯Id" prop="newsId" style="font-weight: 600">
           <span class="mRbox">{{ form.newsId }}</span>
         </el-form-item>
-        <el-form-item label="收藏用户Id" prop="favoriteAccountId" style="font-weight: 600">
+        <el-form-item
+          label="收藏用户Id"
+          prop="favoriteAccountId"
+          style="font-weight: 600"
+        >
           <span class="mRbox">{{ form.favoriteAccountId }}</span>
         </el-form-item>
         <el-form-item label="位置经度" prop="lng" style="font-weight: 600">
@@ -163,7 +167,7 @@
 </template>
 
 <script lang="ts" name="newsFavorite" setup>
-import NewsFavorite from "@/api/request/news/newsFavorite";
+import NewsFavorite from "@/hooks/news/newsFavorite";
 import stacky from "@/utils/table-sticky";
 
 const {

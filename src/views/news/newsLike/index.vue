@@ -131,7 +131,11 @@
         <el-form-item label="资讯Id" prop="newsId" style="font-weight: 600">
           <span class="mRbox">{{ form.newsId }}</span>
         </el-form-item>
-        <el-form-item label="点赞用户Id" prop="likeAccountId" style="font-weight: 600">
+        <el-form-item
+          label="点赞用户Id"
+          prop="likeAccountId"
+          style="font-weight: 600"
+        >
           <span class="mRbox">{{ form.likeAccountId }}</span>
         </el-form-item>
         <el-form-item label="位置经度" prop="lng" style="font-weight: 600">
@@ -163,7 +167,7 @@
 </template>
 
 <script lang="ts" name="newsLike" setup>
-import NewsLike1 from "@/api/request/news/newsLike";
+import NewsLike1 from "@/hooks/news/newsLike";
 import stacky from "@/utils/table-sticky";
 
 const {

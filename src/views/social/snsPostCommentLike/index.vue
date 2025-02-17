@@ -162,7 +162,7 @@
 </template>
 
 <script lang="ts" name="snsPostCommentLike" setup>
-import SnsPostCommentLike from "@/api/request/social/snsPostCommentLike";
+import SnsPostCommentLike from "@/hooks/social/snsPostCommentLike";
 import stacky from "@/utils/table-sticky";
 
 const {

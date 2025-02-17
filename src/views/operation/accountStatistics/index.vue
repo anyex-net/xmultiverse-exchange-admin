@@ -1,39 +1,55 @@
 <template>
-    <div class="app-container">
-        <el-form size="small" :model="queryParams" ref="queryFormRef" :inline="true" v-show="showSearch"
-            label-width="70px">
-          <el-form-item label="类型" prop="type">
-            <el-select style="width: 215px" v-model="queryParams.type" @change="handleQuery"
-                       placeholder="请选择" clearable>
-              <el-option v-for="(item, index) in typeList" :key="index" :label="item.name" :value="item.id" />
-            </el-select>
-          </el-form-item>
-            <el-form-item label="日期" prop="dt">
-              <el-date-picker
-                  v-model="queryParams.dt"
-                  format="YYYY-MM-DD"
-                  value-format="YYYY-MM-DD"
-                  type="daterange"
-                  range-separator="~"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  :disabled-date="disableConfig"
-                  pack-options="op"
-                  @change="handleQuery()"
-              >
-              </el-date-picker>
-            </el-form-item>
+  <div class="app-container">
+    <el-form
+      size="small"
+      :model="queryParams"
+      ref="queryFormRef"
+      :inline="true"
+      v-show="showSearch"
+      label-width="70px"
+    >
+      <el-form-item label="类型" prop="type">
+        <el-select
+          style="width: 215px"
+          v-model="queryParams.type"
+          @change="handleQuery"
+          placeholder="请选择"
+          clearable
+        >
+          <el-option
+            v-for="(item, index) in typeList"
+            :key="index"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="日期" prop="dt">
+        <el-date-picker
+          v-model="queryParams.dt"
+          format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD"
+          type="daterange"
+          range-separator="~"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :disabled-date="disableConfig"
+          pack-options="op"
+          @change="handleQuery()"
+        >
+        </el-date-picker>
+      </el-form-item>
 
-            <form-search @reset="resetQuery()" @search="handleQuery()" />
-        </el-form>
-      <div id="registerChart" style="width: 90%; height: 400px; "></div>
-      <div id="activationChart" style="width: 90%;; height: 400px"></div>
-      <div id="switchRateChart" style="width: 90%;; height: 400px"></div>
-    </div>
+      <form-search @reset="resetQuery()" @search="handleQuery()" />
+    </el-form>
+    <div id="registerChart" style="width: 90%; height: 400px"></div>
+    <div id="activationChart" style="width: 90%; height: 400px"></div>
+    <div id="switchRateChart" style="width: 90%; height: 400px"></div>
+  </div>
 </template>
 
 <script lang="ts" name="accountStatistics" setup>
-import accountStatistics from "@/api/request/operation/accountStatistics";
+import accountStatistics from "@/hooks/operation/accountStatistics";
 // prettier-ignore
 const {
     loading,
@@ -63,17 +79,20 @@ const {
 
 // 限制日期选择器的范围
 const disableConfig = (time: Date) => {
-  return time.getTime() >  Date.now() ||  time.getTime() < Date.now()- 31*24*3600000;
+  return (
+    time.getTime() > Date.now() ||
+    time.getTime() < Date.now() - 31 * 24 * 3600000
+  );
 };
 </script>
 
 <style lang="scss" scoped>
 .mRbox {
-    width: 100%;
-    font-weight: 400;
-    margin-left: 30px;
-    border-bottom: 1px dotted #dfdcdc;
-    display: flex;
-    justify-content: flex-end;
+  width: 100%;
+  font-weight: 400;
+  margin-left: 30px;
+  border-bottom: 1px dotted #dfdcdc;
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

@@ -1,0 +1,129 @@
+import Pattern from "@/data/pattern";
+
+// id	记录唯一ID	integer(int64)
+// userId	用户ID	integer(int64)
+// instInvestorId	机构投资者ID	integer(int64)
+// instSpvProductId	机构SPV产品ID	integer(int64)
+// redemptionCurrency	赎回币种	string
+// redemptionPrice	赎回价格	number
+// redemptionAmount	赎回数量	number
+// state	状态(成功success、处理中pending、失败failed)	string
+// remark	备注	string
+// createTime	创建时间	integer(int64)
+// updateBy	更新人	string
+// updateTime	更新时间	integer(int64)
+
+export const forms = [
+  {
+    title: "用户ID",
+    name: "userId",
+    rules: [{ required: true, message: "用户ID不能为空", trigger: "blur" }],
+  },
+  {
+    title: "机构投资者ID",
+    name: "instInvestorId",
+    rules: [
+      { required: true, message: "机构投资者ID不能为空", trigger: "blur" },
+    ],
+  },
+  {
+    title: "机构SPV产品ID",
+    name: "instSpvProductId",
+    rules: [
+      { required: true, message: "机构SPV产品ID不能为空", trigger: "blur" },
+    ],
+  },
+  {
+    title: "赎回币种",
+    name: "redemptionCurrency",
+    rules: [{ required: true, message: "赎回币种不能为空", trigger: "blur" }],
+  },
+  {
+    title: "赎回价格",
+    name: "redemptionPrice",
+    rules: [
+      {
+        required: true,
+        message: "赎回价格不能为空",
+        trigger: "blur",
+      },
+      {
+        pattern: Pattern.amount,
+        message: "请输入数字",
+        trigger: "blur",
+      },
+    ],
+  },
+  {
+    title: "赎回数量",
+    name: "redemptionAmount",
+    rules: [
+      {
+        required: true,
+        message: "赎回数量不能为空",
+        trigger: "blur",
+      },
+      {
+        pattern: Pattern.amount,
+        message: "请输入数字",
+        trigger: "blur",
+      },
+    ],
+  },
+  {
+    title: "状态",
+    name: "state",
+    type: "radio",
+    rules: [
+      {
+        required: true,
+        message: "请选择状态",
+        trigger: "change",
+      },
+    ],
+  },
+  { title: "备注", name: "remark" },
+];
+const searchNames = [
+  "userId",
+  "instInvestorId",
+  "instSpvProductId",
+  "redemptionCurrency",
+  "state",
+];
+export const formSearchs = forms
+  .filter((i) => searchNames.includes(i.name))
+  .map((i) => ({ name: i.name, title: i.title, type: i.type || "text" }));
+export const formOptions: any = {
+  state: { success: "成功", pending: "处理中", failed: "失败" },
+};
+
+export const titles = forms.map((i) => ({
+  title: i.title,
+  name: i.name,
+}));
+export const formtitles = forms.reduce((pre: any, i, k) => {
+  const item = {
+    title: i.title,
+    name: i.name,
+    type: i.type,
+  };
+  return k % 2 === 0
+    ? [...pre, [item]]
+    : [...pre.slice(0, pre.length - 1), [pre[pre.length - 1][0], item]];
+}, []);
+export const rules = forms.reduce(
+  (pre, i) => ({
+    ...pre,
+    [i.name]: i.rules || [],
+  }),
+  {}
+);
+export const formDefault = forms.reduce(
+  (pre, i) => ({ ...pre, [i.name]: "" }),
+  {}
+);
+export const searchDefault = formSearchs.reduce(
+  (pre, i) => ({ ...pre, [i.name]: "" }),
+  {}
+);

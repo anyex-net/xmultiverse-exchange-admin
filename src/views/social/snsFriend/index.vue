@@ -113,11 +113,7 @@
       @close="cleanSelect()"
     >
       <el-form size="small" ref="formRef" :model="form" :rules="rules">
-        <el-form-item
-          label="用户ID"
-          prop="userId"
-          style="font-weight: 600"
-        >
+        <el-form-item label="用户ID" prop="userId" style="font-weight: 600">
           <span class="mRbox">{{ form.userId }}</span>
         </el-form-item>
         <el-form-item
@@ -150,7 +146,7 @@
 </template>
 
 <script lang="ts" name="snsFriend" setup>
-import snsFriend from "@/api/request/social/snsFriend";
+import snsFriend from "@/hooks/social/snsFriend";
 import stacky from "@/utils/table-sticky";
 
 const {

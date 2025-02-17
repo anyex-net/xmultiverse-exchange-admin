@@ -182,7 +182,7 @@
 </template>
 
 <script lang="ts" name="tradeDay" setup>
-import tradeDay1 from "@/api/request/common/tradeDay";
+import tradeDay1 from "@/hooks/common/tradeDay";
 import stacky from "../../../utils/table-sticky";
 
 const {

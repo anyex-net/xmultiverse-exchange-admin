@@ -70,7 +70,7 @@
         <el-table-column label="用户头像" prop="faceUrl">
           <template #default="scope">
             <el-image
-              style="width: 30px; height: 30px;border-radius: 5px"
+              style="width: 30px; height: 30px; border-radius: 5px"
               :src="uploadUrl + scope.row.faceUrl"
               :preview-src-list="[uploadUrl + scope.row.faceUrl]"
               :initial-index="1"
@@ -143,7 +143,11 @@
         label-width="120px"
       >
         <el-row>
-          <el-form-item label="用户头像" prop="faceUrl" style="width: 100%;font-weight: 600;">
+          <el-form-item
+            label="用户头像"
+            prop="faceUrl"
+            style="width: 100%; font-weight: 600"
+          >
             <el-upload
               ref="iconUpload"
               class="upload-demo"
@@ -166,10 +170,7 @@
           </el-form-item>
         </el-row>
         <el-form-item label="用户昵称" prop="nickname">
-          <el-input
-            v-model="form.nickname"
-            placeholder="请输入"
-          />
+          <el-input v-model="form.nickname" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="用户ID" prop="userId">
           <el-input
@@ -192,7 +193,7 @@
 </template>
 
 <script lang="ts" name="notificationAccount" setup>
-import NotificationAccount from "@/api/request/openim/notification/notificationAccount";
+import NotificationAccount from "@/hooks/openim/notification/notificationAccount";
 import stacky from "@/utils/table-sticky";
 
 const {
