@@ -157,4 +157,5 @@ export default {
     "accountSignInDetail":'账户签到明细',
     "accountFavorite":'账户收藏',
     "snsActivity":'社交活动',
+    "baseMgt":"基础设置"
 };
