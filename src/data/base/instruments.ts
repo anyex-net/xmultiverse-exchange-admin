@@ -47,17 +47,18 @@ export const forms = [
     title: "产品ID",
     name: "instId",
     rules: [
-      { required: true, message: "提币精度不能为空", trigger: "blur" },
-      {
-        pattern: /^\d{1,2}$/,
-        message: "提币精度为最多2位的整数",
-        trigger: "blur",
-      },
+      { required: true, message: "产品ID不能为空", trigger: "blur" },
+      // {
+      //   pattern: /^\d{1,2}$/,
+      //   message: "提币精度为最多2位的整数",
+      //   trigger: "blur",
+      // },
     ],
   },
   {
     title: "产品类型",
     name: "instType",
+    type: "radio",
     rules: [
       {
         required: true,
@@ -65,6 +66,9 @@ export const forms = [
         trigger: "blur",
       },
     ],
+    formatter: (i: any) => {
+      return formOptions.instType[i.instType];
+    },
   },
   {
     title: "下单价格精度",
@@ -92,12 +96,12 @@ export const forms = [
     title: "上线日期",
     name: "listTime",
     rules: [
-      { required: true, message: "最大提币手续费不能为空", trigger: "blur" },
-      {
-        pattern: Pattern.amount,
-        message: "请输入数字",
-        trigger: "blur",
-      },
+      { required: true, message: "上线日期不能为空", trigger: "blur" },
+      // {
+      //   pattern: Pattern.amount,
+      //   message: "请输入数字",
+      //   trigger: "blur",
+      // },
     ],
   },
   {
@@ -115,6 +119,31 @@ export const forms = [
         trigger: "blur",
       },
     ],
+  },
+  {
+    title: "合约类型",
+    name: "ctType",
+    rules: [{ required: true, message: "合约类型不能为空", trigger: "blur" }],
+  },
+  {
+    title: "合约日期别名",
+    name: "alias",
+    rules: [{ required: true, message: "合约日期别名不能为空", trigger: "blur" }],
+  },
+  {
+    title: "盈亏结算和保证金币种",
+    name: "settleCcy",
+    rules: [{ required: true, message: "盈亏结算和保证金币种不能为空", trigger: "blur" }],
+  },
+  {
+    title: "期权类型",
+    name: "optType",
+    rules: [{ required: true, message: "期权类型不能为空", trigger: "blur" }],
+  },
+  {
+    title: "合约面值计价币种",
+    name: "ctValCcy",
+    rules: [{ required: true, message: "合约面值计价币种不能为空", trigger: "blur" }],
   },
   {
     title: "产品状态",
@@ -179,6 +208,13 @@ export const formOptions: any = {
     settlement: "资金费结算",
   },
   status: { true: "是", false: "否" },
+  instType: {
+    SPOT: "币币",
+    MARGIN: "永续合约",
+    SWAP: "暂停中",
+    FUTURES: "交割合约",
+    OPTION: "期权",
+  },
 };
 
 export const titles = forms.map((i) => ({

@@ -93,11 +93,19 @@
         <el-table-column label="更新时间" prop="updateTime" min-width="150px" />
         <el-table-column
           label="操作"
-          min-width="120px"
+          min-width="160px"
           fixed="right"
           class-name="small-padding fixed-width"
         >
           <template #default="scope">
+              <el-link
+                  class="table_link_btn"
+                  :underline="false"
+                  type="primary"
+                  @click="handleShowDetail(scope.row)"
+                  v-hasPermi="['base:instruments:data']"
+              ><span class="table_link_text">详情</span></el-link
+              >
             <el-link
               class="table_link_btn"
               :underline="false"
@@ -169,7 +177,7 @@
         </el-row>
       </el-form>
       <template #footer>
-        <div class="dialog-footer">
+        <div v-if="isShowBtn === true" class="dialog-footer">
           <!-- prettier-ignore -->
           <el-button size="small" type="primary" @click="submitForm">确 定</el-button>
           <el-button size="small" @click="cancel">取 消</el-button>
@@ -222,6 +230,6 @@ const {
   form,queryParams, queryRef, pageTableRef, formRef,
   title,loading, single, multiple, open, showSearch, total, dataList, 
   getList, resetQuery, cancel,submitForm, cleanSelect,
-  handleQuery, handleAdd, handleSelectionChange,handleUpdate, handleDelete, 
+  handleQuery, handleAdd, handleSelectionChange,handleUpdate, handleDelete,handleShowDetail, isShowBtn
 } = datas();
 </script>

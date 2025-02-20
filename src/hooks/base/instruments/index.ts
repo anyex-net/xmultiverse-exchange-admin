@@ -9,6 +9,7 @@ import {
 } from "@/api/base/instruments";
 import { isStrings } from "@/utils/validate";
 import { formDefault, searchDefault } from "@/data/base/instruments";
+import { getCurrencies } from "@/api/base/currencies";
 
 export default () => {
   const { proxy } = getCurrentInstance() as any;
@@ -31,6 +32,7 @@ export default () => {
     single: true, //非单个禁用
     total: 0, //总条数
     ids: [], //选中数组
+    isShowBtn:true
   });
   const queryRef = ref<InstanceType<typeof ElForm>>();
   const formRef = ref<InstanceType<typeof ElForm>>();
@@ -47,6 +49,7 @@ export default () => {
     single,
     total,
     ids,
+    isShowBtn
   } = toRefs(state);
 
   const cleanSelect = () => {
@@ -64,6 +67,7 @@ export default () => {
       if (response.code == 200) {
         dataList.value = response.data.records.map((i: any) => ({
           ...i,
+          listTime: new Date(+i.listTime).toLocaleString(),
           createTime: new Date(+i.createTime).toLocaleString(),
           updateTime: i.updateTime
             ? new Date(+i.updateTime).toLocaleString()
@@ -108,6 +112,18 @@ export default () => {
     open.value = true;
     title.value = "添加平台交易产品";
   };
+  /** 详情页 */
+  const handleShowDetail = (row: any) => {
+    reset();
+    const configId = row.id || ids.value;
+    getDatas(configId).then((response: any) => {
+      form.value = response.data;
+      open.value = true;
+      title.value = "详情";
+      isShowBtn.value = false;
+      proxy.setTableRowSelected(pageTableRef, row, true);
+    });
+  };
   /** 修改按钮操作 */
   const handleUpdate = async (row: any) => {
     reset();
@@ -115,6 +131,7 @@ export default () => {
     await getDatas(userId).then((response: any) => {
       if (response.code === 200) {
         form.value = response.data;
+        isShowBtn.value = true;
       }
     });
 
@@ -233,5 +250,7 @@ export default () => {
     handleDelete,
     handleSelectionChange,
     handleStatusChange,
+    handleShowDetail,
+    isShowBtn
   };
 };

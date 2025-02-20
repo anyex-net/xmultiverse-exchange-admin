@@ -157,5 +157,10 @@ export default {
     "accountSignInDetail":'账户签到明细',
     "accountFavorite":'账户收藏',
     "snsActivity":'社交活动',
-    "baseMgt":"基础设置"
+    "baseMgt":"基础设置",
+
+    "currencies":"平台币种",
+    "instruments":"平台交易产品",
+    "instTradeFee":"平台交易费率",
+    "userInstTradeFee":"用户交易费率",
 };

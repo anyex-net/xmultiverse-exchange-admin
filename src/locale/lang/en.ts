@@ -156,4 +156,10 @@ export default {
     "accountSignInDetail":'Account sign-in details',
     "accountFavorite":'Account Collection',
     "snsActivity":'Social Activities',
+
+    "baseMgt":"baseMgt",
+    "currencies":"currencies",
+    "instruments":"instruments",
+    "instTradeFee":"instTradeFee",
+    "userInstTradeFee":"userInstTradeFee",
 };

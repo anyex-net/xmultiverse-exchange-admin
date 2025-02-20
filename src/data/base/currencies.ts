@@ -60,6 +60,9 @@ export const forms = [
         trigger: "change",
       },
     ],
+    formatter: (i: any) => {
+      return formOptions.mainNet[i.mainNet];
+    },
   },
   {
     title: "是否可内部转账",
@@ -68,18 +71,27 @@ export const forms = [
     rules: [
       { required: true, message: "请选择是否可内部转账", trigger: "change" },
     ],
+    formatter: (i: any) => {
+      return formOptions.canInternal[i.canInternal];
+    },
   },
   {
     title: "是否可充值",
     name: "canDep",
     type: "radio",
     rules: [{ required: true, message: "请选择是否可充值", trigger: "change" }],
+    formatter: (i: any) => {
+      return formOptions.canDep[i.canDep];
+    },
   },
   {
     title: "是否可提币",
     name: "canWd",
     type: "radio",
     rules: [{ required: true, message: "请选择是否可提币", trigger: "change" }],
+    formatter: (i: any) => {
+      return formOptions.canWd[i.canWd];
+    },
   },
   {
     title: "最大提币手续费",
