@@ -162,4 +162,8 @@ export default {
     "instruments":"instruments",
     "instTradeFee":"instTradeFee",
     "userInstTradeFee":"userInstTradeFee",
+
+    "userMgt":"userMgt",
+    "user":"user",
+    "userCertKyc":"userCertKyc",
 };

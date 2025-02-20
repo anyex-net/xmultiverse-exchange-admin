@@ -68,3 +68,15 @@ export const allDatas = async (query: any) => {
     data: query,
   });
 };
+
+/**
+ * 审核
+ * @param data
+ */
+export const checkDatas = async (data: any) => {
+  return await request({
+    url: "/api/user/userCertKyc/check",
+    method: "post",
+    data: data,
+  });
+};

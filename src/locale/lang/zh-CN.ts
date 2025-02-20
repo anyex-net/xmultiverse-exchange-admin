@@ -163,4 +163,9 @@ export default {
     "instruments":"平台交易产品",
     "instTradeFee":"平台交易费率",
     "userInstTradeFee":"用户交易费率",
+
+    "userMgt":"用户管理",
+    "user":"用户管理",
+    "userCertKyc":"用户个人KYC认证",
+
 };

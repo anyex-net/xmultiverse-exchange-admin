@@ -68,3 +68,15 @@ export const allDatas = async (query: any) => {
     data: query,
   });
 };
+
+/**
+ * 用户冻结或者解冻
+ * @param data
+ */
+export const frozenOrUnfrozenDatas = async (data: any) => {
+  return await request({
+    url: "/api/user/user/frozenOrUnfrozen",
+    method: "post",
+    data: data,
+  });
+};

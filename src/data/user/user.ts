@@ -198,7 +198,7 @@ export const formSearchs = forms
 export const formOptions: any = {
   state: { 0: "正常", 1: "冻结", 2: "注销" },
   certState: {
-    0: "未认证",
+    '0': "未认证",
     1: "已认证个人KYC",
     2: "已认证机构投资者",
     3: "已认证机构SPV发起人",
