@@ -68,3 +68,11 @@ export const allDatas = async (query: any) => {
     data: query,
   });
 };
+
+export const checkDatas = async (data: any) => {
+  return await request({
+    url: "/api/fund/withdrawalHistory/check",
+    method: "post",
+    data: data,
+  });
+};

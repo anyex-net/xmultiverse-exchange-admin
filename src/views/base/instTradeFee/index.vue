@@ -77,7 +77,7 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键" prop="id" min-width="150px" />
+<!--        <el-table-column label="主键" prop="id" min-width="150px" />-->
 
         <el-table-column
           :label="i.title"
@@ -139,7 +139,7 @@
     <el-dialog
       :title="title"
       v-model="open"
-      width="700px"
+      width="1000px"
       append-to-body
       @close="cleanSelect()"
     >

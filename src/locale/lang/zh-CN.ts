@@ -168,4 +168,11 @@ export default {
     "user":"用户管理",
     "userCertKyc":"用户个人KYC认证",
 
+    "fundMgt":"资金管理",
+    "balances":"资金账户余额",
+    "balancesTransHistory":"资金账户流水",
+    "depositAddress":"充值地址",
+    "depositTransHistory":"充值记录",
+    "withdrawalHistory":"提现管理",
+
 };

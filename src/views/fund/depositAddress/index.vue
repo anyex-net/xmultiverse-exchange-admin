@@ -6,7 +6,7 @@
       ref="queryFormRef"
       :inline="true"
       v-show="showSearch"
-      label-width="70px"
+      label-width="100px"
     >
       <el-form-item
         :label="i.title"
@@ -36,7 +36,7 @@
         @selection-change="handleSelectionChange"
       >
         <!-- <el-table-column type="selection" width="55" align="center" /> -->
-        <el-table-column label="主键" prop="id" min-width="150px" />
+<!--        <el-table-column label="主键" prop="id" min-width="150px" />-->
 
         <el-table-column
           :label="i.title"
@@ -53,14 +53,22 @@
           class-name="small-padding fixed-width"
         >
           <template #default="scope">
-            <el-link
-              class="table_link_btn"
-              :underline="false"
-              type="primary"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['fund:balancesTransHistory:operator']"
-              ><span class="table_link_text">修改</span></el-link
-            >
+              <el-link
+                  class="table_link_btn"
+                  :underline="false"
+                  type="primary"
+                  @click="handleShowDetail(scope.row)"
+                  v-hasPermi="['fund:depositAddress:data']"
+              ><span class="table_link_text">详情</span></el-link
+              >
+<!--            <el-link-->
+<!--              class="table_link_btn"-->
+<!--              :underline="false"-->
+<!--              type="primary"-->
+<!--              @click="handleUpdate(scope.row)"-->
+<!--              v-hasPermi="['fund:depositAddress:operator']"-->
+<!--              ><span class="table_link_text">修改</span></el-link-->
+<!--            >-->
           </template>
         </el-table-column>
       </el-table>
@@ -77,7 +85,7 @@
     <el-dialog
       :title="title"
       v-model="open"
-      width="500px"
+      width="1000px"
       append-to-body
       @close="cleanSelect()"
     >
@@ -101,7 +109,7 @@
         </el-row>
       </el-form>
       <template #footer>
-        <div class="dialog-footer">
+        <div v-if="isShowBtn === true" class="dialog-footer">
           <!-- prettier-ignore -->
           <el-button size="small" type="primary" @click="submitForm">确 定</el-button>
           <el-button size="small" @click="cancel">取 消</el-button>
@@ -145,5 +153,7 @@ const {
   handleDelete,
   pageTableRef,
   cleanSelect,
+    handleShowDetail,
+    isShowBtn
 } = datas();
 </script>

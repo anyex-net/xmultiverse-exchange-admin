@@ -77,7 +77,7 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键" prop="id" min-width="150px" />
+<!--        <el-table-column label="主键" prop="id" min-width="150px" />-->
 
         <el-table-column
           :label="i.title"
@@ -87,7 +87,44 @@
           v-for="i in titles"
           :key="i.name"
         />
+          <el-table-column label="证件照片1" prop="passportImg1" min-width="120px">
+              <template #default="scope">
+                  <el-image
+                      style="width: 30px; height: 30px; border-radius: 5px"
+                      :src="uploadUrl1 + scope.row.passportImg1"
+                      :preview-src-list="[uploadUrl1 + scope.row.passportImg1]"
+                      :initial-index="1"
+                      :z-index="99999"
+                      :preview-teleported="true"
+                  />
+              </template>
+          </el-table-column>
+          <el-table-column label="证件照片2" prop="passportImg2" min-width="120px">
+              <template #default="scope">
+                  <el-image
+                      style="width: 30px; height: 30px; border-radius: 5px"
+                      :src="uploadUrl1 + scope.row.passportImg2"
+                      :preview-src-list="[uploadUrl1 + scope.row.passportImg2]"
+                      :initial-index="1"
+                      :z-index="99999"
+                      :preview-teleported="true"
+                  />
+              </template>
+          </el-table-column>
+          <el-table-column label="证件照片3" prop="passportImg3" min-width="120px">
+              <template #default="scope">
+                  <el-image
+                      style="width: 30px; height: 30px; border-radius: 5px"
+                      :src="uploadUrl1 + scope.row.passportImg3"
+                      :preview-src-list="[uploadUrl1 + scope.row.passportImg3]"
+                      :initial-index="1"
+                      :z-index="99999"
+                      :preview-teleported="true"
+                  />
+              </template>
+          </el-table-column>
 
+        <el-table-column label="备注" prop="remark" min-width="150px" />
         <el-table-column label="创建时间" prop="createTime" min-width="150px" />
         <el-table-column label="更新人" prop="updateBy" min-width="150px" />
         <el-table-column label="更新时间" prop="updateTime" min-width="150px" />
@@ -113,7 +150,7 @@
                       :underline="false"
                       type="success"
                       @click="handleStatusChange(scope.row, 'approve')"
-                      v-hasPermi="['user:userCertKyc:operator']"
+                      v-hasPermi="['user:userCertKyc:check']"
                   >
                       <span class="table_link_text">审核通过</span>
                   </el-link>
@@ -122,7 +159,7 @@
                       :underline="false"
                       type="danger"
                       @click="handleStatusChange(scope.row, 'reject')"
-                      v-hasPermi="['user:userCertKyc:operator']"
+                      v-hasPermi="['user:userCertKyc:check']"
                   >
                       <span class="table_link_text">审核拒绝</span>
                   </el-link>
@@ -143,7 +180,7 @@
     <el-dialog
       :title="title"
       v-model="open"
-      width="700px"
+      width="1000px"
       append-to-body
       @close="cleanSelect()"
     >
@@ -202,6 +239,7 @@
 <script lang="ts" name="userCertKyc" setup>
 import datas from "@/hooks/user/userCertKyc";
 import stacky from "../../../utils/table-sticky";
+import getFileType from "@/utils/imageShow";
 import {
   formSearchs,
   formOptions,
@@ -242,6 +280,6 @@ const {
   form,queryParams, queryRef, pageTableRef, formRef,
   title,loading, single, multiple, open, showSearch, total, dataList, 
   getList, resetQuery, cancel,submitForm, cleanSelect,
-  handleQuery, handleAdd, handleSelectionChange,handleStatusChange, handleDelete, handleShowDetail, isShowBtn
+  handleQuery, handleAdd, handleSelectionChange,handleStatusChange, handleDelete, handleShowDetail, isShowBtn,uploadUrl
 } = datas();
 </script>

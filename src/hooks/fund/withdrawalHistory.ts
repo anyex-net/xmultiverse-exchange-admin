@@ -4,11 +4,12 @@ import {
   listDatas,
   getDatas,
   addDatas,
-  delDatas,
+  delDatas, checkDatas,
   // allCurrencies,
 } from "@/api/fund/withdrawalHistory";
 import { isStrings } from "@/utils/validate";
 import { formDefault, searchDefault } from "@/data/fund/withdrawalHistory";
+import { frozenOrUnfrozenDatas } from "@/api/user/user";
 
 export default () => {
   const { proxy } = getCurrentInstance() as any;
@@ -31,6 +32,7 @@ export default () => {
     single: true, //非单个禁用
     total: 0, //总条数
     ids: [], //选中数组
+    isShowBtn:true
   });
   const queryFormRef = ref<InstanceType<typeof ElForm>>();
   const formRef = ref<InstanceType<typeof ElForm>>();
@@ -47,6 +49,7 @@ export default () => {
     single,
     total,
     ids,
+    isShowBtn
   } = toRefs(state);
 
   const cleanSelect = () => {
@@ -64,6 +67,9 @@ export default () => {
       if (response.code == 200) {
         dataList.value = response.data.records.map((i: any) => ({
           ...i,
+          checkTime: i.checkTime
+              ? new Date(+i.checkTime).toLocaleString()
+              : "--",
           createTime: new Date(+i.createTime).toLocaleString(),
           updateTime: i.updateTime
             ? new Date(+i.updateTime).toLocaleString()
@@ -108,6 +114,22 @@ export default () => {
     open.value = true;
     title.value = "添加";
   };
+  /** 详情页 */
+  const handleShowDetail = (row: any) => {
+    reset();
+    const configId = row.id || ids.value;
+    getDatas(configId).then((response: any) => {
+      let data = response.data;
+      if(data.checkTime) {
+        data.checkTime = new Date(Number(data.checkTime)).toLocaleString();
+      }
+      form.value = data;
+      open.value = true;
+      title.value = "详情";
+      isShowBtn.value = false;
+      proxy.setTableRowSelected(pageTableRef, row, true);
+    });
+  };
   /** 修改按钮操作 */
   const handleUpdate = async (row: any) => {
     reset();
@@ -115,6 +137,7 @@ export default () => {
     await getDatas(userId).then((response: any) => {
       if (response.code === 200) {
         form.value = response.data;
+        isShowBtn.value = true;
       }
     });
 
@@ -188,24 +211,27 @@ export default () => {
   };
 
   //状态
-  const handleStatusChange = async (val: any, row: any) => {
-    // proxy.setTableRowSelected(pageTableRef, row, true);
-    // const text = val === true ? "启用" : "停用";
-    // // prettier-ignore
-    // await proxy.$modal.confirm('确认要"' + text + '""' + row.userName + '"用户吗?',"警告")
-    //         .then(() => {
-    //             changeUserStatus(row.id).then(res=>{
-    //                 if (res.code==200){
-    //                     proxy.$modal.msgSuccess('操作成功');
-    //                 }
-    //             });
-    //         })
-    //         .catch(() => {
-    //             proxy.setTableRowSelected(pageTableRef, row, false);
-    //             row.active = row.active === false ? true : false;
-    //             return;
-    //         });
-    //updateUserStatus(row.userId, val);
+  const handleStatusChange = async (row:any) => {
+    // 设置当前行选中状态为 true
+    proxy.setTableRowSelected(pageTableRef, row, true);
+    await proxy.$modal.confirm(`确认"${row.userId}" 用户通过提现申请吗?`, "警告")
+        .then(async () => {
+          // 假设 freezeDatas 接受一个对象，包含 userId 和 newState
+          // const newState = row.state === '0' ? '0' : '1'; // 切换状态
+          checkDatas({id: row.id}).then((res:any) => {
+            if (res.code === 200){
+              proxy.$modal.msgSuccess('操作成功');
+              // 刷新列表数据
+              getList();
+            }
+          });
+        })
+        .catch(() => {
+          // 如果用户取消操作，则恢复原来的选择状态
+          proxy.setTableRowSelected(pageTableRef, row, false);
+          // 取消操作时切换回原来的状态
+          row.state = row.state === 'applied' ? 'applied' : 'checked';
+        });
   };
 
   return {
@@ -233,5 +259,7 @@ export default () => {
     handleDelete,
     handleSelectionChange,
     handleStatusChange,
+    handleShowDetail,
+    isShowBtn
   };
 };

@@ -32,7 +32,8 @@ export default () => {
     single: true, //非单个禁用
     total: 0, //总条数
     ids: [], //选中数组
-    isShowBtn:true
+    isShowBtn:true,
+    uploadUrl: import.meta.env.VITE_upload_url,
   });
   const queryRef = ref<InstanceType<typeof ElForm>>();
   const formRef = ref<InstanceType<typeof ElForm>>();
@@ -49,7 +50,8 @@ export default () => {
     single,
     total,
     ids,
-    isShowBtn
+    isShowBtn,
+    uploadUrl
   } = toRefs(state);
 
   const cleanSelect = () => {
@@ -275,6 +277,7 @@ export default () => {
     handleSelectionChange,
     handleStatusChange,
     handleShowDetail,
-    isShowBtn
+    isShowBtn,
+    uploadUrl
   };
 };

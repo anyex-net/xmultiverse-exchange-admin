@@ -43,21 +43,21 @@ export const forms = [
     name: "passportType",
     rules: [{ required: true, message: "证件类型不能为空", trigger: "blur" }],
   },
-  {
-    title: "证件照片1",
-    name: "passportImg1",
-    rules: [{ required: true, message: "证件照片1不能为空", trigger: "blur" }],
-  },
-  {
-    title: "证件照片2",
-    name: "passportImg2",
-    rules: [{ required: true, message: "证件照片2不能为空", trigger: "blur" }],
-  },
-  {
-    title: "证件照片3",
-    name: "passportImg3",
-    rules: [{ required: true, message: "证件照片3不能为空", trigger: "blur" }],
-  },
+  // {
+  //   title: "证件照片1",
+  //   name: "passportImg1",
+  //   rules: [{ required: true, message: "证件照片1不能为空", trigger: "blur" }],
+  // },
+  // {
+  //   title: "证件照片2",
+  //   name: "passportImg2",
+  //   rules: [{ required: true, message: "证件照片2不能为空", trigger: "blur" }],
+  // },
+  // {
+  //   title: "证件照片3",
+  //   name: "passportImg3",
+  //   rules: [{ required: true, message: "证件照片3不能为空", trigger: "blur" }],
+  // },
   {
     title: "状态",
     name: "state",
@@ -73,7 +73,7 @@ export const forms = [
       return formOptions.state[i.state];
     },
   },
-  { title: "备注", name: "remark" },
+  // { title: "备注", name: "remark" },
 ];
 const searchNames = ["userId", "surName", "realName", "passportType", "state"];
 export const formSearchs = forms

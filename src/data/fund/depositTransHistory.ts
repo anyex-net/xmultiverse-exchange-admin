@@ -88,6 +88,9 @@ export const forms = [
         trigger: "change",
       },
     ],
+    formatter: (i: any) => {
+      return formOptions.confirmState[i.confirmState];
+    },
   },
   {
     title: "充值入账状态",
@@ -100,6 +103,9 @@ export const forms = [
         trigger: "change",
       },
     ],
+    formatter: (i: any) => {
+      return formOptions.depositState[i.depositState];
+    },
   },
   { title: "备注", name: "remark" },
 ];
@@ -124,6 +130,7 @@ export const formOptions: any = {
 export const titles = forms.map((i) => ({
   title: i.title,
   name: i.name,
+  formatter: i.formatter,
 }));
 export const formtitles = forms.reduce((pre: any, i, k) => {
   const item = {

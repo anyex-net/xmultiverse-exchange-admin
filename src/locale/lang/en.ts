@@ -166,4 +166,12 @@ export default {
     "userMgt":"userMgt",
     "user":"user",
     "userCertKyc":"userCertKyc",
+
+    "fundMgt":"fundMgt",
+    "balances":"balances",
+    "balancesTransHistory":"balancesTransHistory",
+    "depositAddress":"depositAddress",
+    "depositTransHistory":"depositTransHistory",
+    "withdrawalHistory":"withdrawalHistory",
+
 };
