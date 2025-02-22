@@ -175,7 +175,7 @@ export default {
     "depositTransHistory":"充值记录",
     "withdrawalHistory":"提现管理",
 
-    "rwaMgt":"RWA交易管理",
+    "rwaMgt":"RWA交易",
     "rwaCertInstSpvPromoter":"机构SPV发起人认证",
     "rwaCertInstInvestor":"机构投资者认证",
     "rwaBalances":"RWA账户余额",
@@ -185,4 +185,6 @@ export default {
     "rwaInstSpvProductPurchase":"机构SPV产品申购记录",
     "rwaInstSpvProductDividend":"机构SPV产品分红记录",
     "rwaInstSpvProductRedemption":"机构SPV产品赎回记录",
+
+    "spotMgt":"现货交易",
 };
