@@ -54,6 +54,7 @@
 
         <el-table-column
           :label="i.title"
+          :formatter="i.formatter"
           :prop="i.name"
           min-width="150px"
           v-for="i in titles"
@@ -67,14 +68,22 @@
           class-name="small-padding fixed-width"
         >
           <template #default="scope">
-            <el-link
-              class="table_link_btn"
-              :underline="false"
-              type="primary"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['fund:balancesTransHistory:operator']"
-              ><span class="table_link_text">修改</span></el-link
-            >
+              <el-link
+                  class="table_link_btn"
+                  :underline="false"
+                  type="primary"
+                  @click="handleShowDetail(scope.row)"
+                  v-hasPermi="['rwa:rwaBalancesTransHistory:data']"
+              ><span class="table_link_text">详情</span></el-link
+              >
+<!--            <el-link-->
+<!--              class="table_link_btn"-->
+<!--              :underline="false"-->
+<!--              type="primary"-->
+<!--              @click="handleUpdate(scope.row)"-->
+<!--              v-hasPermi="['fund:balancesTransHistory:operator']"-->
+<!--              ><span class="table_link_text">修改</span></el-link-->
+<!--            >-->
           </template>
         </el-table-column>
       </el-table>
@@ -91,7 +100,7 @@
     <el-dialog
       :title="title"
       v-model="open"
-      width="500px"
+      width="1000px"
       append-to-body
       @close="cleanSelect()"
     >
@@ -105,17 +114,19 @@
         <el-row v-for="(i, k) in formtitles" :key="k">
           <el-col :span="12" v-for="i2 in i" :key="i2.name">
             <el-form-item :label="i2.title" :prop="i2.name">
-              <el-radio-group
-                v-model="(form as any)[i2.name]"
-                v-if="i2.type === 'radio'"
-              >
-                <el-radio
-                  :value="k"
-                  v-for="(o, k) in formOptions[i2.name]"
-                  :key="o"
-                  >{{ o }}</el-radio
+                <el-select
+                    v-model="(form as any)[i2.name]"
+                    style="width: 120px"
+                    placeholder="请选择"
+                    v-if="i2.type === 'radio'"
                 >
-              </el-radio-group>
+                    <el-option
+                        v-for="(o, k) in formOptions[i2.name]"
+                        :key="o"
+                        :label="o"
+                        :value="k"
+                    ></el-option>
+                </el-select>
               <el-input
                 v-else
                 v-model="(form as any)[i2.name]"
@@ -127,7 +138,7 @@
         </el-row>
       </el-form>
       <template #footer>
-        <div class="dialog-footer">
+        <div v-if="isShowBtn === true" class="dialog-footer">
           <!-- prettier-ignore -->
           <el-button size="small" type="primary" @click="submitForm">确 定</el-button>
           <el-button size="small" @click="cancel">取 消</el-button>
@@ -171,5 +182,7 @@ const {
   handleDelete,
   pageTableRef,
   cleanSelect,
+    handleShowDetail,
+    isShowBtn
 } = datas();
 </script>

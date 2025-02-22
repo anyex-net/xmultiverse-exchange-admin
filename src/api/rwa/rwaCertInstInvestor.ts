@@ -68,3 +68,12 @@ export const allDatas = async (query: any) => {
     data: query,
   });
 };
+
+export const checkDatas = async (data: any) => {
+  return await request({
+    url: "/api/rwa/rwaCertInstInvestor/check",
+    method: "post",
+    data: data,
+  });
+};
+

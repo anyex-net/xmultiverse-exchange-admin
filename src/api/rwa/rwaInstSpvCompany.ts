@@ -68,3 +68,11 @@ export const allDatas = async (query: any) => {
     data: query,
   });
 };
+
+export const checkDatas = async (data: any) => {
+  return await request({
+    url: "/api/rwa/rwaInstSpvCompany/check",
+    method: "post",
+    data: data,
+  });
+};

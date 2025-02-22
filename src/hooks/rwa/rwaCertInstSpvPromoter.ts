@@ -5,6 +5,7 @@ import {
   getDatas,
   addDatas,
   delDatas,
+    checkDatas
   // allCurrencies,
 } from "@/api/rwa/rwaCertInstSpvPromoter";
 import { isStrings } from "@/utils/validate";
@@ -31,6 +32,7 @@ export default () => {
     single: true, //非单个禁用
     total: 0, //总条数
     ids: [], //选中数组
+    isShowBtn:true
   });
   const queryFormRef = ref<InstanceType<typeof ElForm>>();
   const formRef = ref<InstanceType<typeof ElForm>>();
@@ -47,6 +49,7 @@ export default () => {
     single,
     total,
     ids,
+    isShowBtn
   } = toRefs(state);
 
   const cleanSelect = () => {
@@ -65,6 +68,9 @@ export default () => {
         dataList.value = response.data.records.map((i: any) => ({
           ...i,
           createTime: new Date(+i.createTime).toLocaleString(),
+          checkTime: i.checkTime
+              ? new Date(+i.checkTime).toLocaleString()
+              : "--",
           updateTime: i.updateTime
             ? new Date(+i.updateTime).toLocaleString()
             : "--",
@@ -107,6 +113,22 @@ export default () => {
     reset();
     open.value = true;
     title.value = "添加平台交易产品";
+  };
+  /** 详情页 */
+  const handleShowDetail = (row: any) => {
+    reset();
+    const configId = row.id || ids.value;
+    getDatas(configId).then((response: any) => {
+      let data = response.data;
+      if(data.checkTime) {
+        data.checkTime = new Date(Number(data.checkTime)).toLocaleString();
+      }
+      form.value = data;
+      open.value = true;
+      title.value = "详情";
+      isShowBtn.value = false;
+      proxy.setTableRowSelected(pageTableRef, row, true);
+    });
   };
   /** 修改按钮操作 */
   const handleUpdate = async (row: any) => {
@@ -188,24 +210,47 @@ export default () => {
   };
 
   //状态
-  const handleStatusChange = async (val: any, row: any) => {
-    // proxy.setTableRowSelected(pageTableRef, row, true);
-    // const text = val === true ? "启用" : "停用";
-    // // prettier-ignore
-    // await proxy.$modal.confirm('确认要"' + text + '""' + row.userName + '"用户吗?',"警告")
-    //         .then(() => {
-    //             changeUserStatus(row.id).then(res=>{
-    //                 if (res.code==200){
-    //                     proxy.$modal.msgSuccess('操作成功');
-    //                 }
-    //             });
-    //         })
-    //         .catch(() => {
-    //             proxy.setTableRowSelected(pageTableRef, row, false);
-    //             row.active = row.active === false ? true : false;
-    //             return;
-    //         });
-    //updateUserStatus(row.userId, val);
+  const handleStatusChange = async (row: any, action: 'approve' | 'reject') => {
+    // 设置当前行选中状态为 true
+    proxy.setTableRowSelected(pageTableRef, row, true);
+
+    let text = '';
+    let newState = '';
+
+    if (row.state !== '0') {
+      proxy.$modal.msgWarning('只有待审核用户可以进行审核操作');
+      return;
+    }
+
+    switch(action) {
+      case 'approve':
+        text = "审核通过";
+        newState = '1'; // 假设 '0' 表示审核通过后的活跃状态
+        break;
+      case 'reject':
+        text = "审核拒绝";
+        newState = '2'; // 假设 '1' 表示审核拒绝后的冻结状态
+        break;
+      default:
+        console.error("未知的操作类型");
+        return;
+    }
+
+    await proxy.$modal.confirm(`确认要${text} "${row.userId}" 用户吗?`, "警告")
+        .then(async () => {
+          checkDatas({id: row.id, state: newState}).then((res: any) => {
+            if (res.code === 200){
+              proxy.$modal.msgSuccess('操作成功');
+              // 刷新列表数据
+              getList();
+            }
+          });
+        })
+        .catch(() => {
+          // 如果用户取消操作，则恢复原来的选择状态
+          proxy.setTableRowSelected(pageTableRef, row, false);
+          // 取消操作时无需更改状态，因为状态保持不变
+        });
   };
 
   return {
@@ -233,5 +278,7 @@ export default () => {
     handleDelete,
     handleSelectionChange,
     handleStatusChange,
+    handleShowDetail,
+    isShowBtn
   };
 };

@@ -81,7 +81,7 @@
               :underline="false"
               type="primary"
               @click="handleStatusChange(scope.row)"
-              v-hasPermi="['fund:withdrawalHistory:data']"
+              v-hasPermi="['fund:withdrawalHistory:check']"
               ><span v-if="scope.row.state === 'applied'" class="table_link_text">复核</span></el-link
             >
           </template>

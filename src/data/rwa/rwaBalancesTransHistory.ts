@@ -29,7 +29,11 @@ export const forms = [
   {
     title: "类型",
     name: "type",
+    type: "radio",
     rules: [{ required: true, message: "类型不能为空", trigger: "blur" }],
+    formatter: (i: any) => {
+      return formOptions.type[i.type];
+    },
   },
   {
     title: "前余额",
@@ -115,6 +119,9 @@ export const forms = [
         trigger: "change",
       },
     ],
+    formatter: (i: any) => {
+      return formOptions.state[i.state];
+    },
   },
   {
     title: "交易描述",
@@ -141,13 +148,24 @@ const searchNames = [
 export const formSearchs = forms
   .filter((i) => searchNames.includes(i.name))
   .map((i) => ({ name: i.name, title: i.title, type: i.type || "text" }));
+// 转入transferIn、转出transferOut、冻结forzen、解冻unforzen、申购purchase、赎回redemption、分红dividend
 export const formOptions: any = {
   state: { success: "成功", pending: "处理中", failed: "失败" },
+  type:{
+    transferIn: "转入",
+    transferOut: "转出",
+    forzen: "冻结",
+    unforzen: "解冻",
+    purchase: "申购",
+    redemption: "赎回",
+    dividend: "分红",
+  }
 };
 
 export const titles = forms.map((i) => ({
   title: i.title,
   name: i.name,
+  formatter: i.formatter,
 }));
 export const formtitles = forms.reduce((pre: any, i, k) => {
   const item = {

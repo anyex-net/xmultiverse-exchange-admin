@@ -148,7 +148,7 @@
         ref="formRef"
         :model="form"
         :rules="rules"
-        label-width="100px"
+        label-width="160px"
       >
         <el-row v-for="(i, k) in formtitles" :key="k">
           <el-col :span="12" v-for="i2 in i" :key="i2.name">

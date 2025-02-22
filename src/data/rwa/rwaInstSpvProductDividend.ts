@@ -64,6 +64,9 @@ export const forms = [
         trigger: "change",
       },
     ],
+    formatter: (i: any) => {
+      return formOptions.state[i.state];
+    },
   },
   { title: "备注", name: "remark" },
 ];
@@ -84,6 +87,7 @@ export const formOptions: any = {
 export const titles = forms.map((i) => ({
   title: i.title,
   name: i.name,
+  formatter: i.formatter,
 }));
 export const formtitles = forms.reduce((pre: any, i, k) => {
   const item = {

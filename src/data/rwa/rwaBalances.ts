@@ -66,6 +66,7 @@ export const formSearchs = forms
 export const titles = forms.map((i) => ({
   title: i.title,
   name: i.name,
+
 }));
 export const formtitles = forms.reduce((pre: any, i, k) => {
   const item = {

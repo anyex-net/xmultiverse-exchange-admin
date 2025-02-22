@@ -6,7 +6,7 @@
       ref="queryFormRef"
       :inline="true"
       v-show="showSearch"
-      label-width="70px"
+      label-width="120px"
     >
       <el-form-item
         :label="i.title"
@@ -50,10 +50,11 @@
         @selection-change="handleSelectionChange"
       >
         <!-- <el-table-column type="selection" width="55" align="center" /> -->
-        <el-table-column label="主键" prop="id" min-width="150px" />
+<!--        <el-table-column label="主键" prop="id" min-width="150px" />-->
 
         <el-table-column
           :label="i.title"
+          :formatter="i.formatter"
           :prop="i.name"
           min-width="150px"
           v-for="i in titles"
@@ -62,7 +63,7 @@
         <el-table-column label="创建时间" prop="createTime" min-width="150px" />
         <el-table-column
           label="操作"
-          min-width="120px"
+          min-width="140px"
           fixed="right"
           class-name="small-padding fixed-width"
         >
@@ -71,10 +72,31 @@
               class="table_link_btn"
               :underline="false"
               type="primary"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['fund:balancesTransHistory:operator']"
-              ><span class="table_link_text">修改</span></el-link
+              @click="handleShowDetail(scope.row)"
+              v-hasPermi="['rwa:rwaInstSpvProduct:data']"
+              ><span class="table_link_text">详情</span></el-link
             >
+              <div v-if="scope.row.state === '0'">
+                  <!-- 待审核状态下的操作 -->
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="success"
+                      @click="handleStatusChange(scope.row, 'approve')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">审核通过</span>
+                  </el-link>
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="danger"
+                      @click="handleStatusChange(scope.row, 'reject')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">审核拒绝</span>
+                  </el-link>
+              </div>
           </template>
         </el-table-column>
       </el-table>
@@ -91,7 +113,7 @@
     <el-dialog
       :title="title"
       v-model="open"
-      width="500px"
+      width="1000px"
       append-to-body
       @close="cleanSelect()"
     >
@@ -100,22 +122,31 @@
         ref="formRef"
         :model="form"
         :rules="rules"
-        label-width="100px"
+        label-width="160px"
       >
         <el-row v-for="(i, k) in formtitles" :key="k">
           <el-col :span="12" v-for="i2 in i" :key="i2.name">
             <el-form-item :label="i2.title" :prop="i2.name">
-              <el-radio-group
-                v-model="(form as any)[i2.name]"
-                v-if="i2.type === 'radio'"
-              >
-                <el-radio
-                  :value="k"
-                  v-for="(o, k) in formOptions[i2.name]"
-                  :key="o"
-                  >{{ o }}</el-radio
-                >
-              </el-radio-group>
+<!--                <el-select-->
+<!--                    v-model="(form as any)[i2.name]"-->
+<!--                    style="width: 120px"-->
+<!--                    placeholder="请选择"-->
+<!--                    v-if="i2.type === 'radio'"-->
+<!--                >-->
+<!--                    <el-option-->
+<!--                        v-for="(o, k) in formOptions[i2.name]"-->
+<!--                        :key="o"-->
+<!--                        :label="o"-->
+<!--                        :value="k"-->
+<!--                    ></el-option>-->
+<!--                </el-select>-->
+                <template v-if="i2.type === 'radio'">
+                    <!-- 使用 el-input 以只读形式展示状态值 -->
+                    <el-input
+                        :value="formOptions[i2.name] ? (formOptions[i2.name][form[i2.name]] || '未知状态') : ''"
+                        readonly
+                    />
+                </template>
               <el-input
                 v-else
                 v-model="(form as any)[i2.name]"
@@ -127,7 +158,7 @@
         </el-row>
       </el-form>
       <template #footer>
-        <div class="dialog-footer">
+        <div v-if="isShowBtn === true" class="dialog-footer">
           <!-- prettier-ignore -->
           <el-button size="small" type="primary" @click="submitForm">确 定</el-button>
           <el-button size="small" @click="cancel">取 消</el-button>
@@ -171,5 +202,8 @@ const {
   handleDelete,
   pageTableRef,
   cleanSelect,
+    handleStatusChange,
+    handleShowDetail,
+    isShowBtn
 } = datas();
 </script>

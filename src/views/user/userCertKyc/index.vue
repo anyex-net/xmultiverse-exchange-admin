@@ -6,7 +6,7 @@
       ref="queryRef"
       :inline="true"
       v-show="showSearch"
-      label-width="120px"
+      label-width="60px"
     >
       <el-form-item
         :label="i.title"
@@ -91,8 +91,8 @@
               <template #default="scope">
                   <el-image
                       style="width: 30px; height: 30px; border-radius: 5px"
-                      :src="uploadUrl1 + scope.row.passportImg1"
-                      :preview-src-list="[uploadUrl1 + scope.row.passportImg1]"
+                      :src="uploadUrl + scope.row.passportImg1"
+                      :preview-src-list="[uploadUrl + scope.row.passportImg1]"
                       :initial-index="1"
                       :z-index="99999"
                       :preview-teleported="true"
@@ -103,8 +103,8 @@
               <template #default="scope">
                   <el-image
                       style="width: 30px; height: 30px; border-radius: 5px"
-                      :src="uploadUrl1 + scope.row.passportImg2"
-                      :preview-src-list="[uploadUrl1 + scope.row.passportImg2]"
+                      :src="uploadUrl + scope.row.passportImg2"
+                      :preview-src-list="[uploadUrl + scope.row.passportImg2]"
                       :initial-index="1"
                       :z-index="99999"
                       :preview-teleported="true"
@@ -115,8 +115,8 @@
               <template #default="scope">
                   <el-image
                       style="width: 30px; height: 30px; border-radius: 5px"
-                      :src="uploadUrl1 + scope.row.passportImg3"
-                      :preview-src-list="[uploadUrl1 + scope.row.passportImg3]"
+                      :src="uploadUrl + scope.row.passportImg3"
+                      :preview-src-list="[uploadUrl + scope.row.passportImg3]"
                       :initial-index="1"
                       :z-index="99999"
                       :preview-teleported="true"

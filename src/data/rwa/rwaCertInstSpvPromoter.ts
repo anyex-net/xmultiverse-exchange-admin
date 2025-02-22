@@ -189,8 +189,32 @@ export const forms = [
         trigger: "change",
       },
     ],
+    formatter: (i: any) => {
+      return formOptions.state[i.state];
+    },
   },
-
+  {
+    title: "复核人",
+    name: "checkBy",
+    rules: [
+      {
+        required: true,
+        message: "复核人不能为空",
+        trigger: "blur",
+      },
+    ],
+  },
+  {
+    title: "复核时间",
+    name: "checkTime",
+    rules: [
+      {
+        required: true,
+        message: "checkTime不能为空",
+        trigger: "blur",
+      },
+    ],
+  },
   { title: "备注", name: "remark" },
 ];
 const searchNames = [

@@ -31,6 +31,7 @@ export default () => {
     single: true, //非单个禁用
     total: 0, //总条数
     ids: [], //选中数组
+    isShowBtn:true
   });
   const queryFormRef = ref<InstanceType<typeof ElForm>>();
   const formRef = ref<InstanceType<typeof ElForm>>();
@@ -47,6 +48,7 @@ export default () => {
     single,
     total,
     ids,
+    isShowBtn
   } = toRefs(state);
 
   const cleanSelect = () => {
@@ -106,6 +108,18 @@ export default () => {
     reset();
     open.value = true;
     title.value = "添加平台交易产品";
+  };
+  /** 详情页 */
+  const handleShowDetail = (row: any) => {
+    reset();
+    const configId = row.id || ids.value;
+    getDatas(configId).then((response: any) => {
+      form.value = response.data;
+      open.value = true;
+      title.value = "详情";
+      isShowBtn.value = false;
+      proxy.setTableRowSelected(pageTableRef, row, true);
+    });
   };
   /** 修改按钮操作 */
   const handleUpdate = async (row: any) => {
@@ -232,5 +246,7 @@ export default () => {
     handleDelete,
     handleSelectionChange,
     handleStatusChange,
+    handleShowDetail,
+    isShowBtn
   };
 };

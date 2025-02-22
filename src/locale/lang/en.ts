@@ -174,4 +174,15 @@ export default {
     "depositTransHistory":"depositTransHistory",
     "withdrawalHistory":"withdrawalHistory",
 
+    "rwaMgt":"rwaMgt",
+    "rwaCertInstSpvPromoter":"rwaCertInstSpvPromoter",
+    "rwaCertInstInvestor":"rwaCertInstInvestor",
+    "rwaBalances":"rwaBalances",
+    "rwaBalancesTransHistory":"rwaBalancesTransHistory",
+    "rwaInstSpvCompany":"rwaInstSpvCompany",
+    "rwaInstSpvProduct":"rwaInstSpvProduct",
+    "rwaInstSpvProductPurchase":"rwaInstSpvProductPurchase",
+    "rwaInstSpvProductDividend":"rwaInstSpvProductDividend",
+    "rwaInstSpvProductRedemption":"rwaInstSpvProductRedemption",
+
 };

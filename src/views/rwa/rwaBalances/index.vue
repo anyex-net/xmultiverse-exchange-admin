@@ -36,8 +36,8 @@
         :data="dataList"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键" prop="id" min-width="150px" />
+<!--        <el-table-column type="selection" width="55" align="center" />-->
+<!--        <el-table-column label="主键" prop="id" min-width="150px" />-->
 
         <el-table-column
           :label="i.title"
@@ -50,7 +50,7 @@
         <el-table-column label="更新时间" prop="updateTime" min-width="150px" />
         <el-table-column
           label="操作"
-          min-width="120px"
+          min-width="100px"
           fixed="right"
           class-name="small-padding fixed-width"
         >
@@ -59,19 +59,19 @@
               class="table_link_btn"
               :underline="false"
               type="primary"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['fund:balances:operator']"
-              ><span class="table_link_text">修改</span></el-link
+              @click="handleShowDetail(scope.row)"
+              v-hasPermi="['rwa:rwaBalances:data']"
+              ><span class="table_link_text">详情</span></el-link
             >
-            <el-link
-              class="table_link_btn"
-              :underline="false"
-              size="small"
-              type="primary"
-              @click="handleDelete(scope.row)"
-              v-hasPermi="['fund:balances:operator']"
-              ><span class="table_link_text">删除</span></el-link
-            >
+<!--            <el-link-->
+<!--              class="table_link_btn"-->
+<!--              :underline="false"-->
+<!--              size="small"-->
+<!--              type="primary"-->
+<!--              @click="handleDelete(scope.row)"-->
+<!--              v-hasPermi="['fund:balances:operator']"-->
+<!--              ><span class="table_link_text">删除</span></el-link-->
+<!--            >-->
           </template>
         </el-table-column>
       </el-table>
@@ -112,7 +112,7 @@
         </el-row>
       </el-form>
       <template #footer>
-        <div class="dialog-footer">
+        <div v-if="isShowBtn === true" class="dialog-footer">
           <!-- prettier-ignore -->
           <el-button size="small" type="primary" @click="submitForm">确 定</el-button>
           <el-button size="small" @click="cancel">取 消</el-button>
@@ -130,5 +130,6 @@ import { formSearchs, titles, formtitles, rules } from "@/data/rwa/rwaBalances";
 const {
   loading, single, multiple, open, showSearch, total, dataList, title, queryParams, queryFormRef, form, formRef,
   getList, cancel,handleQuery, resetQuery, handleAdd, handleSelectionChange,handleUpdate, submitForm, handleDelete, pageTableRef, cleanSelect,
+    handleShowDetail, isShowBtn
 } = balances();
 </script>
