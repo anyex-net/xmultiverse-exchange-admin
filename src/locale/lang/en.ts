@@ -186,4 +186,15 @@ export default {
     "rwaInstSpvProductRedemption":"rwaInstSpvProductRedemption",
 
     "spotMgt":"spotMgt",
+    "spotAssetList":"spotAssetList",
+    "spotMarketList":"spotMarketList",
+    "spotBalances":"spotBalances",
+    "spotBalancesHistory":"spotBalancesHistory",
+    "spotBalancesUpdate":"spotBalancesUpdate",
+    "spotAssetSummary":"spotAssetSummary",
+    "spotMarketSummary":"spotMarketSummary",
+    "spotOrderBook":"spotOrderBook",
+    "spotOrderPending":"spotOrderPending",
+    "spotOrderFinished":"spotOrderFinished",
+    "spotMarketDeals":"spotMarketDeals"
 };

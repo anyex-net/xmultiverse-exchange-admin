@@ -187,4 +187,15 @@ export default {
     "rwaInstSpvProductRedemption":"机构SPV产品赎回记录",
 
     "spotMgt":"现货交易",
+    "spotAssetList":"现货资产币种",
+    "spotMarketList":"现货市场币对",
+    "spotBalances":"现货账户余额",
+    "spotBalancesHistory":"现货账户流水",
+    "spotBalancesUpdate":"现货账户调整",
+    "spotAssetSummary":"现货资产总览",
+    "spotMarketSummary":"现货市场总览",
+    "spotOrderBook":"现货订单簿",
+    "spotOrderPending":"现货待处理订单",
+    "spotOrderFinished":"现货已完成订单",
+    "spotMarketDeals":"现货市场成交"
 };
