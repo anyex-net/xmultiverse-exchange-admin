@@ -2,7 +2,7 @@ import { ElForm, ElTable,ElMessage } from "element-plus";
 import { ref, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import {
     listDatas,
-} from "@/api/spot/spotMarketList";
+} from "@/api/spot/spotOrderBook";
 import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
@@ -12,49 +12,86 @@ export default () => {
     // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
-    // {
-    //     "money": "BCH",
-    //     "min_amount": "0.001",
-    //     "name": "BTCBCH",
-    //     "stock_prec": 8,
-    //     "stock": "BTC",
-    //     "money_prec": 8,
-    //     "fee_prec": 4
-    // },
         forms: [
             {
-                title: "货币",
-                name: "money",
+                title: "id",
+                name: "id",
             },
             {
-                title: "名称",
-                name: "name",
+                title: "用户",
+                name: "user",
             },
             {
-                title:"存量",
-                name: "stock"
+                title: "交易对",
+                name: "market",
             },
             {
-                title:"最小数量",
-                name: "min_amount"
+                title: "限制数量",
+                name: "limit",
             },
             {
-                title:"货币精度",
-                name: "money_prec"
+                title:"偏移量",
+                name: "offset"
             },
             {
-                title:"存量精度",
-                name: "stock_prec"
+                title:"成交金额",
+                name: "deal_money"
             },
             {
-                title: "费率精度",
-                name: "fee_prec"
+                title:"成交存量",
+                name: "deal_stock"
+            },
+            {
+                title:"数量",
+                name: "amount"
+            },
+            {
+                title:"价格",
+                name: "price"
+            },
+            {
+                title:"方向",
+                name: "side"
+            },
+            {
+                title:"数量",
+                name: "amount"
+            },
+            {
+                title:"类型",
+                name: "type"
+            },
+            {
+                title:"左",
+                name: "left"
+            },
+            {
+                title:"挂单费用",
+                name: "maker_fee"
+            },
+            {
+                title:"吃单费用",
+                name: "taker_fee"
+            },
+            {
+                title:"来源",
+                name: "source"
+            },
+            {
+                title:"创建时间",
+                name: "ctime"
+            },
+            {
+                title:"更新时间",
+                name: "mtime"
             }],
         queryParams: {
             current: 1,
             size: 10,
-            userId: 1,
-            currency: "",
+            market: "BIEXBCH",
+            side: 1,
+            offset: 0,
+            limit: 1
         },
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
@@ -101,10 +138,6 @@ export default () => {
     }
     // 查询用户列表数据
     const getList = async () => {
-        if (!queryParams.value.userId) {
-            ElMessage.error('用户ID为必填项，请输入后重试');
-            return; // 停止函数执行
-        }
         loading.value = true;
         const obj = JSON.parse(JSON.stringify(queryParams.value));
         const userId = obj.userId;
@@ -114,13 +147,15 @@ export default () => {
             loading.value = false;
             if (response.code == 200) {
                 // console.log(JSON.stringify("=====================" + response.data.result));
-                dataList.value = response.data.result.map((i: any) => ({
+                const data = formattedRes(response.data.result,userId);
+                // console.log(JSON.stringify(data, null, 4));
+                dataList.value = data.map((i: any) => ({
                     ...i,
                     updateTime: i.updateTime
                         ? new Date(+i.updateTime).toLocaleString()
                         : "--",
                 }));
-                total.value = response.data.total;
+                // total.value = response.data.total;
             }
         });
     };

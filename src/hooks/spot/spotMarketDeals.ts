@@ -2,7 +2,7 @@ import { ElForm, ElTable,ElMessage } from "element-plus";
 import { ref, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import {
     listDatas,
-} from "@/api/spot/spotMarketList";
+} from "@/api/spot/spotMarketDeals";
 import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
@@ -12,43 +12,22 @@ export default () => {
     // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
-    // {
-    //     "money": "BCH",
-    //     "min_amount": "0.001",
-    //     "name": "BTCBCH",
-    //     "stock_prec": 8,
-    //     "stock": "BTC",
-    //     "money_prec": 8,
-    //     "fee_prec": 4
-    // },
         forms: [
             {
-                title: "货币",
-                name: "money",
+                title: "用户ID",
+                name: "userId",
             },
             {
-                title: "名称",
-                name: "name",
+                title: "币种",
+                name: "currency",
             },
             {
-                title:"存量",
-                name: "stock"
+                title:"冻结",
+                name: "freeze"
             },
             {
-                title:"最小数量",
-                name: "min_amount"
-            },
-            {
-                title:"货币精度",
-                name: "money_prec"
-            },
-            {
-                title:"存量精度",
-                name: "stock_prec"
-            },
-            {
-                title: "费率精度",
-                name: "fee_prec"
+                title: "可用",
+                name: "available"
             }],
         queryParams: {
             current: 1,
@@ -114,7 +93,9 @@ export default () => {
             loading.value = false;
             if (response.code == 200) {
                 // console.log(JSON.stringify("=====================" + response.data.result));
-                dataList.value = response.data.result.map((i: any) => ({
+                const data = formattedRes(response.data.result,userId);
+                // console.log(JSON.stringify(data, null, 4));
+                dataList.value = data.map((i: any) => ({
                     ...i,
                     updateTime: i.updateTime
                         ? new Date(+i.updateTime).toLocaleString()

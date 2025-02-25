@@ -2,7 +2,7 @@ import { ElForm, ElTable,ElMessage } from "element-plus";
 import { ref, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import {
     listDatas,
-} from "@/api/spot/spotMarketList";
+} from "@/api/spot/spotBalancesUpdate";
 import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
@@ -12,49 +12,52 @@ export default () => {
     // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
-    // {
-    //     "money": "BCH",
-    //     "min_amount": "0.001",
-    //     "name": "BTCBCH",
-    //     "stock_prec": 8,
-    //     "stock": "BTC",
-    //     "money_prec": 8,
-    //     "fee_prec": 4
-    // },
         forms: [
             {
-                title: "货币",
-                name: "money",
+                title: "用户ID",
+                name: "userId",
             },
             {
-                title: "名称",
-                name: "name",
+                title: "偏移位置",
+                name: "offset",
             },
             {
-                title:"存量",
-                name: "stock"
+                title: "数量限制",
+                name: "limit",
             },
             {
-                title:"最小数量",
-                name: "min_amount"
+                title: "币种",
+                name: "currency",
             },
             {
-                title:"货币精度",
-                name: "money_prec"
+                title: "业务",
+                name: "business",
             },
             {
-                title:"存量精度",
-                name: "stock_prec"
+                title: "余额",
+                name: "balance",
             },
             {
-                title: "费率精度",
-                name: "fee_prec"
+                title: "变更",
+                name: "change",
+            },
+            {
+                title: "详情",
+                name: "detail",
+            },
+            {
+                title: "时间",
+                name: "time",
             }],
         queryParams: {
             current: 1,
             size: 10,
             userId: 1,
-            currency: "",
+            currency: "BTC",
+            business: "deposit",
+            businessId: 1,
+            change: 100,
+            detail: 0,
         },
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
@@ -114,7 +117,9 @@ export default () => {
             loading.value = false;
             if (response.code == 200) {
                 // console.log(JSON.stringify("=====================" + response.data.result));
-                dataList.value = response.data.result.map((i: any) => ({
+                const data = formattedRes(response.data.result,userId);
+                // console.log(JSON.stringify(data, null, 4));
+                dataList.value = data.map((i: any) => ({
                     ...i,
                     updateTime: i.updateTime
                         ? new Date(+i.updateTime).toLocaleString()

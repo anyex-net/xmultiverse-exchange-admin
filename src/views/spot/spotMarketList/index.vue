@@ -110,12 +110,12 @@
 </template>
 
 <script lang="ts" name="balances" setup>
-import balances from "@/hooks/spot/spotAssetList";
+import balances from "@/hooks/spot/spotMarketList";
 import { formSearchs, titles, formtitles, rules } from "@/data/fund/balances";
 
 // prettier-ignore
 const {
   loading, single, multiple, open, showSearch, total, dataList, title, queryParams, queryFormRef, form, formRef,
-  getList, cancel,handleQuery, resetQuery, handleAdd, pageTableRef, cleanSelect,forms
+  getList, cancel,handleQuery, resetQuery, pageTableRef, cleanSelect,forms
 } = balances();
 </script>

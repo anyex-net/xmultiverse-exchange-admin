@@ -8,7 +8,7 @@ import request from "@/utils/request";
  */
 export const listDatas = async (query: any) => {
     return await request({
-        url: "/api/spot/spotMarketList/data",
+        url: "/api/spot/spotBalancesUpdate/data",
         method: "post",
         data: query,
     });

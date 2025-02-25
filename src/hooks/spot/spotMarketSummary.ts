@@ -2,7 +2,7 @@ import { ElForm, ElTable,ElMessage } from "element-plus";
 import { ref, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import {
     listDatas,
-} from "@/api/spot/spotMarketList";
+} from "@/api/spot/spotMarketSummary";
 import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
@@ -12,49 +12,31 @@ export default () => {
     // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
-    // {
-    //     "money": "BCH",
-    //     "min_amount": "0.001",
-    //     "name": "BTCBCH",
-    //     "stock_prec": 8,
-    //     "stock": "BTC",
-    //     "money_prec": 8,
-    //     "fee_prec": 4
-    // },
         forms: [
             {
-                title: "货币",
-                name: "money",
-            },
-            {
-                title: "名称",
+                title: "现货",
                 name: "name",
             },
             {
-                title:"存量",
-                name: "stock"
+                title:"要价数量",
+                name: "ask_amount"
             },
             {
-                title:"最小数量",
-                name: "min_amount"
+                title: "要价计数",
+                name: "ask_count"
             },
             {
-                title:"货币精度",
-                name: "money_prec"
+                title:"出价数量",
+                name: "bid_amount"
             },
             {
-                title:"存量精度",
-                name: "stock_prec"
-            },
-            {
-                title: "费率精度",
-                name: "fee_prec"
+                title: "出价计数",
+                name: "bid_count"
             }],
         queryParams: {
             current: 1,
             size: 10,
-            userId: 1,
-            currency: "",
+            market: "",
         },
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
@@ -101,10 +83,6 @@ export default () => {
     }
     // 查询用户列表数据
     const getList = async () => {
-        if (!queryParams.value.userId) {
-            ElMessage.error('用户ID为必填项，请输入后重试');
-            return; // 停止函数执行
-        }
         loading.value = true;
         const obj = JSON.parse(JSON.stringify(queryParams.value));
         const userId = obj.userId;
@@ -114,6 +92,8 @@ export default () => {
             loading.value = false;
             if (response.code == 200) {
                 // console.log(JSON.stringify("=====================" + response.data.result));
+                // const data = formattedRes(response.data.result,userId);
+                // console.log(JSON.stringify(data, null, 4));
                 dataList.value = response.data.result.map((i: any) => ({
                     ...i,
                     updateTime: i.updateTime
