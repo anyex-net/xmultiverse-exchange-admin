@@ -8,9 +8,9 @@
             v-show="showSearch"
             label-width="120px"
         >
-            <el-form-item label="用户ID" prop="userId">
+            <el-form-item label="交易对" prop="market">
                 <el-input
-                    v-model="queryParams.userId"
+                    v-model="queryParams.market"
                     placeholder="请输入"
                     clearable
                     style="width: 120px"
@@ -18,12 +18,22 @@
                     @change="handleQuery()"
                 />
             </el-form-item>
-            <el-form-item label="币种" prop="currency">
+            <el-form-item label="数量限制" prop="limit">
                 <el-input
-                    v-model="queryParams.currency"
+                    v-model="queryParams.limit"
                     placeholder="请输入"
                     clearable
-                    style="width: 240px"
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+            <el-form-item label="最后Id" prop="lastId">
+                <el-input
+                    v-model="queryParams.lastId"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
                     @keyup.enter.native="handleQuery()"
                     @change="handleQuery()"
                 />

@@ -6,11 +6,11 @@
             ref="queryFormRef"
             :inline="true"
             v-show="showSearch"
-            label-width="120px"
+            label-width="100px"
         >
-            <el-form-item label="用户ID" prop="userId">
+            <el-form-item label="交易对" prop="market">
                 <el-input
-                    v-model="queryParams.userId"
+                    v-model="queryParams.market"
                     placeholder="请输入"
                     clearable
                     style="width: 120px"
@@ -18,12 +18,37 @@
                     @change="handleQuery()"
                 />
             </el-form-item>
-            <el-form-item label="币种" prop="currency">
+            <el-form-item label="交易方向" prop="side">
+                <el-select
+                    v-model="queryParams.side"
+                    placeholder="请选择"
+                    clearable
+                    style="width: 120px;"
+                    @change="handleQuery()">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="偏移量" prop="offset">
                 <el-input
-                    v-model="queryParams.currency"
+                    v-model="queryParams.offset"
                     placeholder="请输入"
                     clearable
-                    style="width: 240px"
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+            <el-form-item label="数量限制" prop="limit">
+                <el-input
+                    v-model="queryParams.limit"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
                     @keyup.enter.native="handleQuery()"
                     @change="handleQuery()"
                 />
@@ -48,23 +73,6 @@
                     v-for="i in forms"
                     :key="i.name"
                 />
-                <!--        <el-table-column-->
-                <!--          label="操作"-->
-                <!--          min-width="120px"-->
-                <!--          fixed="right"-->
-                <!--          class-name="small-padding fixed-width"-->
-                <!--        >-->
-                <!--          <template #default="scope">-->
-                <!--              <el-link-->
-                <!--                  class="table_link_btn"-->
-                <!--                  :underline="false"-->
-                <!--                  type="primary"-->
-                <!--                  @click="handleShowDetail(scope.row)"-->
-                <!--                  v-hasPermi="['fund:balances:data']"-->
-                <!--              ><span class="table_link_text">详情</span></el-link-->
-                <!--              >-->
-                <!--          </template>-->
-                <!--        </el-table-column>-->
             </el-table>
         </div>
 <!--        <pagination-->
@@ -120,6 +128,6 @@ import { formSearchs, titles, formtitles, rules } from "@/data/fund/balances";
 // prettier-ignore
 const {
     loading, single, multiple, open, showSearch, total, dataList, title, queryParams, queryFormRef, form, formRef,
-    getList, cancel, handleQuery, resetQuery, pageTableRef, cleanSelect, forms,
+    getList, cancel, handleQuery, resetQuery, pageTableRef, cleanSelect, forms,options
 } = balances();
 </script>

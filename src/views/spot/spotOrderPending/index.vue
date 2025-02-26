@@ -18,12 +18,47 @@
                     @change="handleQuery()"
                 />
             </el-form-item>
-            <el-form-item label="币种" prop="currency">
+            <el-form-item label="交易对" prop="market">
                 <el-input
-                    v-model="queryParams.currency"
+                    v-model="queryParams.market"
                     placeholder="请输入"
                     clearable
-                    style="width: 240px"
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+<!--            <el-form-item label="交易方向" prop="side">-->
+<!--                <el-select-->
+<!--                    v-model="queryParams.side"-->
+<!--                    placeholder="请选择"-->
+<!--                    clearable-->
+<!--                    style="width: 120px;"-->
+<!--                    @change="handleQuery()">-->
+<!--                    <el-option-->
+<!--                        v-for="item in options"-->
+<!--                        :key="item.value"-->
+<!--                        :label="item.label"-->
+<!--                        :value="item.value">-->
+<!--                    </el-option>-->
+<!--                </el-select>-->
+<!--            </el-form-item>-->
+            <el-form-item label="偏移量" prop="offset">
+                <el-input
+                    v-model="queryParams.offset"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+            <el-form-item label="数量限制" prop="limit">
+                <el-input
+                    v-model="queryParams.limit"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
                     @keyup.enter.native="handleQuery()"
                     @change="handleQuery()"
                 />
@@ -67,13 +102,13 @@
                 <!--        </el-table-column>-->
             </el-table>
         </div>
-        <pagination
-            v-show="total > 0"
-            :total="total"
-            v-model:page="queryParams.current"
-            v-model:limit="queryParams.size"
-            @pagination="getList()"
-        />
+<!--        <pagination-->
+<!--            v-show="total > 0"-->
+<!--            :total="total"-->
+<!--            v-model:page="queryParams.current"-->
+<!--            v-model:limit="queryParams.size"-->
+<!--            @pagination="getList()"-->
+<!--        />-->
 
         <!-- 添加或修改参数配置对话框 -->
         <!--    <el-dialog-->

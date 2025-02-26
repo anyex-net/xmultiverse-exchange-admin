@@ -7,34 +7,99 @@ import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
     const { proxy } = getCurrentInstance() as any;
-    // <
-    // user<userForm, userQueryParams, userElTreeProps, userType>
-    // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
         forms: [
             {
-                title: "用户ID",
-                name: "userId",
+                title: "id",
+                name: "id",
             },
             {
-                title: "币种",
-                name: "currency",
+                title: "用户",
+                name: "user",
             },
             {
-                title:"冻结",
-                name: "freeze"
+                title: "交易对",
+                name: "market",
             },
             {
-                title: "可用",
-                name: "available"
+                title: "限制数量",
+                name: "limit",
+            },
+            {
+                title:"偏移量",
+                name: "offset"
+            },
+            {
+                title:"成交金额",
+                name: "deal_money"
+            },
+            {
+                title:"成交存量",
+                name: "deal_stock"
+            },
+            {
+                title:"数量",
+                name: "amount"
+            },
+            {
+                title:"价格",
+                name: "price"
+            },
+            {
+                title:"方向",
+                name: "side"
+            },
+            {
+                title:"数量",
+                name: "amount"
+            },
+            {
+                title:"类型",
+                name: "type"
+            },
+            {
+                title:"左",
+                name: "left"
+            },
+            {
+                title:"挂单费用",
+                name: "maker_fee"
+            },
+            {
+                title:"吃单费用",
+                name: "taker_fee"
+            },
+            {
+                title:"来源",
+                name: "source"
+            },
+            {
+                title:"创建时间",
+                name: "ctime"
+            },
+            {
+                title:"更新时间",
+                name: "mtime"
             }],
         queryParams: {
             current: 1,
             size: 10,
             userId: 1,
-            currency: "",
+            market: "BIEXBCH",
+            offset: 0,
+            limit: 1
         },
+        options: [
+            {
+                value: 2,
+                label: '买入'
+            },
+            {
+                value: 1,
+                label: '卖出'
+            }
+        ],
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
         showSearch: true, //显示搜索条件
@@ -43,8 +108,6 @@ export default () => {
         multiple: true, // 非多个禁用
         single: true, //非单个禁用
         total: 0, //总条数
-        ids: [], //选中数组
-        isShowBtn: true,
     });
     const queryFormRef = ref<InstanceType<typeof ElForm>>();
     const formRef = ref<InstanceType<typeof ElForm>>();
@@ -60,8 +123,6 @@ export default () => {
         multiple,
         single,
         total,
-        ids,
-        isShowBtn,
         forms,
     } = toRefs(state);
 
@@ -70,13 +131,25 @@ export default () => {
     };
 
     // 转换为目标格式
-    const formattedRes = (res:any,userId:number) => {
-        return  Object.entries(res).map(([currency, values]) => ({
-            userId: userId,
-            currency: currency,
-            freeze: values.freeze,
-            available: values.available
-        }));
+    const formattedRes = (res:any,offset:number,limit:number,forms:any) => {
+        if (!forms || typeof forms[Symbol.iterator] !== 'function') {
+            forms = []; // 或者根据具体情况设置其他默认值
+        }
+        return Object.entries(res).map(([, values]) => {
+            let result = {
+                offset: offset,
+                limit: limit,
+            };
+
+            // 根据forms表单里的字段添加属性
+            for (let form of forms) {
+                if (form.name !== undefined && values[form.name] !== undefined) {
+                    result[form.name] = values[form.name];
+                }
+            }
+            // console.log(JSON.stringify(forms,null,4))
+            return result;
+        });
     }
     // 查询用户列表数据
     const getList = async () => {
@@ -93,15 +166,20 @@ export default () => {
             loading.value = false;
             if (response.code == 200) {
                 // console.log(JSON.stringify("=====================" + response.data.result));
-                const data = formattedRes(response.data.result,userId);
+                const res = response.data.result;
+                const data = formattedRes(res.records,res.offset,res.limit,state.forms)
                 // console.log(JSON.stringify(data, null, 4));
                 dataList.value = data.map((i: any) => ({
                     ...i,
-                    updateTime: i.updateTime
-                        ? new Date(+i.updateTime).toLocaleString()
+                    ctime: i.ctime
+                        ? new Date(+i.ctime*1000).toLocaleString()
                         : "--",
+                    mtime: i.mtime
+                        ? new Date(+i.mtime*1000).toLocaleString()
+                        : "--",
+                    side: i.side == 1 ? "卖":"买"
                 }));
-                total.value = response.data.total;
+                // total.value = res.total;
             }
         });
     };

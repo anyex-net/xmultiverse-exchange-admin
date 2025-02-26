@@ -7,33 +7,35 @@ import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
     const { proxy } = getCurrentInstance() as any;
-    // <
-    // user<userForm, userQueryParams, userElTreeProps, userType>
-    // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
         forms: [
             {
-                title: "用户ID",
-                name: "userId",
+                title: "id",
+                name: "id",
             },
             {
-                title: "币种",
-                name: "currency",
+                title: "方向",
+                name: "type",
             },
             {
-                title:"冻结",
-                name: "freeze"
+                title:"价格",
+                name: "price"
             },
             {
-                title: "可用",
-                name: "available"
+                title:"数量",
+                name: "amount"
+            },
+            {
+                title: "时间",
+                name: "time"
             }],
         queryParams: {
             current: 1,
             size: 10,
-            userId: 1,
-            currency: "",
+            market: "BIEXBCH",
+            lastId: 1,
+            limit: 10
         },
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
@@ -70,20 +72,26 @@ export default () => {
     };
 
     // 转换为目标格式
-    const formattedRes = (res:any,userId:number) => {
-        return  Object.entries(res).map(([currency, values]) => ({
-            userId: userId,
-            currency: currency,
-            freeze: values.freeze,
-            available: values.available
-        }));
+    const formattedRes = (res:any,forms:any) => {
+        if (!forms || typeof forms[Symbol.iterator] !== 'function') {
+            forms = []; // 或者根据具体情况设置其他默认值
+        }
+        return Object.entries(res).map(([, values]) => {
+            let result = {
+            };
+
+            // 根据forms表单里的字段添加属性
+            for (let form of forms) {
+                if (form.name !== undefined && values[form.name] !== undefined) {
+                    result[form.name] = values[form.name];
+                }
+            }
+            // console.log(JSON.stringify(forms,null,4))
+            return result;
+        });
     }
     // 查询用户列表数据
     const getList = async () => {
-        if (!queryParams.value.userId) {
-            ElMessage.error('用户ID为必填项，请输入后重试');
-            return; // 停止函数执行
-        }
         loading.value = true;
         const obj = JSON.parse(JSON.stringify(queryParams.value));
         const userId = obj.userId;
@@ -93,15 +101,17 @@ export default () => {
             loading.value = false;
             if (response.code == 200) {
                 // console.log(JSON.stringify("=====================" + response.data.result));
-                const data = formattedRes(response.data.result,userId);
+                const res = response.data.result;
+                const data = formattedRes(res,state.forms)
                 // console.log(JSON.stringify(data, null, 4));
                 dataList.value = data.map((i: any) => ({
                     ...i,
-                    updateTime: i.updateTime
-                        ? new Date(+i.updateTime).toLocaleString()
+                    time: i.time
+                        ? new Date(+i.time*1000).toLocaleString()
                         : "--",
+                    type: i.type == 'buy' ? '买':'卖'
                 }));
-                total.value = response.data.total;
+                // total.value = response.data.total;
             }
         });
     };

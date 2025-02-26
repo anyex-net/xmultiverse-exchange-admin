@@ -18,12 +18,67 @@
                     @change="handleQuery()"
                 />
             </el-form-item>
-            <el-form-item label="币种" prop="currency">
+            <el-form-item label="交易对" prop="market">
                 <el-input
-                    v-model="queryParams.currency"
+                    v-model="queryParams.market"
                     placeholder="请输入"
                     clearable
-                    style="width: 240px"
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+            <el-form-item label="交易方向" prop="side">
+                <el-select
+                    v-model="queryParams.side"
+                    placeholder="请选择"
+                    clearable
+                    style="width: 120px;"
+                    @change="handleQuery()">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="偏移量" prop="offset">
+                <el-input
+                    v-model="queryParams.offset"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+            <el-form-item label="数量限制" prop="limit">
+                <el-input
+                    v-model="queryParams.limit"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+            <el-form-item label="开始时间" prop="startTime">
+                <el-input
+                    v-model="queryParams.startTime"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
+                    @keyup.enter.native="handleQuery()"
+                    @change="handleQuery()"
+                />
+            </el-form-item>
+            <el-form-item label="结束时间" prop="endTime">
+                <el-input
+                    v-model="queryParams.endTime"
+                    placeholder="请输入"
+                    clearable
+                    style="width: 120px"
                     @keyup.enter.native="handleQuery()"
                     @change="handleQuery()"
                 />
@@ -120,6 +175,6 @@ import { formSearchs, titles, formtitles, rules } from "@/data/fund/balances";
 // prettier-ignore
 const {
     loading, single, multiple, open, showSearch, total, dataList, title, queryParams, queryFormRef, form, formRef,
-    getList, cancel, handleQuery, resetQuery, pageTableRef, cleanSelect, forms,
+    getList, cancel, handleQuery, resetQuery, pageTableRef, cleanSelect, forms,options
 } = balances();
 </script>
