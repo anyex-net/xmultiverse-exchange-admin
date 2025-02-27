@@ -7,9 +7,7 @@ import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
     const { proxy } = getCurrentInstance() as any;
-    // <
-    // user<userForm, userQueryParams, userElTreeProps, userType>
-    // >
+
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
         forms: [
@@ -121,19 +119,23 @@ export default () => {
         await listDatas(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                // console.log(JSON.stringify("=====================" + response.data.result));
-                const res = response.data.result;
-                const offset = res.offset;
-                const limit = res.limit;
-                const data = formattedRes(res.records,userId,limit,offset);
-                console.log(JSON.stringify(data, null, 4));
-                dataList.value = data.map((i: any) => ({
-                    ...i,
-                    updateTime: i.updateTime
-                        ? new Date(+i.updateTime).toLocaleString()
-                        : "--",
-                }));
-                // total.value = response.data.total;
+                if (response.data.error == null){
+                    // console.log(JSON.stringify("=====================" + response.data.result));
+                    const res = response.data.result;
+                    const offset = res.offset;
+                    const limit = res.limit;
+                    const data = formattedRes(res.records,userId,limit,offset);
+                    // console.log(JSON.stringify(data, null, 4));
+                    dataList.value = data.map((i: any) => ({
+                        ...i,
+                        updateTime: i.updateTime
+                            ? new Date(+i.updateTime).toLocaleString()
+                            : "--",
+                    }));
+                    // total.value = response.data.total;
+                }else {
+                    ElMessage.error("参数错误："+response.data.error.message);
+                }
             }
         });
     };

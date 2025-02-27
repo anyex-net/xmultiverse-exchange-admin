@@ -120,7 +120,7 @@ export default () => {
                         ? new Date(+i.updateTime).toLocaleString()
                         : "--",
                 }));
-                total.value = response.data.total;
+                // total.value = response.data.total;
             }
         });
     };

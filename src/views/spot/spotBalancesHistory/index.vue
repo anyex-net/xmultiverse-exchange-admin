@@ -88,7 +88,6 @@
                 v-loading="loading"
                 ref="pageTableRef"
                 :data="dataList"
-                @selection-change="handleSelectionChange"
             >
 
                 <el-table-column
@@ -165,7 +164,6 @@
 
 <script lang="ts" name="balances" setup>
 import balances from "@/hooks/spot/spotBalancesHistory";
-import { formSearchs, titles, formtitles, rules } from "@/data/fund/balances";
 
 // prettier-ignore
 const {

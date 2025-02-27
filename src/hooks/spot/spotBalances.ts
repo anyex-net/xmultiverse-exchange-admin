@@ -92,16 +92,20 @@ export default () => {
         await listDatas(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                // console.log(JSON.stringify("=====================" + response.data.result));
-                const data = formattedRes(response.data.result,userId);
-                // console.log(JSON.stringify(data, null, 4));
-                dataList.value = data.map((i: any) => ({
-                    ...i,
-                    updateTime: i.updateTime
-                        ? new Date(+i.updateTime).toLocaleString()
-                        : "--",
-                }));
-                total.value = response.data.total;
+                if (response.data.error == null){
+                    // console.log(JSON.stringify("=====================" + response.data.result));
+                    const data = formattedRes(response.data.result,userId);
+                    // console.log(JSON.stringify(data, null, 4));
+                    dataList.value = data.map((i: any) => ({
+                        ...i,
+                        updateTime: i.updateTime
+                            ? new Date(+i.updateTime).toLocaleString()
+                            : "--",
+                    }));
+                    // total.value = response.data.total;
+                }else {
+                    ElMessage.error('参数错误：'+response.data.error.message)
+                }
             }
         });
     };

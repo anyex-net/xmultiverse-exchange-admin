@@ -34,7 +34,6 @@
         v-loading="loading"
         ref="pageTableRef"
         :data="dataList"
-        @selection-change="handleSelectionChange"
       >
 
         <el-table-column
@@ -63,13 +62,13 @@
 <!--        </el-table-column>-->
       </el-table>
     </div>
-    <pagination
-      v-show="total > 0"
-      :total="total"
-      v-model:page="queryParams.current"
-      v-model:limit="queryParams.size"
-      @pagination="getList()"
-    />
+<!--    <pagination-->
+<!--      v-show="total > 0"-->
+<!--      :total="total"-->
+<!--      v-model:page="queryParams.current"-->
+<!--      v-model:limit="queryParams.size"-->
+<!--      @pagination="getList()"-->
+<!--    />-->
 
     <!-- 添加或修改参数配置对话框 -->
 <!--    <el-dialog-->

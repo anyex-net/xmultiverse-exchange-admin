@@ -6,9 +6,9 @@ import request from "@/utils/request";
  * @param {object} query 参数Obj
  * @returns
  */
-export const listDatas = async (query: any) => {
+export const updateDatas = async (query: any) => {
     return await request({
-        url: "/api/spot/spotBalancesUpdate/data",
+        url: "/api/spot/spotBalancesUpdate/update",
         method: "post",
         data: query,
     });

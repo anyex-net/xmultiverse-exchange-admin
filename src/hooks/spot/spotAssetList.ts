@@ -8,9 +8,6 @@ import { formDefault, searchDefault } from "@/data/fund/balances";
 
 export default () => {
     const { proxy } = getCurrentInstance() as any;
-    // <
-    // user<userForm, userQueryParams, userElTreeProps, userType>
-    // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
         forms: [
@@ -70,7 +67,6 @@ export default () => {
             listDatas(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                console.log(JSON.stringify('====================='+response.data.result))
                 dataList.value = response.data.result.map((i: any) => ({
                     ...i,
                     updateTime: i.updateTime

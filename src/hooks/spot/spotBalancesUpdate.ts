@@ -2,8 +2,8 @@ import { ElForm, ElTable,ElMessage } from "element-plus";
 import { ref, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import {
     listDatas,
-} from "@/api/spot/spotBalancesUpdate";
-import { formDefault, searchDefault } from "@/data/fund/balances";
+} from "@/api/spot/spotBalancesHistory";
+import { updateDatas } from "@/api/spot/spotBalancesUpdate";
 
 export default () => {
     const { proxy } = getCurrentInstance() as any;
@@ -11,7 +11,6 @@ export default () => {
     // user<userForm, userQueryParams, userElTreeProps, userType>
     // >
     const state = reactive({
-        form: JSON.parse(JSON.stringify(formDefault)),
         forms: [
             {
                 title: "用户ID",
@@ -54,11 +53,45 @@ export default () => {
             size: 10,
             userId: 1,
             currency: "BTC",
-            business: "deposit",
-            businessId: 1,
-            change: 100,
-            detail: 0,
+            business: "",
+            offset: 1,
+            limit: 100,
+            startTime: 0,
+            endTime: 0,
         },
+        updateParams:[
+        //     {
+        //     userId: 1,
+        //     currency: "BTC",
+        //     business: "",
+        //     businessId: 1,
+        //     change: 100,
+        //     detail: 0,
+        // },
+            {
+                title: "用户Id",
+                name: "userId",
+            },
+            {
+                title: "币种",
+                name: "currency",
+            },
+            {
+                title: "业务",
+                name: "business",
+            },
+            {
+                title: "业务Id",
+                name: "businessId",
+            },
+            {
+                title: "变更",
+                name: "change",
+            },
+            {
+                title: "详情",
+                name: "detail",
+            },],
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
         showSearch: true, //显示搜索条件
@@ -74,7 +107,6 @@ export default () => {
     const formRef = ref<InstanceType<typeof ElForm>>();
     const pageTableRef = ref<InstanceType<typeof ElTable>>();
     const {
-        form,
         queryParams,
         dataList,
         title,
@@ -87,21 +119,35 @@ export default () => {
         ids,
         isShowBtn,
         forms,
+        updateParams
     } = toRefs(state);
 
     const cleanSelect = () => {
         pageTableRef.value?.clearSelection();
     };
+    const form = reactive({
+        userId: null,
+        currency: '',
+        business: '',
+        businessId: null,
+        change: null,
+        detail: null,
+    });
 
     // 转换为目标格式
-    const formattedRes = (res:any,userId:number) => {
-        return  Object.entries(res).map(([currency, values]) => ({
+    const formattedRes = (res: any, userId: number, limit: number, offset: number) => {
+        return Object.entries(res).map(([, values]) => ({
             userId: userId,
-            currency: currency,
-            freeze: values.freeze,
-            available: values.available
+            offset: offset,
+            limit: limit,
+            currency: values.asset,
+            business: values.business,
+            balance: values.balance,
+            change: values.change,
+            detail: JSON.stringify(values.detail, null, 4),
+            time: (new Date(values.time * 1000)).toLocaleString(),
         }));
-    }
+    };
     // 查询用户列表数据
     const getList = async () => {
         if (!queryParams.value.userId) {
@@ -116,8 +162,10 @@ export default () => {
         await listDatas(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                // console.log(JSON.stringify("=====================" + response.data.result));
-                const data = formattedRes(response.data.result,userId);
+                const res = response.data.result;
+                const offset = res.offset;
+                const limit = res.limit;
+                const data = formattedRes(res.records,userId,limit,offset);
                 // console.log(JSON.stringify(data, null, 4));
                 dataList.value = data.map((i: any) => ({
                     ...i,
@@ -125,7 +173,7 @@ export default () => {
                         ? new Date(+i.updateTime).toLocaleString()
                         : "--",
                 }));
-                total.value = response.data.total;
+                // total.value = response.data.total;
             }
         });
     };
@@ -150,7 +198,7 @@ export default () => {
     };
     // 表单重置
     const reset = () => {
-        form.value = JSON.parse(JSON.stringify(formDefault));
+        // form.value = JSON.parse(JSON.stringify(formDefault));
         proxy.resetForm(formRef);
     };
     // // 新增按钮操作
@@ -160,31 +208,25 @@ export default () => {
     //     title.value = "添加";
     // };
     // /** 详情页 */
-    // const handleShowDetail = (row: any) => {
-    //     reset();
-    //     const configId = row.id || ids.value;
-    //     getDatas(configId).then((response: any) => {
-    //         form.value = response.data;
-    //         open.value = true;
-    //         title.value = "详情";
-    //         isShowBtn.value = false;
-    //         proxy.setTableRowSelected(pageTableRef, row, true);
-    //     });
-    // };
-    // /** 修改按钮操作 */
-    // const handleUpdate = async (row: any) => {
-    //     reset();
-    //     const userId = row.id || ids.value;
-    //     await getDatas(userId).then((response: any) => {
-    //         if (response.code === 200) {
-    //             form.value = response.data;
-    //             isShowBtn.value = true;
-    //         }
-    //     });
+    const handleUpate = (row:any) => {
 
-    //     open.value = true;
-    //     title.value = "修改";
-    // };
+        console.log(JSON.stringify(row, null, 4));
+        form.userId = row.userId;
+        form.currency = row.currency;
+        form.business = row.business;
+        form.change = row.change;
+        form.detail = row.detail;
+        open.value = true;
+    };
+    /** 修改按钮操作 */
+    const submitForm = async (form: any) => {
+        await updateDatas(form).then((response: any) => {
+            if (response.code === 200) {
+                proxy.$modal.msgSuccess('操作成功');
+
+            }
+        });
+    };
     onMounted(() => {
         getList();
     });
@@ -209,5 +251,8 @@ export default () => {
         cleanSelect,
         handleQuery,
         forms,
+        handleUpate,
+        updateParams,
+        submitForm
     };
 };
