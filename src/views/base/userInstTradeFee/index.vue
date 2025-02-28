@@ -139,7 +139,7 @@
     <el-dialog
       :title="title"
       v-model="open"
-      width="1000px"
+      width="800px"
       append-to-body
       @close="cleanSelect()"
     >

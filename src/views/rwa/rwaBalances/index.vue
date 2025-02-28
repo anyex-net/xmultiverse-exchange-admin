@@ -88,7 +88,7 @@
     <el-dialog
       :title="title"
       v-model="open"
-      width="500px"
+      width="800px"
       append-to-body
       @close="cleanSelect()"
     >
