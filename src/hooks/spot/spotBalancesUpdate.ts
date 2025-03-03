@@ -2,7 +2,7 @@ import { ElForm, ElTable,ElMessage } from "element-plus";
 import { ref, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import {
     listDatas,
-} from "@/api/spot/spotBalancesHistory";
+} from "@/api/spot/spotBalances";
 import { updateDatas } from "@/api/spot/spotBalancesUpdate";
 
 export default () => {
@@ -17,47 +17,22 @@ export default () => {
                 name: "userId",
             },
             {
-                title: "偏移位置",
-                name: "offset",
-            },
-            {
-                title: "数量限制",
-                name: "limit",
-            },
-            {
                 title: "币种",
                 name: "currency",
             },
             {
-                title: "业务",
-                name: "business",
+                title:"冻结",
+                name: "freeze"
             },
             {
-                title: "余额",
-                name: "balance",
-            },
-            {
-                title: "变更",
-                name: "change",
-            },
-            {
-                title: "详情",
-                name: "detail",
-            },
-            {
-                title: "时间",
-                name: "time",
+                title: "可用",
+                name: "available"
             }],
         queryParams: {
             current: 1,
             size: 10,
             userId: 1,
-            currency: "BTC",
-            business: "",
-            offset: 1,
-            limit: 100,
-            startTime: 0,
-            endTime: 0,
+            currency: "",
         },
         updateParams:[
         //     {
@@ -88,10 +63,11 @@ export default () => {
                 title: "变更",
                 name: "change",
             },
-            {
-                title: "详情",
-                name: "detail",
-            },],
+            // {
+            //     title: "详情",
+            //     name: "detail",
+            // },
+            ],
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
         showSearch: true, //显示搜索条件
@@ -129,25 +105,19 @@ export default () => {
         userId: null,
         currency: '',
         business: '',
-        businessId: null,
+        businessId: Date.now(),
         change: null,
         detail: null,
     });
 
-    // 转换为目标格式
-    const formattedRes = (res: any, userId: number, limit: number, offset: number) => {
-        return Object.entries(res).map(([, values]) => ({
+    const formattedRes = (res:any,userId:number) => {
+        return  Object.entries(res).map(([currency, values]) => ({
             userId: userId,
-            offset: offset,
-            limit: limit,
-            currency: values.asset,
-            business: values.business,
-            balance: values.balance,
-            change: values.change,
-            detail: JSON.stringify(values.detail, null, 4),
-            time: (new Date(values.time * 1000)).toLocaleString(),
+            currency: currency,
+            freeze: values.freeze,
+            available: values.available
         }));
-    };
+    }
     // 查询用户列表数据
     const getList = async () => {
         if (!queryParams.value.userId) {
@@ -162,22 +132,23 @@ export default () => {
         await listDatas(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                const res = response.data.result;
-                const offset = res.offset;
-                const limit = res.limit;
-                const data = formattedRes(res.records,userId,limit,offset);
-                // console.log(JSON.stringify(data, null, 4));
-                dataList.value = data.map((i: any) => ({
-                    ...i,
-                    updateTime: i.updateTime
-                        ? new Date(+i.updateTime).toLocaleString()
-                        : "--",
-                }));
-                // total.value = response.data.total;
+                if (response.data.error == null){
+                    // console.log(JSON.stringify("=====================" + response.data.result));
+                    const data = formattedRes(response.data.result,userId);
+                    // console.log(JSON.stringify(data, null, 4));
+                    dataList.value = data.map((i: any) => ({
+                        ...i,
+                        updateTime: i.updateTime
+                            ? new Date(+i.updateTime).toLocaleString()
+                            : "--",
+                    }));
+                    // total.value = response.data.total;
+                }else {
+                    ElMessage.error('参数错误：'+response.data.error.message)
+                }
             }
         });
     };
-    // getList();
 
     // 搜索按钮操作
     const handleQuery = () => {
@@ -201,12 +172,12 @@ export default () => {
         // form.value = JSON.parse(JSON.stringify(formDefault));
         proxy.resetForm(formRef);
     };
-    // // 新增按钮操作
-    // const handleAdd = () => {
-    //     reset();
-    //     open.value = true;
-    //     title.value = "添加";
-    // };
+    // 新增按钮操作
+    const handleAdd = () => {
+        reset();
+        open.value = true;
+        title.value = "添加";
+    };
     // /** 详情页 */
     const handleUpate = (row:any) => {
 
@@ -222,8 +193,13 @@ export default () => {
     const submitForm = async (form: any) => {
         await updateDatas(form).then((response: any) => {
             if (response.code === 200) {
-                proxy.$modal.msgSuccess('操作成功');
-
+                if (response.data.error == null){
+                    proxy.$modal.msgSuccess('操作成功');
+                    open.value = false;
+                    getList();
+                }else {
+                    ElMessage.error('参数错误：'+response.data.error.message)
+                }
             }
         });
     };
@@ -253,6 +229,7 @@ export default () => {
         forms,
         handleUpate,
         updateParams,
-        submitForm
+        submitForm,
+        handleAdd
     };
 };

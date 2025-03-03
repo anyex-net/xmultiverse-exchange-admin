@@ -6,7 +6,7 @@
             ref="queryFormRef"
             :inline="true"
             v-show="showSearch"
-            label-width="70px"
+            label-width="120px"
         >
             <el-form-item label="用户ID" prop="userId">
                 <el-input
@@ -23,63 +23,39 @@
                     v-model="queryParams.currency"
                     placeholder="请输入"
                     clearable
-                    style="width: 120px"
-                    @keyup.enter.native="handleQuery()"
-                    @change="handleQuery()"
-                />
-            </el-form-item>
-            <el-form-item label="业务" prop="business">
-                <el-input
-                    v-model="queryParams.business"
-                    placeholder="请输入"
-                    clearable
-                    style="width: 120px"
-                    @keyup.enter.native="handleQuery()"
-                    @change="handleQuery()"
-                />
-            </el-form-item>
-            <el-form-item label="偏移量" prop="offset">
-                <el-input
-                    v-model="queryParams.offset"
-                    placeholder="请输入"
-                    clearable
-                    style="width: 120px"
-                    @keyup.enter.native="handleQuery()"
-                    @change="handleQuery()"
-                />
-            </el-form-item>
-            <el-form-item label="数量限制" prop="limit">
-                <el-input
-                    v-model="queryParams.limit"
-                    placeholder="请输入"
-                    clearable
-                    style="width: 120px"
-                    @keyup.enter.native="handleQuery()"
-                    @change="handleQuery()"
-                />
-            </el-form-item>
-            <el-form-item label="开始时间" prop="startTime">
-                <el-input
-                    v-model="queryParams.startTime"
-                    placeholder="请输入"
-                    clearable
-                    style="width: 120px"
-                    @keyup.enter.native="handleQuery()"
-                    @change="handleQuery()"
-                />
-            </el-form-item>
-            <el-form-item label="结束时间" prop="endTime">
-                <el-input
-                    v-model="queryParams.endTime"
-                    placeholder="请输入"
-                    clearable
-                    style="width: 120px"
+                    style="width: 240px"
                     @keyup.enter.native="handleQuery()"
                     @change="handleQuery()"
                 />
             </el-form-item>
             <form-search @reset="resetQuery()" @search="handleQuery()" />
         </el-form>
+        <el-row :gutter="10" class="mb8">
+            <el-col :span="1.5">
+                <el-button
+                    type="primary"
+                    plain
+                    size="small"
+                    @click="handleAdd"
+                    v-hasPermi="['base:userInstTradeFee:operator']"
+                >新增</el-button
+                >
+            </el-col>
+
+<!--            <el-col :span="1.5">-->
+<!--                <el-button-->
+<!--                    type="danger"-->
+<!--                    plain-->
+<!--                    size="small"-->
+<!--                    :disabled="multiple"-->
+<!--                    @click="handleDelete"-->
+<!--                    v-hasPermi="['base:userInstTradeFee:operator']"-->
+<!--                >删除</el-button-->
+<!--                >-->
+<!--            </el-col>-->
+<!--            &lt;!&ndash; prettier-ignore &ndash;&gt;-->
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList()" />
+        </el-row>
 
         <div class="self-table">
             <el-table
@@ -97,22 +73,23 @@
                     v-for="i in forms"
                     :key="i.name"
                 />
-                <el-table-column
-                    label="操作"
-                    min-width="120px"
-                    fixed="right"
-                    class-name="small-padding fixed-width"
-                >
-                    <template #default="scope">
-                        <el-link
-                            class="table_link_btn"
-                            :underline="false"
-                            type="primary"
-                            @click="handleUpate(scope.row)"
-                        ><span class="table_link_text">调整</span></el-link
-                        >
-                    </template>
-                </el-table-column>
+                <!--        <el-table-column-->
+                <!--          label="操作"-->
+                <!--          min-width="120px"-->
+                <!--          fixed="right"-->
+                <!--          class-name="small-padding fixed-width"-->
+                <!--        >-->
+                <!--          <template #default="scope">-->
+                <!--              <el-link-->
+                <!--                  class="table_link_btn"-->
+                <!--                  :underline="false"-->
+                <!--                  type="primary"-->
+                <!--                  @click="handleShowDetail(scope.row)"-->
+                <!--                  v-hasPermi="['fund:balances:data']"-->
+                <!--              ><span class="table_link_text">详情</span></el-link-->
+                <!--              >-->
+                <!--          </template>-->
+                <!--        </el-table-column>-->
             </el-table>
         </div>
         <!--        <pagination-->
@@ -123,11 +100,10 @@
         <!--            @pagination="getList()"-->
         <!--        />-->
 
-        添加或修改参数配置对话框
         <el-dialog
             :title="title"
             v-model="open"
-            width="1000px"
+            width="800px"
             append-to-body
             @close="cleanSelect()"
         >
@@ -140,14 +116,14 @@
                                   :placeholder="'请输入' + param.title"></el-input>
                     </el-form-item>
                 </div>
-                <template #footer>
-                    <div class="dialog-footer">
-                        <!-- prettier-ignore -->
-                        <el-button size="small" type="primary" @click="submitForm(form)">确 定</el-button>
-                        <el-button size="small" @click="cancel">取 消</el-button>
-                    </div>
-                </template>
             </el-form>
+            <template #footer>
+                <div class="dialog-footer">
+                    <!-- prettier-ignore -->
+                    <el-button size="small" type="primary" @click="submitForm(form)">确 定</el-button>
+                    <el-button size="small" @click="cancel">取 消</el-button>
+                </div>
+            </template>
         </el-dialog>
     </div>
 </template>
@@ -158,6 +134,6 @@ import balances from "@/hooks/spot/spotBalancesUpdate";
 // prettier-ignore
 const {
     loading, single, multiple, open, showSearch, total, dataList, title, queryParams, queryFormRef, form, formRef,
-    getList, cancel, handleQuery, resetQuery, pageTableRef, cleanSelect, forms, handleUpate, updateParams,submitForm
+    getList, cancel, handleQuery, resetQuery, pageTableRef, cleanSelect, forms,updateParams,handleAdd,submitForm
 } = balances();
 </script>

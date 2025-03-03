@@ -100,18 +100,23 @@ export default () => {
         await listDatas(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                // console.log(JSON.stringify("=====================" + response.data.result));
-                const res = response.data.result;
-                const data = formattedRes(res,state.forms)
-                // console.log(JSON.stringify(data, null, 4));
-                dataList.value = data.map((i: any) => ({
-                    ...i,
-                    time: i.time
-                        ? new Date(+i.time*1000).toLocaleString()
-                        : "--",
-                    type: i.type == 'buy' ? '买':'卖'
-                }));
-                // total.value = response.data.total;
+                if (response.data.error == null){
+                    // console.log(JSON.stringify("=====================" + response.data.result));
+                    const res = response.data.result;
+                    const data = formattedRes(res,state.forms)
+                    // console.log(JSON.stringify(data, null, 4));
+                    dataList.value = data.map((i: any) => ({
+                        ...i,
+                        time: i.time
+                            ? new Date(+i.time*1000).toLocaleString()
+                            : "--",
+                        type: i.type == 'buy' ? '买':'卖'
+                    }));
+                    // total.value = response.data.total;
+                }else {
+                    ElMessage.error("参数错误："+response.data.error.message);
+                }
+
             }
         });
     };

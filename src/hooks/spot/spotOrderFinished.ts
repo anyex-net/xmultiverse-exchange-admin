@@ -173,21 +173,25 @@ export default () => {
         await listDatas(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                // console.log(JSON.stringify("=====================" + response.data.result));
-                const res = response.data.result;
-                const data = formattedRes(res.records,res.offset,res.limit,state.forms)
-                // console.log(JSON.stringify(data, null, 4));
-                dataList.value = data.map((i: any) => ({
-                    ...i,
-                    ctime: i.ctime
-                        ? new Date(+i.ctime*1000).toLocaleString()
-                        : "--",
-                    ftime: i.ftime
-                        ? new Date(+i.ftime*1000).toLocaleString()
-                        : "--",
-                    side: i.side == 1 ? "卖":"买"
-                }));
-                // total.value = response.data.total;
+                if (response.data.error == null){
+                    // console.log(JSON.stringify("=====================" + response.data.result));
+                    const res = response.data.result;
+                    const data = formattedRes(res.records,res.offset,res.limit,state.forms)
+                    // console.log(JSON.stringify(data, null, 4));
+                    dataList.value = data.map((i: any) => ({
+                        ...i,
+                        ctime: i.ctime
+                            ? new Date(+i.ctime*1000).toLocaleString()
+                            : "--",
+                        ftime: i.ftime
+                            ? new Date(+i.ftime*1000).toLocaleString()
+                            : "--",
+                        side: i.side == 1 ? "卖":"买"
+                    }));
+                    // total.value = response.data.total;
+                }else {
+                    ElMessage.error("参数错误："+response.data.error.message);
+                }
             }
         });
     };
