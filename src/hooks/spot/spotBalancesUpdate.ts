@@ -60,7 +60,7 @@ export default () => {
                 name: "businessId",
             },
             {
-                title: "变更",
+                title: "变更数量",
                 name: "change",
             },
             // {

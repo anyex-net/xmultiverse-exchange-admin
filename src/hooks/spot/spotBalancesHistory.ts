@@ -36,7 +36,7 @@ export default () => {
                 name: "balance",
             },
             {
-                title: "变更",
+                title: "变更数量",
                 name: "change",
             },
             {

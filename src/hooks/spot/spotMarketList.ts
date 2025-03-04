@@ -23,16 +23,16 @@ export default () => {
     // },
         forms: [
             {
-                title: "货币",
-                name: "money",
-            },
-            {
-                title: "名称",
+                title: "交易对",
                 name: "name",
             },
             {
-                title:"存量",
+                title:"交易标的",
                 name: "stock"
+            },
+            {
+                title: "计价货币",
+                name: "money",
             },
             {
                 title:"最小数量",

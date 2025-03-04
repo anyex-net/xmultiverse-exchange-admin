@@ -14,7 +14,7 @@ export default () => {
         form: JSON.parse(JSON.stringify(formDefault)),
         forms: [
             {
-                title: "现货",
+                title: "币种",
                 name: "name",
             },
             {
