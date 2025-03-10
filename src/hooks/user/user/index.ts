@@ -216,11 +216,11 @@ export default () => {
         proxy.setTableRowSelected(pageTableRef, row, true);
 
         // 根据 row.state 判断操作是冻结还是解冻
-        const text = row.state === '1' ? "解冻" : "冻结"; // 假设 'frozen' 代表已冻结状态
+        const text = row.state === 1 ? "解冻" : "冻结"; // 假设 'frozen' 代表已冻结状态
         await proxy.$modal.confirm(`确认要${text} "${row.userName}" 用户吗?`, "警告")
             .then(async () => {
                 // 假设 freezeDatas 接受一个对象，包含 userId 和 newState
-                const newState = row.state === '0' ? '0' : '1'; // 切换状态
+                const newState = row.state === 0 ? 0 : 1; // 切换状态
                 frozenOrUnfrozenDatas({id: row.id, state: newState}).then((res:any) => {
                     if (res.code === 200){
                         proxy.$modal.msgSuccess('操作成功');

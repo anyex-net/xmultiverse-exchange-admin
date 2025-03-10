@@ -111,7 +111,7 @@
                   type="primary"
                   @click="handleStatusChange(scope.row)"
                   v-hasPermi="['user:user:operator']"
-              ><span class="table_link_text">{{ scope.row.state === '0' ? '冻结' : '解冻' }}</span></el-link>
+              ><span class="table_link_text">{{ scope.row.state === 0 ? '冻结' : '解冻' }}</span></el-link>
 <!--            <el-link-->
 <!--              class="table_link_btn"-->
 <!--              :underline="false"-->
