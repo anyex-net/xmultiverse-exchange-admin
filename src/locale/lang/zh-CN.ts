@@ -197,5 +197,14 @@ export default {
     "spotOrderBook":"现货订单簿",
     "spotOrderPending":"现货待处理订单",
     "spotOrderFinished":"现货已完成订单",
-    "spotMarketDeals":"现货市场成交"
+    "spotMarketDeals":"现货市场成交",
+    "operLog":"ViaBtcDB操作记录",
+    "sliceHistory":"ViaBtcDB切片历史",
+    "sliceBalance":"ViaBtcDB资金切片记录",
+    "sliceOrder":"ViaBtcDB订单切片记录",
+    "balanceHistory":"ViaBtcDB资金历史",
+    "orderDetail":"ViaBtcDB订单明细",
+    "orderHistory":"ViaBtcDB订单历史",
+    "dealHistory":"ViaBtcDB成交历史",
+    "userDealHistory":"ViaBtcDB用户成交历史",
 };

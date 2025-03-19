@@ -6,9 +6,9 @@ import request from "@/utils/request";
  * @param {object} query 参数Obj
  * @returns
  */
-export const listBalanceHistoryExample = async (query: any) => {
+export const listHistory = async (query: any) => {
     return await request({
-        url: "/api/spot/balanceHistory/data",
+        url: "/api/spot/userDealHistory/data",
         method: "post",
         data: query,
     });

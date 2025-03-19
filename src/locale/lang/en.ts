@@ -196,5 +196,16 @@ export default {
     "spotOrderBook":"spotOrderBook",
     "spotOrderPending":"spotOrderPending",
     "spotOrderFinished":"spotOrderFinished",
-    "spotMarketDeals":"spotMarketDeals"
+    "spotMarketDeals":"spotMarketDeals",
+
+    "operLog":"operLog",
+    "sliceHistory":"sliceHistory",
+    "sliceBalance":"sliceBalance",
+    "sliceOrder":"sliceOrder",
+    "balanceHistory":"balanceHistory",
+    "orderDetail":"orderDetail",
+    "orderHistory":"orderHistory",
+    "dealHistory":"dealHistory",
+    "userDealHistory":"userDealHistory",
+
 };
