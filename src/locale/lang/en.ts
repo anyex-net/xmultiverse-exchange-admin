@@ -184,6 +184,7 @@ export default {
     "rwaInstSpvProductPurchase":"rwaInstSpvProductPurchase",
     "rwaInstSpvProductDividend":"rwaInstSpvProductDividend",
     "rwaInstSpvProductRedemption":"rwaInstSpvProductRedemption",
+    "rwaInstSpvProductNotice":"rwaInstSpvProductNotice",
 
     "spotMgt":"spotMgt",
     "spotAssetList":"spotAssetList",
