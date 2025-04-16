@@ -82,7 +82,7 @@
                       class="table_link_btn"
                       :underline="false"
                       type="success"
-                      @click="handleStatusChange(scope.row, 'approve')"
+                      @click="handleStatusChange(scope.row, '3')"
                       v-hasPermi="['rwa:rwaInstSpvProduct:check']"
                   >
                       <span class="table_link_text">审核通过</span>
@@ -91,10 +91,58 @@
                       class="table_link_btn"
                       :underline="false"
                       type="danger"
-                      @click="handleStatusChange(scope.row, 'reject')"
+                      @click="handleStatusChange(scope.row, '2')"
                       v-hasPermi="['rwa:rwaInstSpvProduct:check']"
                   >
                       <span class="table_link_text">审核拒绝</span>
+                  </el-link>
+              </div>
+              <div v-if="scope.row.state === '3'">
+                  <!-- 待审核状态下的操作 -->
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="success"
+                      @click="handleStatusChange(scope.row, '4')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">待交保证金</span>
+                  </el-link>
+              </div>
+              <div v-if="scope.row.state === '4'">
+                  <!-- 待审核状态下的操作 -->
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="success"
+                      @click="handleStatusChange(scope.row, '5')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">申购</span>
+                  </el-link>
+              </div>
+              <div v-if="scope.row.state === '5'">
+                  <!-- 待审核状态下的操作 -->
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="success"
+                      @click="handleStatusChange(scope.row, '7')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">运营</span>
+                  </el-link>
+              </div>
+              <div v-if="scope.row.state === '7'">
+                  <!-- 待审核状态下的操作 -->
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="success"
+                      @click="handleStatusChange(scope.row, '8')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">已到期</span>
                   </el-link>
               </div>
           </template>
