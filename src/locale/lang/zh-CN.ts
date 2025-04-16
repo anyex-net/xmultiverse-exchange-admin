@@ -167,6 +167,7 @@ export default {
     "userMgt":"用户管理",
     "user":"用户管理",
     "userCertKyc":"用户个人KYC认证",
+    "userLog":"用户日志",
 
     "fundMgt":"资金管理",
     "balances":"资金账户余额",

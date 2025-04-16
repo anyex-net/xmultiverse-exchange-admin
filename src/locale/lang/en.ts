@@ -166,6 +166,7 @@ export default {
     "userMgt":"userMgt",
     "user":"user",
     "userCertKyc":"userCertKyc",
+    "userLog":"userLog",
 
     "fundMgt":"fundMgt",
     "balances":"balances",
