@@ -187,6 +187,8 @@ export default {
     "rwaInstSpvProductDividend":"机构SPV产品分红记录",
     "rwaInstSpvProductRedemption":"机构SPV产品赎回记录",
     "rwaInstSpvProductNotice":"RWA机构SPV产品公告",
+    "rwaInstSpvProductAsset":"RWA机构SPV产品资产信息",
+    "rwaInstSpvProDividendSnapshot":"RWA机构SPV产品投资者分红快照",
 
     "spotMgt":"现货交易",
     "spotAssetList":"现货资产币种",
