@@ -76,6 +76,22 @@
               v-hasPermi="['rwa:rwaInstSpvProduct:data']"
               ><span class="table_link_text">详情</span></el-link
             >
+              <el-link
+                  class="table_link_btn"
+                  :underline="false"
+                  type="primary"
+                  @click="handleStatusChange(scope.row, '8')"
+                  v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+              ><span class="table_link_text">下架</span></el-link
+              >
+              <el-link
+                  class="table_link_btn"
+                  :underline="false"
+                  type="primary"
+                  @click="handleStatusChange(scope.row, '0')"
+                  v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+              ><span class="table_link_text">重新上架</span></el-link
+              >
               <div v-if="scope.row.state === '0'">
                   <!-- 待审核状态下的操作 -->
                   <el-link
