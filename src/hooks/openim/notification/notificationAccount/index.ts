@@ -17,7 +17,7 @@ import {
   import { ElForm, ElTable } from "element-plus";
   import { isStrings } from "@/utils/validate";
   import { getSuffix, randomString } from "@/utils/dateTime";
-  
+
   export default () => {
     const { proxy } = getCurrentInstance() as any;
     const upload = ref<any>();
@@ -90,7 +90,7 @@ import {
       },
       uploadUrl: import.meta.env.VITE_upload_url  ,
     });
-  
+
     const queryFormRef = ref<InstanceType<typeof ElForm>>();
     const formRef = ref<InstanceType<typeof ElForm>>();
     const pageTableRef = ref<InstanceType<typeof ElTable>>();
@@ -111,7 +111,7 @@ import {
       uploadParams,
       uploadUrl
     } = toRefs(state);
-  
+
     /** 查询列表 */
     const getList = () => {
       for (let key in queryParams.value) {
@@ -129,7 +129,7 @@ import {
                   total.value = response.data.total;
                   loading.value = false;
               }
-  
+
           });
     };
     const cleanSelect = () => {
@@ -256,7 +256,7 @@ import {
             uploadParams.value.signature = res.data.signature;
             uploadParams.value.OSSAccessKeyId = res.data.accessid;
             uploadParams.value.key =
-              "wivpal/" + randomString(10) + getSuffix(uploadParams.value.name);
+              "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
             nextTick(() => {
               iconUpload.value.submit();
               setTimeout(() => {
@@ -321,4 +321,3 @@ import {
           iconUpload
       };
   };
-  

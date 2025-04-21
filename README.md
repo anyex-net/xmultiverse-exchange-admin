@@ -26,7 +26,8 @@ cd frontend-admin
 npm install
 
 # 不建议使用cnpm安装依赖，可能会出现莫名其妙的问题，npm依赖安装比较慢使用如下方式
-npm install --registry=https://registry.npmmirror.com
+#npm install --registry=https://registry.npmmirror.com
+npm install --registry=http://registry.npm.taobao.org
 
 # 启动服务
 npm run dev

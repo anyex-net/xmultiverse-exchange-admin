@@ -765,7 +765,7 @@ export default () => {
                     uploadParams.value.signature = res.data.signature;
                     uploadParams.value.OSSAccessKeyId = res.data.accessid;
                     uploadParams.value.key =
-                        "wivpal/" + randomString(10) + getSuffix(uploadParams.value.name);
+                        "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
                     nextTick(() => {
                         iconUpload.value.submit();
                         setTimeout(() => {
@@ -788,7 +788,7 @@ export default () => {
                     uploadParams.value.signature = res.data.signature;
                     uploadParams.value.OSSAccessKeyId = res.data.accessid;
                     uploadParams.value.key =
-                        "wivpal/" + randomString(10) + getSuffix(uploadParams.value.name);
+                        "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
                     nextTick(() => {
                         iconUpload1.value.submit();
                         setTimeout(() => {

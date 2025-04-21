@@ -895,7 +895,7 @@ const handleUpdateForm1 = () => {
         uploadParams.value.OSSAccessKeyId = res.data.accessid;
         // uploadUrl.value= res.data.host;
         uploadParams.value.key =
-          "wivpal/" + randomString(10) + getSuffix(uploadParams.value.name);
+          "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
         nextTick(() => {
           uploadQuill.value.submit();
           setTimeout(() => {
@@ -920,7 +920,7 @@ const handleUpdateImage = () => {
         uploadParams.value.signature = res.data.signature;
         uploadParams.value.OSSAccessKeyId = res.data.accessid;
         uploadParams.value.key =
-          "wivpal/" + randomString(10) + getSuffix(uploadParams.value.name);
+          "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
         nextTick(() => {
           iconUpload.value.submit();
           setTimeout(() => {

@@ -458,7 +458,7 @@ export default () => {
             uploadParams.value.signature = res.data.signature;
             uploadParams.value.OSSAccessKeyId = res.data.accessid;
             uploadParams.value.key =
-              "wivpal/" + randomString(10) + getSuffix(file.name);
+              "exoss/" + randomString(10) + getSuffix(file.name);
             mainImages.value.push(uploadParams.value.key);
             setTimeout(() => {
               change1Arr1.value = true;
@@ -484,7 +484,7 @@ export default () => {
             uploadParams.value.signature = res.data.signature;
             uploadParams.value.OSSAccessKeyId = res.data.accessid;
             uploadParams.value.key =
-              "wivpal/" + randomString(10) + getSuffix(file.name);
+              "exoss/" + randomString(10) + getSuffix(file.name);
             detailImages.value.push(uploadParams.value.key);
             setTimeout(() => {
               change1Arr2.value = true;
@@ -573,7 +573,7 @@ export default () => {
           uploadParams.value.signature = res.data.signature;
           uploadParams.value.OSSAccessKeyId = res.data.accessid;
           uploadParams.value.key =
-            "wivpal/" + randomString(10) + getSuffix(uploadParams.value.name);
+            "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
           nextTick(() => {
             iconUpload.value.submit();
             setTimeout(() => {

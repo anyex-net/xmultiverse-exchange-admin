@@ -24,7 +24,7 @@ export default () => {
   const { proxy } = getCurrentInstance() as any;
   const upload = ref<any>();
   const iconUpload = ref<any>();
-  
+
   const state = reactive({
     // 查询参数
     queryParams: {
@@ -141,7 +141,7 @@ export default () => {
                   total.value = response.data.total;
                   loading.value = false;
               }
-  
+
           });
   };
   const cleanSelect = () => {
@@ -296,7 +296,7 @@ export default () => {
           uploadParams.value.signature = res.data.signature;
           uploadParams.value.OSSAccessKeyId = res.data.accessid;
           uploadParams.value.key =
-            "wivpal/" + randomString(10) + getSuffix(uploadParams.value.name);
+            "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
           nextTick(() => {
             iconUpload.value.submit();
             setTimeout(() => {
