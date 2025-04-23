@@ -76,3 +76,11 @@ export const checkDatas = async (data: any) => {
     data: data,
   });
 };
+
+export const checkDataIsActive = async (data: any) => {
+  return await request({
+    url: "/api/rwa/rwaInstSpvProduct/checkIsActive",
+    method: "post",
+    data: data,
+  });
+};

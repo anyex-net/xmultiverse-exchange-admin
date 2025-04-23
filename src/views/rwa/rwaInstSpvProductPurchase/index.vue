@@ -61,9 +61,11 @@
           :key="i.name"
         />
         <el-table-column label="创建时间" prop="createTime" min-width="150px" />
+          <el-table-column label="更新人" prop="updateBy" min-width="150px" />
+          <el-table-column label="更新时间" prop="updateTime" min-width="150px" />
         <el-table-column
           label="操作"
-          min-width="120px"
+          min-width="150px"
           fixed="right"
           class-name="small-padding fixed-width"
         >
@@ -76,6 +78,27 @@
               v-hasPermi="['rwa:rwaInstSpvProductPurchase:data']"
               ><span class="table_link_text">详情</span></el-link
             >
+              <div v-if="scope.row.state === 'pending'">
+                  <!-- 待审核状态下的操作 -->
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="success"
+                      @click="handleStatusChange(scope.row, 'success')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">审核通过</span>
+                  </el-link>
+                  <el-link
+                      class="table_link_btn"
+                      :underline="false"
+                      type="danger"
+                      @click="handleStatusChange(scope.row, 'failed')"
+                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
+                  >
+                      <span class="table_link_text">审核拒绝</span>
+                  </el-link>
+              </div>
           </template>
         </el-table-column>
       </el-table>
@@ -175,6 +198,7 @@ const {
   pageTableRef,
   cleanSelect,
     handleShowDetail,
+    handleStatusChange,
     isShowBtn
 } = datas();
 </script>

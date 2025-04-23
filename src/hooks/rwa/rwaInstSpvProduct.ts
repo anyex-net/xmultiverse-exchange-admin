@@ -6,6 +6,7 @@ import {
     addDatas,
     delDatas,
     checkDatas,
+    checkDataIsActive
     // allCurrencies,
 } from "@/api/rwa/rwaInstSpvProduct";
 import { isStrings } from "@/utils/validate";
@@ -237,18 +238,18 @@ export default () => {
             case "3":
                 text = "审核通过";
                 break;
-            case "1":
+            case "2":
                 text = "审核拒绝";
                 break;
-            case "4":
-                text = "保证金设置";
-                reason = await proxy.$prompt("请输入保证金比例（仅限两位正整数）", "提示", {
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    inputPattern: /^\d{2}$/, // 确保输入非空且为两位整数
-                    inputErrorMessage: "请输入有效的两位正整数作为保证金比例",
-                }).then(({ value }) => value); // 返回用户输入的值
-                break;
+            // case "4":
+            //     text = "保证金设置";
+            //     reason = await proxy.$prompt("请输入保证金比例（仅限两位正整数）", "提示", {
+            //         confirmButtonText: "确定",
+            //         cancelButtonText: "取消",
+            //         inputPattern: /^\d{2}$/, // 确保输入非空且为两位整数
+            //         inputErrorMessage: "请输入有效的两位正整数作为保证金比例",
+            //     }).then(({ value }) => value); // 返回用户输入的值
+            //     break;
             case "5":
                 text= "调整为可进行申购";
                 break;
@@ -269,6 +270,40 @@ export default () => {
         await proxy.$modal.confirm(`确认要${text} "${row.productNo}" 产品吗?`, "警告")
             .then(async () => {
                 checkDatas({ id: row.id, state: action, raiseMarginRatio: reason }).then((res: any) => {
+                    if (res.code === 200) {
+                        proxy.$modal.msgSuccess("操作成功");
+                        // 刷新列表数据
+                        getList();
+                    }
+                });
+            })
+            .catch(() => {
+                // 如果用户取消操作，则恢复原来的选择状态
+                proxy.setTableRowSelected(pageTableRef, row, false);
+                // 取消操作时无需更改状态，因为状态保持不变
+            });
+    };
+
+    //状态
+    const handleIsActiveChange = async (row: any, action: any) => {
+        // 设置当前行选中状态为 true
+        proxy.setTableRowSelected(pageTableRef, row, true);
+
+        let text = "";
+        let reason = "";
+
+        switch (action) {
+            case 0:
+                text = "下架";
+                break;
+            case 1:
+                text = "上架";
+                break;
+        }
+
+        await proxy.$modal.confirm(`确认要${text} "${row.productNo}" 产品吗?`, "警告")
+            .then(async () => {
+                checkDataIsActive({ id: row.id, isActive: action }).then((res: any) => {
                     if (res.code === 200) {
                         proxy.$modal.msgSuccess("操作成功");
                         // 刷新列表数据
@@ -308,6 +343,7 @@ export default () => {
         handleDelete,
         handleSelectionChange,
         handleStatusChange,
+        handleIsActiveChange,
         handleShowDetail,
         isShowBtn,
     };

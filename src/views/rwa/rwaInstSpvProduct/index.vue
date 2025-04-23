@@ -80,7 +80,7 @@
                   class="table_link_btn"
                   :underline="false"
                   type="primary"
-                  @click="handleStatusChange(scope.row, '8')"
+                  @click="handleIsActiveChange(scope.row, 0)"
                   v-hasPermi="['rwa:rwaInstSpvProduct:check']"
               ><span class="table_link_text">下架</span></el-link
               >
@@ -88,7 +88,7 @@
                   class="table_link_btn"
                   :underline="false"
                   type="primary"
-                  @click="handleStatusChange(scope.row, '0')"
+                  @click="handleIsActiveChange(scope.row, 1)"
                   v-hasPermi="['rwa:rwaInstSpvProduct:check']"
               ><span class="table_link_text">重新上架</span></el-link
               >
@@ -241,6 +241,7 @@ import {
   formtitles,
   rules,
 } from "@/data/rwa/rwaInstSpvProduct";
+import { checkDataIsActive } from "@/api/rwa/rwaInstSpvProduct";
 
 const {
   loading,
@@ -267,6 +268,7 @@ const {
   pageTableRef,
   cleanSelect,
     handleStatusChange,
+    handleIsActiveChange,
     handleShowDetail,
     isShowBtn
 } = datas();

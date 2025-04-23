@@ -267,8 +267,8 @@ export const forms = [
     ],
   },
   {
-    title: "募集对应保证金比例",
-    name: "raiseMarginRatio",
+    title: "募集对应保证金",
+    name: "raiseMargin",
     rules: [
       {
         required: true,
@@ -316,6 +316,21 @@ export const forms = [
     ],
     formatter: (i: any) => {
       return formOptions.state[i.state];
+    },
+  },
+  {
+    title: "活动状态",
+    name: "isActive",
+    type: "radio",
+    rules: [
+      {
+        required: true,
+        message: "请选择状态",
+        trigger: "change",
+      },
+    ],
+    formatter: (i: any) => {
+      return formOptions.isActive[i.isActive];
     },
   },
   { title: "备注", name: "remark" },
@@ -368,6 +383,10 @@ export const formOptions: any = {
   raiseMarginState: {
     0: "未缴",
     1: "已缴",
+  },
+  isActive: {
+    0: "已下架",
+    1: "已上架",
   },
 };
 

@@ -68,3 +68,11 @@ export const allDatas = async (query: any) => {
     data: query,
   });
 };
+
+export const checkData = async (data: any) => {
+  return await request({
+    url: "/api/rwa/rwaInstSpvProductPurchase/check",
+    method: "post",
+    data: data,
+  });
+};

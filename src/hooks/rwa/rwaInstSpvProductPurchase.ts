@@ -5,6 +5,7 @@ import {
   getDatas,
   addDatas,
   delDatas,
+    checkData
   // allCurrencies,
 } from "@/api/rwa/rwaInstSpvProductPurchase";
 import { isStrings } from "@/utils/validate";
@@ -205,24 +206,36 @@ export default () => {
   };
 
   //状态
-  const handleStatusChange = async (val: any, row: any) => {
-    // proxy.setTableRowSelected(pageTableRef, row, true);
-    // const text = val === true ? "启用" : "停用";
-    // // prettier-ignore
-    // await proxy.$modal.confirm('确认要"' + text + '""' + row.userName + '"用户吗?',"警告")
-    //         .then(() => {
-    //             changeUserStatus(row.id).then(res=>{
-    //                 if (res.code==200){
-    //                     proxy.$modal.msgSuccess('操作成功');
-    //                 }
-    //             });
-    //         })
-    //         .catch(() => {
-    //             proxy.setTableRowSelected(pageTableRef, row, false);
-    //             row.active = row.active === false ? true : false;
-    //             return;
-    //         });
-    //updateUserStatus(row.userId, val);
+  const handleStatusChange = async (row: any, action: any) => {
+    // 设置当前行选中状态为 true
+    proxy.setTableRowSelected(pageTableRef, row, true);
+
+    let text = "";
+
+    switch (action) {
+      case "success":
+        text = "审核通过";
+        break;
+      case "failed":
+        text = "审核拒绝";
+        break;
+    }
+
+    await proxy.$modal.confirm(`确认要${text} "${row.id}" 申购记录吗?`, "警告")
+        .then(async () => {
+          checkData({ id: row.id, state: action }).then((res: any) => {
+            if (res.code === 200) {
+              proxy.$modal.msgSuccess("操作成功");
+              // 刷新列表数据
+              getList();
+            }
+          });
+        })
+        .catch(() => {
+          // 如果用户取消操作，则恢复原来的选择状态
+          proxy.setTableRowSelected(pageTableRef, row, false);
+          // 取消操作时无需更改状态，因为状态保持不变
+        });
   };
 
   return {
