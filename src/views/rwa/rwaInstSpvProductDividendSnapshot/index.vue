@@ -221,11 +221,8 @@ const {
   handleAdd,
   handleSelectionChange,
   handleUpdate,
-  submitForm,
-  handleDelete,
   pageTableRef,
   cleanSelect,
-    handleStatusChange,
     handleShowDetail,
     isShowBtn
 } = datas();

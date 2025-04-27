@@ -61,8 +61,8 @@
                     :key="i.name"
                 >
                 <!-- 使用作用域插槽来处理不同的prop -->
-                <template #default="scope">
-                    <div v-if="['noticeContent'].includes(i.name)">
+<!--                <template #default="scope">-->
+<!--                    <div v-if="['noticeContent'].includes(i.name)">-->
                         <!--                  <div v-if="i.name === 'companyRegistrImg'">-->
 <!--                        <el-image-->
 <!--                            style="width: 30px; height: 30px; border-radius: 5px"-->
@@ -72,15 +72,15 @@
 <!--                            :z-index="99999"-->
 <!--                            :preview-teleported="true"-->
 <!--                        />-->
-                        <a :href="uploadUrl + scope.row.noticeContent" target="_blank" style="color: red">
-                            查看PDF
-                        </a>
-                    </div>
+<!--                        <a :href="uploadUrl + scope.row.noticeContent" target="_blank" style="color: red">-->
+<!--                            查看PDF-->
+<!--                        </a>-->
+<!--                    </div>-->
 <!--                    <div v-else-if="i.name === 'state'">-->
 <!--                        {{ formOptions.state[scope.row[i.name]] || '未知状态' }}-->
 <!--                    </div>-->
 <!--                    <div v-else>{{ scope.row[i.name] }}</div>-->
-                </template>
+<!--                </template>-->
                 </el-table-column>
                 <el-table-column label="创建时间" prop="createTime" min-width="150px" />
                 <el-table-column label="更新人" prop="updateBy" min-width="150px" />
@@ -100,13 +100,21 @@
                             v-hasPermi="['rwa:rwaInstSpvProductNotice:data']"
                         ><span class="table_link_text">详情</span></el-link
                         >
+                        <el-link
+                            class="table_link_btn"
+                            :underline="false"
+                            type="danger"
+                            @click="handleDelete(scope.row)"
+                            v-hasPermi="['rwa:rwaInstSpvProductNotice:operator']"
+                        ><span class="table_link_text">删除</span></el-link
+                        >
                         <div v-if="scope.row.state === 0">
                             <!-- 待审核状态下的操作 -->
                             <el-link
                                 class="table_link_btn"
                                 :underline="false"
                                 type="success"
-                                @click="handleStatusChange(scope.row, 2)"
+                                @click="handleStatusChange(scope.row, 3)"
                                 v-hasPermi="['rwa:rwaInstSpvProductNotice:operator']"
                             >
                                 <span class="table_link_text">审核通过</span>
@@ -121,17 +129,17 @@
                                 <span class="table_link_text">审核驳回</span>
                             </el-link>
                         </div>
-                        <div v-else-if="scope.row.state === 2">
-                            <el-link
-                                class="table_link_btn"
-                                :underline="false"
-                                type="success"
-                                @click="handleStatusChange(scope.row, 3)"
-                                v-hasPermi="['rwa:rwaInstSpvProductDividend:operator']"
-                            >
-                                <span class="table_link_text">去发布</span>
-                            </el-link>
-                        </div>
+<!--                        <div v-else-if="scope.row.state === 2">-->
+<!--                            <el-link-->
+<!--                                class="table_link_btn"-->
+<!--                                :underline="false"-->
+<!--                                type="success"-->
+<!--                                @click="handleStatusChange(scope.row, 3)"-->
+<!--                                v-hasPermi="['rwa:rwaInstSpvProductDividend:operator']"-->
+<!--                            >-->
+<!--                                <span class="table_link_text">去发布</span>-->
+<!--                            </el-link>-->
+<!--                        </div>-->
                     </template>
                 </el-table-column>
             </el-table>

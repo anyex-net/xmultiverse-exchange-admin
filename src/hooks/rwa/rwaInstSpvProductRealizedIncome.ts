@@ -1,27 +1,24 @@
 import { ElForm, ElTable } from "element-plus";
 import { ref, reactive, toRefs, getCurrentInstance } from "vue";
 import {
-    listDatas
-} from "@/api/spot/spotAssetList";
+    listData,
+    getData,
+    // allCurrencies,
+} from "@/api/rwa/rwaInstSpvProductRealizedIncome";
 import { isStrings } from "@/utils/validate";
-import { formDefault, searchDefault } from "@/data/fund/balances";
+import { formDefault, searchDefault } from "@/data/rwa/rwaInstSpvProductRealizedIncome";
 
 export default () => {
     const { proxy } = getCurrentInstance() as any;
+    // <
+    // user<userForm, userQueryParams, userElTreeProps, userType>
+    // >
     const state = reactive({
         form: JSON.parse(JSON.stringify(formDefault)),
-        forms: [
-            {
-            title: '币种名称',
-            name: 'name'
-        },
-            {
-                title: '币种精度',
-                name: 'prec'
-            }],
         queryParams: {
             current: 1,
-            size: 10,
+             size: 10,
+            ...searchDefault,
         },
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
@@ -49,8 +46,7 @@ export default () => {
         single,
         total,
         ids,
-        isShowBtn,
-        forms
+        isShowBtn
     } = toRefs(state);
 
     const cleanSelect = () => {
@@ -63,14 +59,14 @@ export default () => {
         const obj = JSON.parse(JSON.stringify(queryParams.value));
         // delete obj.current;
         // delete obj.size;
-        await
-            listDatas(obj).then((response: any) => {
+        await listData(obj).then((response: any) => {
             loading.value = false;
             if (response.code == 200) {
-                dataList.value = response.data.result.map((i: any) => ({
+                dataList.value = response.data.records.map((i: any) => ({
                     ...i,
-                    updateTime: i.updateTime
-                        ? new Date(+i.updateTime).toLocaleString()
+                    createTime: new Date(+i.createTime).toLocaleString(),
+                    incomeDistributionDate: i.incomeDistributionDate
+                        ? new Date(+i.incomeDistributionDate).toLocaleString()
                         : "--",
                 }));
                 total.value = response.data.total;
@@ -78,9 +74,17 @@ export default () => {
         });
     };
     getList();
+    //   多选框选中数据
+    const handleSelectionChange = (selection: any) => {
+        ids.value = selection.map((item: any) => item.id);
+        multiple.value = !selection.length;
+        single.value = selection.length != 1;
+    };
 
     // 搜索按钮操作
+    /** 搜索按钮操作 */
     const handleQuery = () => {
+        queryParams.value.current = 1;
         getList();
     };
     // 重置按钮操作
@@ -104,34 +108,38 @@ export default () => {
     const handleAdd = () => {
         reset();
         open.value = true;
-        title.value = "添加";
+        title.value = "添加平台交易产品";
     };
-    // /** 详情页 */
-    // const handleShowDetail = (row: any) => {
-    //     reset();
-    //     const configId = row.id || ids.value;
-    //     getDatas(configId).then((response: any) => {
-    //         form.value = response.data;
-    //         open.value = true;
-    //         title.value = "详情";
-    //         isShowBtn.value = false;
-    //         proxy.setTableRowSelected(pageTableRef, row, true);
-    //     });
-    // };
-    // /** 修改按钮操作 */
-    // const handleUpdate = async (row: any) => {
-    //     reset();
-    //     const userId = row.id || ids.value;
-    //     await getDatas(userId).then((response: any) => {
-    //         if (response.code === 200) {
-    //             form.value = response.data;
-    //             isShowBtn.value = true;
-    //         }
-    //     });
+    /** 详情页 */
+    const handleShowDetail = (row: any) => {
+        reset();
+        const configId = row.id || ids.value;
+        getData(configId).then((response: any) => {
+            let data = response.data;
+            if (data.checkTime) {
+                data.checkTime = new Date(Number(data.checkTime)).toLocaleString();
+            }
+            data.incomeDistributionDate = new Date(Number(data.incomeDistributionDate)).toLocaleString();
+            form.value = response.data;
+            open.value = true;
+            title.value = "详情";
+            isShowBtn.value = false;
+            proxy.setTableRowSelected(pageTableRef, row, true);
+        });
+    };
+    /** 修改按钮操作 */
+    const handleUpdate = async (row: any) => {
+        reset();
+        const userId = row.id || ids.value;
+        await getData(userId).then((response: any) => {
+            if (response.code === 200) {
+                form.value = response.data;
+            }
+        });
 
-    //     open.value = true;
-    //     title.value = "修改";
-    // };
+        open.value = true;
+        title.value = "修改平台交易产品";
+    };
 
     return {
         form,
@@ -153,6 +161,9 @@ export default () => {
         cleanSelect,
         handleQuery,
         handleAdd,
-        forms
+        handleUpdate,
+        handleSelectionChange,
+        handleShowDetail,
+        isShowBtn
     };
 };

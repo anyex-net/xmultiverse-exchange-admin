@@ -188,6 +188,7 @@ export default {
     "rwaInstSpvProductNotice":"rwaInstSpvProductNotice",
     "rwaInstSpvProductAsset":"rwaInstSpvProductAsset",
     "rwaInstSpvProDividendSnapshot":"rwaInstSpvProDividendSnapshot",
+    "rwaInstSpvProRealizedIncome":"rwaInstSpvProRealizedIncome",
 
     "spotMgt":"spotMgt",
     "spotAssetList":"spotAssetList",

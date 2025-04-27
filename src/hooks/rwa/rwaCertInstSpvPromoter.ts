@@ -60,8 +60,8 @@ export default () => {
   const getList = async () => {
     loading.value = true;
     const obj = JSON.parse(JSON.stringify(queryParams.value));
-    delete obj.current;
-    delete obj.size;
+    // delete obj.current;
+    // delete obj.size;
     await listDatas(obj).then((response: any) => {
       loading.value = false;
       if (response.code == 200) {
