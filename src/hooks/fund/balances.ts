@@ -1,10 +1,11 @@
 import { ElForm, ElTable } from "element-plus";
-import { ref, reactive, toRefs, getCurrentInstance } from "vue";
+import { ref, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import {
   listDatas,
   getDatas,
   addDatas,
   delDatas,
+    adjustData,
   // allCurrencies,
 } from "@/api/fund/balances";
 import { isStrings } from "@/utils/validate";
@@ -31,9 +32,91 @@ export default () => {
     single: true, //非单个禁用
     total: 0, //总条数
     ids: [], //选中数组
-    isShowBtn:true
+    isShowBtn:true,
+    // 充值deposit、提现withdraw、冻结forzen、解冻unforzen、转入transferIn、转出transferOut
+    typeList: [
+      // {
+      //   id: "deposit",
+      //   name: "充值"
+      // },
+      // {
+      //   id: "withdraw",
+      //   name: "提现"
+      // },
+      // {
+      //   id: "forzen",
+      //   name: "冻结"
+      // },
+      // {
+      //   id: "unforzen",
+      //   name: "解冻"
+      // },
+      // {
+      //   id: "transferIn",
+      //   name: "转入"
+      // },
+      // {
+      //   id: "transferOut",
+      //   name: "转出"
+      // },
+      {
+        id: "adjustAdd",
+        name: "调增"
+      },
+      {
+        id: "adjustSub",
+        name: "调减"
+      },
+    ],
+    rulesAdjust: {
+      id: [
+        {
+          required: true,
+          message: "账户不能为空",
+          trigger: "blur",
+        },
+      ],
+      type: [
+        {
+          required: true,
+          message: "调整方向不能为空",
+          trigger: "blur",
+        },
+      ],
+      currency: [
+        {
+          required: true,
+          message: "币种不能为空",
+          trigger: "blur",
+        },
+      ],
+      changeAmt: [
+        {
+          required: true,
+          message: "调整金额不能为空",
+          trigger: "blur",
+        },
+      ],
+      transDesc: [
+        {
+          required: true,
+          message: "交易描述不可为空",
+          trigger: "blur",
+        },
+      ],
+    },
+    openAdjust:false,
+    formAdjust: {
+      id: "",
+      type: "",
+      currency: "",
+      changeAmt: "",
+      transDesc: "",
+      remark: ""
+    },
   });
   const queryFormRef = ref<InstanceType<typeof ElForm>>();
+  const formAdjustRef = ref<InstanceType<typeof ElForm>>();
   const formRef = ref<InstanceType<typeof ElForm>>();
   const pageTableRef = ref<InstanceType<typeof ElTable>>();
   const {
@@ -48,7 +131,11 @@ export default () => {
     single,
     total,
     ids,
-    isShowBtn
+    isShowBtn,
+    typeList,
+    openAdjust,
+    formAdjust,
+    rulesAdjust,
   } = toRefs(state);
 
   const cleanSelect = () => {
@@ -120,6 +207,48 @@ export default () => {
       isShowBtn.value = false;
       proxy.setTableRowSelected(pageTableRef, row, true);
     });
+  };
+
+  const handleUpdateAdjust = (row: any) => {
+    reset();
+    formAdjust.value = {
+      id: row.id,
+      type: "adjustAdd",
+      currency: row.currency,
+      changeAmt: "",
+      transDesc: "",
+      remark: ""
+    };
+    openAdjust.value = true;
+    title.value = "资产调整";
+  };
+
+  const submitFormAdjust = async () => {
+    console.log("formAdjust.value");
+    await formAdjustRef.value?.validate((valid: boolean) => {
+      if (valid) {
+        adjustData(formAdjust.value).then((response:any) => {
+          if (response.code === 200) {
+            proxy.$modal.msgSuccess("操作成功");
+            openAdjust.value = false;
+            getList();
+          }
+        });
+      }
+    });
+  };
+
+  const cancelAdjust = () => {
+    openAdjust.value = false;
+    formAdjust.value = {
+      id: "",
+      type: "adjustAdd",
+      currency: "",
+      changeAmt: "",
+      transDesc: "",
+      remark: ""
+    };
+    cleanSelect();
   };
   /** 修改按钮操作 */
   const handleUpdate = async (row: any) => {
@@ -221,6 +350,9 @@ export default () => {
     //         });
     //updateUserStatus(row.userId, val);
   };
+  onMounted(() => {
+    getList();
+  });
 
   return {
     form,
@@ -248,6 +380,14 @@ export default () => {
     handleSelectionChange,
     handleStatusChange,
     handleShowDetail,
-    isShowBtn
+    isShowBtn,
+    typeList,
+    openAdjust,
+    formAdjust,
+    handleUpdateAdjust,
+    submitFormAdjust,
+    cancelAdjust,
+    rulesAdjust,
+    formAdjustRef
   };
 };

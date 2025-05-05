@@ -113,20 +113,19 @@
                       <span class="table_link_text">审核拒绝</span>
                   </el-link>
               </div>
-              <div v-if="scope.row.state === '3'">
-                  <!-- 待审核状态下的操作 -->
+              <div v-if="scope.row.state === '-1'">
                   <el-link
                       class="table_link_btn"
                       :underline="false"
                       type="success"
-                      @click="handleStatusChange(scope.row, '4')"
+                      @click="handleStatusChange(scope.row, '0')"
                       v-hasPermi="['rwa:rwaInstSpvProduct:check']"
                   >
                       <span class="table_link_text">待交保证金</span>
                   </el-link>
               </div>
-              <div v-if="scope.row.state === '4'">
-                  <!-- 待审核状态下的操作 -->
+<!--              临时修改成3，本应4才对-->
+              <div v-if="scope.row.state === '3'">
                   <el-link
                       class="table_link_btn"
                       :underline="false"

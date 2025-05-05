@@ -68,3 +68,11 @@ export const allDatas = async (query: any) => {
     data: query,
   });
 };
+
+export const adjustData = async (param: any) => {
+  return await request({
+    url: "/api/fund/balances/adjust",
+    method: "post",
+    data: param,
+  });
+};

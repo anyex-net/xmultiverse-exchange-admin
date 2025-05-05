@@ -42,6 +42,9 @@ export const forms = [
     title: "证件类型",
     name: "passportType",
     rules: [{ required: true, message: "证件类型不能为空", trigger: "blur" }],
+    formatter: (i: any) => {
+      return formOptions.passportType[i.passportType];
+    },
   },
   // {
   //   title: "证件照片1",
@@ -81,6 +84,7 @@ export const formSearchs = forms
   .map((i) => ({ name: i.name, title: i.title, type: i.type || "text" }));
 export const formOptions: any = {
   state: { 0: "未审核", 1: "审核通过", 2: "审核拒绝" },
+  passportType: {  "IdentityCard": "身份证", "Passport": "护照"}
 };
 
 export const titles = forms.map((i) => ({

@@ -63,6 +63,14 @@
                   v-hasPermi="['fund:balances:data']"
               ><span class="table_link_text">详情</span></el-link
               >
+              <el-link
+                  class="table_link_btn"
+                  :underline="false"
+                  type="primary"
+                  @click="handleUpdateAdjust(scope.row)"
+                  v-hasPermi="['fund:balances:operator']"
+              ><span class="table_link_text">调整</span></el-link
+              >
 <!--            <el-link-->
 <!--              class="table_link_btn"-->
 <!--              :underline="false"-->
@@ -128,6 +136,49 @@
       </template>
     </el-dialog>
   </div>
+
+    <el-dialog :title="title" v-model="openAdjust" width="500px" append-to-body @close="cleanSelect()">
+        <el-form size="small" ref="formAdjustRef" :model="formAdjust" :rules="rulesAdjust" label-width="100px">
+            <el-form-item label="资产ID" prop="id" style="font-weight: 600;">
+                <span>{{ formAdjust.id }}</span>
+            </el-form-item>
+            <el-form-item label="币种" prop="currency" style="font-weight: 600;">
+                <span>{{ formAdjust.currency }}</span>
+            </el-form-item>
+            <el-form-item label="调整方向" prop="type"  style="font-weight: 600;" >
+                <el-select v-model="formAdjust.type" placeholder="请选择" style="width:300px;" >
+                    <el-option v-for="item in typeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="发生数量" prop="changeAmt" style="font-weight: 600;">
+                <el-input style="width:300px;"
+                          type="number"
+                          v-model="formAdjust.changeAmt"
+                          placeholder="请输入"
+                />
+            </el-form-item>
+            <el-form-item label="交易描述" prop="transDesc" style="font-weight: 600;">
+                <el-input style="width:300px;"
+                          type="text"
+                          v-model="formAdjust.transDesc"
+                          placeholder="请输入"
+                />
+            </el-form-item>
+            <el-form-item label="备注" prop="remark" style="font-weight: 600;">
+                <el-input style="width:300px;"
+                          type="text"
+                          v-model="formAdjust.remark"
+                          placeholder="请输入"
+                />
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button size="small" type="primary" @click="submitFormAdjust">确 定</el-button>
+                <el-button size="small" @click="cancelAdjust">取 消</el-button>
+            </div>
+        </template>
+    </el-dialog>
 </template>
 
 <script lang="ts" name="balances" setup>
@@ -138,6 +189,13 @@ import { formSearchs, titles, formtitles, rules } from "@/data/fund/balances";
 const {
   loading, single, multiple, open, showSearch, total, dataList, title, queryParams, queryFormRef, form, formRef,
   getList, cancel,handleQuery, resetQuery, handleAdd, handleSelectionChange,handleUpdate, submitForm, handleDelete, pageTableRef, cleanSelect,
-    handleShowDetail, isShowBtn
+    handleShowDetail, isShowBtn,typeList,
+    openAdjust,
+    formAdjust,
+    handleUpdateAdjust,
+    submitFormAdjust,
+    cancelAdjust,
+    rulesAdjust,
+    formAdjustRef
 } = balances();
 </script>

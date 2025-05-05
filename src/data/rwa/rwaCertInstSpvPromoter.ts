@@ -120,6 +120,9 @@ export const forms = [
     rules: [
       { required: true, message: "代理人证件类型不能为空", trigger: "blur" },
     ],
+    formatter: (i: any) => {
+      return formOptions.agentPassportType[i.agentPassportType];
+    },
   },
   {
     title: "代理人证件号码",
@@ -230,6 +233,7 @@ export const formSearchs = forms
   .map((i) => ({ name: i.name, title: i.title, type: i.type || "text" }));
 export const formOptions: any = {
   state: { 0: "未审核", 1: "审核通过", 2: "审核拒绝" },
+  agentPassportType: { "IdentityCard": "身份证", "Passport": "护照" },
 };
 
 export const titles = forms.map((i) => ({
