@@ -53,10 +53,12 @@
 <!--        <el-table-column label="主键" prop="id" min-width="150px" />-->
 
           <el-table-column
+              :label="i.title"
+              :formatter="i.formatter"
+              :prop="i.name"
+              min-width="150px"
               v-for="i in titles"
               :key="i.name"
-              :label="i.title"
-              min-width="150px"
           >
               <!-- 使用作用域插槽来处理不同的prop -->
               <template #default="scope">
@@ -70,6 +72,12 @@
                           :z-index="99999"
                           :preview-teleported="true"
                       />
+                  </div>
+                  <div v-else-if="i.name === 'spvCompanyType'">
+                      {{ formOptions.spvCompanyType[scope.row[i.name]] || '未知状态' }}
+                  </div>
+                  <div v-else-if="i.name === 'spvCompanyIndustry'">
+                      {{ formOptions.spvCompanyIndustry[scope.row[i.name]] || '未知状态' }}
                   </div>
                   <div v-else-if="i.name === 'state'">
                       {{ formOptions.state[scope.row[i.name]] || '未知状态' }}
@@ -227,6 +235,7 @@ const {
   cleanSelect,
     handleStatusChange,
     handleShowDetail,
-    isShowBtn
+    isShowBtn,
+    uploadUrl
 } = datas();
 </script>

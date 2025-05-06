@@ -51,7 +51,7 @@ export default () => {
     total,
     ids,
     isShowBtn,
-    uploadUrl
+    uploadUrl,
   } = toRefs(state);
 
   const cleanSelect = () => {

@@ -43,6 +43,9 @@ export const forms = [
     title: "公司类型",
     name: "spvCompanyType",
     rules: [{ required: true, message: "公司类型不能为空", trigger: "blur" }],
+    formatter: (i: any) => {
+      return formOptions.spvCompanyType[i.spvCompanyType];
+    },
   },
   {
     title: "公司行业",
@@ -151,11 +154,14 @@ export const formSearchs = forms
   .map((i) => ({ name: i.name, title: i.title, type: i.type || "text" }));
 export const formOptions: any = {
   state: { 0: "未审核", 1: "审核通过", 2: "审核拒绝" },
+  spvCompanyType: { "0": "私营企业", "1": "上市企业", "2": "持牌金融机构" },
+  spvCompanyIndustry: { "0": "互联网/IT/电子/通信", "1": "房地产/建筑", "2": "金融业","3": "教育培训/科研" },
 };
 
 export const titles = forms.map((i) => ({
   title: i.title,
   name: i.name,
+  formatter: i.formatter,
 }));
 export const formtitles = forms.reduce((pre: any, i, k) => {
   const item = {

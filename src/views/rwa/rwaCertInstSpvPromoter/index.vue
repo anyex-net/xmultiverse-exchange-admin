@@ -227,6 +227,7 @@ const {
   cleanSelect,
     handleStatusChange,
     handleShowDetail,
-    isShowBtn
+    isShowBtn,
+    uploadUrl
 } = datas();
 </script>

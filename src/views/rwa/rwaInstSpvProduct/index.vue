@@ -59,7 +59,25 @@
           min-width="150px"
           v-for="i in titles"
           :key="i.name"
-        />
+        >
+            <template #default="scope">
+                <div v-if="['tokenLogo'].includes(i.name)">
+                    <!--                  <div v-if="i.name === 'companyRegistrImg'">-->
+                    <el-image
+                        style="width: 30px; height: 30px; border-radius: 5px"
+                        :src="uploadUrl + scope.row[i.name]"
+                        :preview-src-list="[uploadUrl + scope.row[i.name]]"
+                        :initial-index="1"
+                        :z-index="99999"
+                        :preview-teleported="true"
+                    />
+                </div>
+                <div v-else-if="i.name === 'state'">
+                    {{ formOptions.state[scope.row[i.name]] || '未知状态' }}
+                </div>
+                <div v-else>{{ scope.row[i.name] }}</div>
+            </template>
+        </el-table-column>
         <el-table-column label="创建时间" prop="createTime" min-width="150px" />
         <el-table-column
           label="操作"
@@ -269,6 +287,7 @@ const {
     handleStatusChange,
     handleIsActiveChange,
     handleShowDetail,
-    isShowBtn
+    isShowBtn,
+    uploadUrl
 } = datas();
 </script>
