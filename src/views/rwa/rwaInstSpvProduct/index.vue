@@ -72,8 +72,14 @@
                         :preview-teleported="true"
                     />
                 </div>
+                <div v-else-if="i.name === 'raiseMarginState'">
+                    {{ formOptions.raiseMarginState[scope.row[i.name]] || '未知状态' }}
+                </div>
                 <div v-else-if="i.name === 'state'">
                     {{ formOptions.state[scope.row[i.name]] || '未知状态' }}
+                </div>
+                <div v-else-if="i.name === 'isActive'">
+                    {{ formOptions.isActive[scope.row[i.name]] || '未知状态' }}
                 </div>
                 <div v-else>{{ scope.row[i.name] }}</div>
             </template>
