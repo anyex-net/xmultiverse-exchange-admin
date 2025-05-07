@@ -82,7 +82,7 @@ export default () => {
             current: 1,
             size: 10,
             userId: 1,
-            market: "BIEXBCH",
+            market: "",
             side: 0,
             offset: 0,
             limit: 1,

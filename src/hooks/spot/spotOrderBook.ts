@@ -88,7 +88,7 @@ export default () => {
         queryParams: {
             current: 1,
             size: 10,
-            market: "BIEXBCH",
+            market: "",
             side: 1,
             offset: 0,
             limit: 1
@@ -158,21 +158,21 @@ export default () => {
     }
     // 查询用户列表数据
     const getList = async () => {
-        if (!queryParams.value.market) {
-            ElMessage.error('交易对为必填项，请输入后重试');
-            return; // 停止函数执行
-        }
-        if (!queryParams.value.side) {
-            ElMessage.error('方向为必填项，请输入后重试');
-            return; // 停止函数执行
-        }
-        if (!queryParams.value.limit) {
-            ElMessage.error('数量限制为必填项，请输入后重试');
-            return; // 停止函数执行
-        }
+        // if (!queryParams.value.market) {
+        //     ElMessage.error('交易对为必填项，请输入后重试');
+        //     return; // 停止函数执行
+        // }
+        // if (!queryParams.value.side) {
+        //     ElMessage.error('方向为必填项，请输入后重试');
+        //     return; // 停止函数执行
+        // }
+        // if (!queryParams.value.limit) {
+        //     ElMessage.error('数量限制为必填项，请输入后重试');
+        //     return; // 停止函数执行
+        // }
         loading.value = true;
         const obj = JSON.parse(JSON.stringify(queryParams.value));
-        const userId = obj.userId;
+        // const userId = obj.userId;
         // delete obj.current;
         // delete obj.size;
         await listDatas(obj).then((response: any) => {

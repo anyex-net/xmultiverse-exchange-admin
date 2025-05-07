@@ -40,7 +40,7 @@ export default () => {
         queryParams: {
             current: 1,
             size: 10,
-            currency: "BTC",
+            currency: "",
         },
         dataList: [], //用户表格数据
         title: "", // 弹出层标题
