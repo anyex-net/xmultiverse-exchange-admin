@@ -192,6 +192,105 @@ export const forms = [
       },
     ],
   },
+  {
+    title: "合约或现货止盈止损委托的单笔最大委托数量",
+    name: "maxStopSz",
+    rules: [
+      {
+        required: true,
+        message: "合约或现货止盈止损委托的单笔最大委托数量不可为空",
+        trigger: "blur",
+      },
+      {
+        pattern: Pattern.amount,
+        message: "请输入数字",
+        trigger: "blur",
+      },
+    ],
+  },
+  {
+    title: "合约或现货冰山委托的单笔最大委托数量",
+    name: "maxIcebergSz",
+    rules: [
+      {
+        required: true,
+        message: "合约或现货冰山委托的单笔最大委托数量不可为空",
+        trigger: "blur",
+      },
+      {
+        pattern: Pattern.amount,
+        message: "请输入数字",
+        trigger: "blur",
+      },
+    ],
+  },
+  {
+    title: "合约或现货计划委托委托的单笔最大委托数量",
+    name: "maxTriggerSz",
+    rules: [
+      {
+        required: true,
+        message: "合约或现货计划委托委托的单笔最大委托数量不可为空",
+        trigger: "blur",
+      },
+      {
+        pattern: Pattern.amount,
+        message: "请输入数字",
+        trigger: "blur",
+      },
+    ],
+  },
+  {
+    title: "合约或现货时间加权单的单笔最大委托数量",
+    name: "maxTwapSz",
+    rules: [
+      {
+        required: true,
+        message: "合约或现货时间加权单的单笔最大委托数量不可为空",
+        trigger: "blur",
+      },
+      {
+        pattern: Pattern.amount,
+        message: "请输入数字",
+        trigger: "blur",
+      },
+    ],
+  },
+  {
+    title: "合约乘数",
+    name: "ctMult",
+    rules: [{ required: true, message: "合约乘数不能为空", trigger: "blur" }],
+  },
+  {
+    title: "合约面值",
+    name: "ctVal",
+    rules: [{ required: true, message: "合约面值不能为空", trigger: "blur" }],
+  },
+  {
+    title: "行权价格",
+    name: "stk",
+    rules: [{ required: true, message: "行权价格不能为空", trigger: "blur" }],
+  },
+  {
+    title: "最大杠杆倍数",
+    name: "lever",
+    rules: [{ required: true, message: "最大杠杆倍数不能为空", trigger: "blur" }],
+  },
+  {
+    title: "交割/行权日期",
+    name: "expTime",
+    rules: [{ required: true, message: "交割/行权日期不能为空", trigger: "blur" }],
+  },
+  {
+    title: "板块分区标签",
+    name: "tags",
+    // rules: [{ required: true, message: "板块分区标签不能为空", trigger: "blur" }],
+  },
+  // {
+  //   title: "详情描述",
+  //   name: "detailDesc",
+  //   // rules: [{ required: true, message: "详情描述不能为空", trigger: "blur" }],
+  // },
   { title: "备注", name: "remark" },
 ];
 

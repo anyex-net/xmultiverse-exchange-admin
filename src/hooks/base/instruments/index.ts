@@ -1,5 +1,13 @@
 import { ElForm, ElTable } from "element-plus";
-import { ref, reactive, toRefs, getCurrentInstance } from "vue";
+import {
+  ref,
+  reactive,
+  toRefs,
+  getCurrentInstance,
+  onMounted,
+  nextTick,
+  toRaw,
+} from "vue";
 import {
   listDatas,
   getDatas,
@@ -9,7 +17,9 @@ import {
 } from "@/api/base/instruments";
 import { isStrings } from "@/utils/validate";
 import { formDefault, searchDefault } from "@/data/base/instruments";
-import { getCurrencies } from "@/api/base/currencies";
+import { QuillEditor } from "@vueup/vue-quill";
+import { getSuffix, randomString } from "@/utils/dateTime";
+import { uploadPolicy } from "@/api/news/news";
 
 export default () => {
   const { proxy } = getCurrentInstance() as any;
@@ -32,11 +42,65 @@ export default () => {
     single: true, //非单个禁用
     total: 0, //总条数
     ids: [], //选中数组
-    isShowBtn:true
+    isShowBtn:true,
+    uploadUrl: import.meta.env.VITE_upload_url,
+    uploadParams: {
+      key: "",
+      name: "",
+      policy: "",
+      OSSAccessKeyId: "",
+      success_action_status: 200,
+      signature: "",
+    },
   });
   const queryRef = ref<InstanceType<typeof ElForm>>();
   const formRef = ref<InstanceType<typeof ElForm>>();
   const pageTableRef = ref<InstanceType<typeof ElTable>>();
+  const quillEditor = ref<any>("");
+  const formA1 = ref();
+  const quill = quillEditor.value;
+  const uploadQuill = ref<any>();
+  const editorOption = ref({
+    modules: {
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6] }], // custom button values
+          ["bold", "italic", "underline", "strike"], // 加粗 斜体 下划线 删除线
+          ["blockquote", "code-block"], // 引用  代码块
+          [{ list: "ordered" }, { list: "bullet" }], // 有序、无序列表
+          [{ script: "sub" }, { script: "super" }], // 上标/下标
+          [{ indent: "-1" }, { indent: "+1" }], // 缩进
+          [{ direction: "rtl" }], // 文本方向
+          ["image", "video"],
+          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ align: "" }],
+          [{ align: "center" }],
+          [{ align: "right" }],
+          ["clean"],
+        ],
+        // 工具栏
+        handlers: {
+          image: (value: any) => {
+            if (value) {
+              // uploadQuill.value.click()
+              // @ts-ignore
+              document.querySelector(".upload-quill .el-button--primary").click();
+            } else {
+              quill.value.format("image", false);
+            }
+          },
+          video: (value: any) => {
+            if (value) {
+              // @ts-ignore
+              document.querySelector(".upload-quill .el-button--primary").click();
+            } else {
+              quill.value.format("video", false);
+            }
+          },
+        },
+      },
+    },
+  });
   const {
     form,
     queryParams,
@@ -49,9 +113,112 @@ export default () => {
     single,
     total,
     ids,
-    isShowBtn
+    isShowBtn,
+    uploadUrl,
+    uploadParams
   } = toRefs(state);
 
+  const doInitPolicy = () => {
+    handleUpdateForm1();
+  };
+  //图片
+  const handleUpdateForm1 = () => {
+    uploadPolicy()
+        .then((res: any) => {
+          if (res.code == 200) {
+            uploadParams.value.policy = res.data.policy;
+            uploadParams.value.signature = res.data.signature;
+            uploadParams.value.OSSAccessKeyId = res.data.accessid;
+            // uploadUrl.value= res.data.host;
+            uploadParams.value.key =
+                "exoss/" + randomString(10) + getSuffix(uploadParams.value.name);
+            nextTick(() => {
+              uploadQuill.value.submit();
+              setTimeout(() => {
+                // form.value.imageUrl = uploadParams.value.key;
+              }, 1000);
+
+              if (uploadQuill.value) {
+                uploadQuill.value.clearFiles();
+              }
+            });
+          }
+        })
+        .catch();
+  };
+  const doChange1 = (file: any) => {
+    uploadParams.value.name = file.raw.name;
+  };
+  const onBeforeUpload = (file: any) => {
+    //获取最后一个.的位置
+    var index = file.name.lastIndexOf(".");
+    //获取后缀
+    var ext = file.name.substr(index + 1).toLowerCase();
+    if (
+        ["png", "jpg", "jpeg", "bmp", "gif", "webp", "psd", "svg", "tiff"].indexOf(
+            ext
+        ) != -1
+    ) {
+    } else {
+      return new Promise(async (resolve: any, reject) => {
+        if (ext != "mp4") {
+          proxy.$modal.msgWarning("格式错误");
+          return reject();
+        }
+        let duration: any = await getVideoDuration(file);
+        // @ts-ignore
+        if (duration <= 150) {
+          resolve(); //放行
+        } else {
+          // @ts-ignore
+          proxy.$modal.warning(
+              "视频时长为：" +
+              duration.toString().substr(0, 4) +
+              "秒，请上传150秒以内的视频"
+          );
+          return reject(); //拦截
+        }
+      });
+    }
+  };
+  // 获取视频时长
+  const getVideoDuration = (file: any) => {
+    return new Promise(function (resolve, reject) {
+      //做一些异步操作
+      let url = URL.createObjectURL(file);
+      let audioElement = new Audio(url);
+      let duration = 0;
+      audioElement.addEventListener("loadedmetadata", () => {
+        duration = audioElement.duration; //时长为秒，小数，182.36
+        resolve(duration);
+      });
+    });
+  };
+  const afterUploadQuill = () => {
+    // 插入链接
+    const quill = toRaw(quillEditor.value).getQuill();
+    const length = quill.getSelection().index;
+    if (
+        uploadParams.value.name.indexOf("jpg") > -1 ||
+        uploadParams.value.name.indexOf("png") > -1 ||
+        uploadParams.value.name.indexOf("jpeg") > -1 ||
+        uploadParams.value.name.indexOf("gif") > -1 ||
+        uploadParams.value.name.indexOf("GIF") > -1
+    ) {
+      quill.insertEmbed(
+          length,
+          "image",
+          uploadUrl.value + uploadParams.value.key
+      );
+    } else {
+      quill.insertEmbed(
+          length,
+          "video",
+          uploadUrl.value + uploadParams.value.key
+      );
+    }
+    quill.setSelection(length + 1);
+  };
   const cleanSelect = () => {
     pageTableRef.value?.clearSelection();
   };
@@ -110,6 +277,7 @@ export default () => {
   const handleAdd = () => {
     reset();
     open.value = true;
+    isShowBtn.value = true;
     title.value = "添加平台交易产品";
   };
   /** 详情页 */
@@ -251,6 +419,17 @@ export default () => {
     handleSelectionChange,
     handleStatusChange,
     handleShowDetail,
-    isShowBtn
+    isShowBtn,
+    uploadUrl,
+    uploadParams,
+    doInitPolicy,
+    handleUpdateForm1,
+    uploadPolicy,
+    doChange1,
+    onBeforeUpload,
+    afterUploadQuill,
+    editorOption,
+    uploadQuill,
+    quillEditor
   };
 };

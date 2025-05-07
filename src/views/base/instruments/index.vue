@@ -175,6 +175,48 @@
             </el-form-item>
           </el-col>
         </el-row>
+          <el-row>
+              <el-col :span="24">
+                  <el-form-item v-if="isShowBtn === true" label="详情描述" prop="detailDesc" class="showI1">
+                      <div style="width: 100%">
+                          <el-upload
+                              ref="uploadQuill"
+                              style="display: none"
+                              class="upload-quill"
+                              :action="uploadUrl"
+                              :data="uploadParams"
+                              :before-upload="onBeforeUpload"
+                              :on-success="afterUploadQuill"
+                              :on-change="doChange1"
+                              :auto-upload="true"
+                              :show-file-list="false"
+                          >
+                              <el-button
+                                  slot="trigger"
+                                  size="small"
+                                  type="primary"
+                                  @click="doInitPolicy()"
+                              ></el-button>
+                          </el-upload>
+                          <QuillEditor
+                              ref="quillEditor"
+                              contentType="html"
+                              class="ql-editor"
+                              style="width: 100%; height: 300px"
+                              v-model:content="form.detailDesc"
+                              :options="editorOption"
+                          />
+                      </div>
+                  </el-form-item>
+                  <el-form-item v-else-if="isShowBtn === false" label="详情描述" prop="detailDesc" class="showI1">
+                      <div
+                          style="width: 100%"
+                          v-html="form.detailDesc"
+                          class="showDetail"
+                      ></div>
+                  </el-form-item>
+              </el-col>
+          </el-row>
       </el-form>
       <template #footer>
         <div v-if="isShowBtn === true" class="dialog-footer">
@@ -197,6 +239,8 @@ import {
   formtitles,
   rules,
 } from "@/data/base/instruments";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
 const {
   getContainer,
@@ -230,6 +274,29 @@ const {
   form,queryParams, queryRef, pageTableRef, formRef,
   title,loading, single, multiple, open, showSearch, total, dataList, 
   getList, resetQuery, cancel,submitForm, cleanSelect,
-  handleQuery, handleAdd, handleSelectionChange,handleUpdate, handleDelete,handleShowDetail, isShowBtn
+  handleQuery, handleAdd, handleSelectionChange,handleUpdate, handleDelete,handleShowDetail, isShowBtn,
+    uploadUrl,
+    uploadParams,
+    doInitPolicy,
+    doChange1,
+    onBeforeUpload,
+    afterUploadQuill,
+    editorOption,
+    uploadQuill,
+    quillEditor
 } = datas();
 </script>
+<style lang="scss" scoped>
+.showI1 {
+    ::v-deep .el-form-item__label {
+        font-weight: 600 !important;
+    }
+}
+.showDetail {
+    ::v-deep img {
+        display: flex;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+}
+</style>
