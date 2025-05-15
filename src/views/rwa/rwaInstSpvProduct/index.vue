@@ -122,7 +122,7 @@
                       class="table_link_btn"
                       :underline="false"
                       type="success"
-                      @click="handleStatusChange(scope.row, '3')"
+                      @click="handleStatusChange(scope.row, '1')"
                       v-hasPermi="['rwa:rwaInstSpvProduct:check']"
                   >
                       <span class="table_link_text">审核通过</span>
@@ -149,7 +149,7 @@
                   </el-link>
               </div>
 <!--              临时修改成3，本应4才对-->
-              <div v-if="scope.row.state === '3'">
+              <div v-if="scope.row.state === '4'">
                   <el-link
                       class="table_link_btn"
                       :underline="false"

@@ -237,7 +237,7 @@ export default () => {
         let reason = "";
 
         switch (action) {
-            case "3":
+            case "1":
                 text = "审核通过";
                 break;
             case "2":
