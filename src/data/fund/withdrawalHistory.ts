@@ -145,7 +145,9 @@ export const formOptions: any = {
     canceled: "已撤销",
     applied: "已申请",
     checked: "已复核",
+    exporting: "汇出中",
     exported: "已汇出",
+    exportfail: "汇出失败",
   },
 };
 
