@@ -213,4 +213,6 @@ export default {
     "dealHistory":"dealHistory",
     "userDealHistory":"userDealHistory",
 
+    "userInstrumentsFavorite":"userInstrumentsFavorite",
+    "instrumentsCurrency":"instrumentsCurrency",
 };

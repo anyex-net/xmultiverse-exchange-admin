@@ -212,4 +212,7 @@ export default {
     "orderHistory":"DB订单历史",
     "dealHistory":"DB成交历史",
     "userDealHistory":"DB用户成交历史",
+
+    "userInstrumentsFavorite":"用户交易产品收藏",
+    "instrumentsCurrency":"平台交易产品币种信息",
 };
