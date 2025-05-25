@@ -215,4 +215,8 @@ export default {
 
     "userInstrumentsFavorite":"用户交易产品收藏",
     "instrumentsCurrency":"平台交易产品币种信息",
+
+    "userApi":"用户API",
+    "userHoldAmountRewardConfig":"用户持有数量奖励配置",
+    "userInviteRewardConfig":"用户邀请返佣奖励配置"
 };
