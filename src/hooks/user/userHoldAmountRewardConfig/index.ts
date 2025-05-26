@@ -135,7 +135,6 @@ export default () => {
             if (response.code === 200) {
                 form.value = {
                     ...response.data,
-                    certState: String(response.data.certState),
                 };
                 isShowBtn.value = true;
             }

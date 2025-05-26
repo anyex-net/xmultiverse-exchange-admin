@@ -42,28 +42,28 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="primary"-->
-<!--          plain-->
-<!--          size="small"-->
-<!--          @click="handleAdd"-->
-<!--          v-hasPermi="['user:user:operator']"-->
-<!--          >新增</el-button-->
-<!--        >-->
-<!--      </el-col>-->
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          size="small"
+          @click="handleAdd"
+          v-hasPermi="['user:userInviteRewardConfig:operator']"
+          >新增</el-button
+        >
+      </el-col>
 
-<!--      <el-col :span="1.5">-->
-<!--        <el-button-->
-<!--          type="danger"-->
-<!--          plain-->
-<!--          size="small"-->
-<!--          :disabled="multiple"-->
-<!--          @click="handleDelete"-->
-<!--          v-hasPermi="['user:user:operator']"-->
-<!--          >删除</el-button-->
-<!--        >-->
-<!--      </el-col>-->
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          size="small"
+          :disabled="multiple"
+          @click="handleDelete"
+          v-hasPermi="['user:userInviteRewardConfig:operator']"
+          >删除</el-button
+        >
+      </el-col>
       <!-- prettier-ignore -->
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList()" />
     </el-row>
@@ -93,7 +93,7 @@
         <el-table-column label="更新时间" prop="updateTime" min-width="150px" />
         <el-table-column
           label="操作"
-          min-width="120px"
+          min-width="100px"
           fixed="right"
           class-name="small-padding fixed-width"
         >
@@ -105,6 +105,23 @@
                   @click="handleShowDetail(scope.row)"
                   v-hasPermi="['user:userInviteRewardConfig:data']"
               ><span class="table_link_text">详情</span></el-link>
+            <el-link
+              class="table_link_btn"
+              :underline="false"
+              type="primary"
+              @click="handleUpdate(scope.row)"
+              v-hasPermi="['user:userInviteRewardConfig:operator']"
+              ><span class="table_link_text">修改</span></el-link
+            >
+            <el-link
+              class="table_link_btn"
+              :underline="false"
+              size="small"
+              type="primary"
+              @click="handleDelete(scope.row)"
+              v-hasPermi="['user:userInviteRewardConfig:operator']"
+              ><span class="table_link_text">删除</span></el-link
+            >
               <el-link
                   class="table_link_btn"
                   :underline="false"
@@ -112,23 +129,6 @@
                   @click="handleStatusChange(scope.row)"
                   v-hasPermi="['user:userInviteRewardConfig:operator']"
               ><span class="table_link_text">{{ scope.row.state === 0 ? '可用' : '不可用' }}</span></el-link>
-<!--            <el-link-->
-<!--              class="table_link_btn"-->
-<!--              :underline="false"-->
-<!--              type="primary"-->
-<!--              @click="handleUpdate(scope.row)"-->
-<!--              v-hasPermi="['user:user:operator']"-->
-<!--              ><span class="table_link_text">修改</span></el-link-->
-<!--            >-->
-<!--            <el-link-->
-<!--              class="table_link_btn"-->
-<!--              :underline="false"-->
-<!--              size="small"-->
-<!--              type="primary"-->
-<!--              @click="handleDelete(scope.row)"-->
-<!--              v-hasPermi="['user:user:operator']"-->
-<!--              ><span class="table_link_text">删除</span></el-link-->
-<!--            >-->
           </template>
         </el-table-column>
       </el-table>
@@ -159,26 +159,26 @@
         <el-row v-for="(i, k) in formtitles" :key="k">
           <el-col :span="12" v-for="i2 in i" :key="i2.name">
             <el-form-item :label="i2.title" :prop="i2.name">
-<!--              <el-select-->
-<!--                v-model="(form as any)[i2.name]"-->
-<!--                style="width: 120px"-->
-<!--                placeholder="请选择"-->
-<!--                v-if="i2.type === 'radio'"-->
-<!--              >-->
-<!--                <el-option-->
-<!--                  v-for="(o, k) in formOptions[i2.name]"-->
-<!--                  :key="o"-->
-<!--                  :label="o"-->
-<!--                  :value="k"-->
-<!--                ></el-option>-->
-<!--              </el-select>-->
-                <template v-if="i2.type === 'radio'">
-                    <!-- 使用 el-input 以只读形式展示状态值 -->
-                    <el-input
-                        :value="formOptions[i2.name] ? (formOptions[i2.name][form[i2.name]] || '未知状态') : ''"
-                        readonly
-                    />
-                </template>
+              <el-select
+                v-model="(form as any)[i2.name]"
+                style="width: 120px"
+                placeholder="请选择"
+                v-if="i2.type === 'radio'"
+              >
+                <el-option
+                  v-for="(o, k) in formOptions[i2.name]"
+                  :key="o"
+                  :label="o"
+                  :value="k"
+                ></el-option>
+              </el-select>
+<!--                <template v-if="i2.type === 'radio'">-->
+<!--                    &lt;!&ndash; 使用 el-input 以只读形式展示状态值 &ndash;&gt;-->
+<!--                    <el-input-->
+<!--                        :value="formOptions[i2.name] ? (formOptions[i2.name][form[i2.name]] || '未知状态') : ''"-->
+<!--                        readonly-->
+<!--                    />-->
+<!--                </template>-->
               <el-input
                 v-else
                 v-model="(form as any)[i2.name]"
@@ -243,6 +243,6 @@ const {
   form,queryParams, queryRef, pageTableRef, formRef,
   title,loading, single, multiple, open, showSearch, total, dataList, 
   getList, resetQuery, cancel,submitForm, cleanSelect,
-  handleQuery, handleAdd, handleSelectionChange,handleStatusChange, handleDelete, handleShowDetail, isShowBtn
+  handleQuery, handleAdd, handleSelectionChange,handleStatusChange, handleDelete, handleShowDetail, isShowBtn,handleUpdate
 } = datas();
 </script>
