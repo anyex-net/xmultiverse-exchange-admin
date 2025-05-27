@@ -60,14 +60,14 @@ export const forms = [
         title: "资产介绍",
         name: "currencyDesc",
         type: "textarea",
-        rules: [{ required: true, message: "资产介绍不能为空", trigger: "blur" }],
+        rules: [{ required: false, message: "资产介绍不能为空", trigger: "blur" }],
     },
     {
         title: "项目简介",
         name: "currencyPmDesc",
         type: "textarea",
         rules: [
-            { required: true, message: "项目简介不能为空" },
+            { required: false, message: "项目简介不能为空" },
         ],
     },
     {

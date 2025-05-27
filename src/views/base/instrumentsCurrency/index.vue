@@ -170,7 +170,7 @@
                     v-else-if="i2.type === 'textarea'"
                     v-model="(form as any)[i2.name]"
                     :placeholder="'请输入' + i2.title"
-                    maxlength="200"
+                    maxlength="5000"
                     show-word-limit
                     resize="none"
                     :rows="3"
