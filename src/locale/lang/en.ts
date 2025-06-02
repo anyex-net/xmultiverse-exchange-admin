@@ -217,5 +217,7 @@ export default {
     "instrumentsCurrency":"instrumentsCurrency",
     "userApi":"userApi",
     "userHoldAmountRewardConfig":"userHoldAmountRewardConfig",
-    "userInviteRewardConfig":"userInviteRewardConfig"
+    "userInviteRewardConfig":"userInviteRewardConfig",
+    "userInvite":"userInvite",
+    "userRebate":"userRebate",
 };

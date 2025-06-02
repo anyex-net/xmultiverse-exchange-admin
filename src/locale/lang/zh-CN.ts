@@ -218,5 +218,7 @@ export default {
 
     "userApi":"用户API",
     "userHoldAmountRewardConfig":"用户持有数量奖励配置",
-    "userInviteRewardConfig":"用户邀请返佣奖励配置"
+    "userInviteRewardConfig":"用户邀请返佣奖励配置",
+    "userInvite":"用户邀请关系",
+    "userRebate":"用户返佣记录",
 };
