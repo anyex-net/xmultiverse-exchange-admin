@@ -64,6 +64,8 @@
           v-for="i in titles"
           :key="i.name"
         />
+          <el-table-column label="创建时间" prop="createTime" min-width="150px" />
+          <el-table-column label="更新时间" prop="updateTime" min-width="150px" />
         <el-table-column
           label="操作"
           min-width="140px"

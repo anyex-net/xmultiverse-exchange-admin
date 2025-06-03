@@ -31,7 +31,7 @@ export const forms = [
         },
     },
 ];
-const searchNames = ["userId", "userName", "systemName", "opType"];
+const searchNames = ["inviterId", "inviteeId", "inviteType", "isValid"];
 export const formSearchs = forms
     .filter((i) => searchNames.includes(i.name))
     .map((i) => ({ name: i.name, title: i.title,type: i.type || "text",}));

@@ -59,13 +59,13 @@ export const forms = [
         name: "settleDate",
     }
 ];
-const searchNames = ["userId", "userName", "systemName", "opType"];
+const searchNames = ["inviterId", "inviteeId", "symbol", "tradeSide","status"];
 export const formSearchs = forms
     .filter((i) => searchNames.includes(i.name))
     .map((i) => ({ name: i.name, title: i.title,type: i.type || "text",}));
 export const formOptions: any = {
     tradeSide: { "1": "买", "2": "卖" },
-    status: { "pending": "结算中", "settled": "已结算", "canceled":"已取消" },
+    status: { "pending": "结算中", "settled": "已结算"},
 };
 
 export const titles = forms.map((i) => ({

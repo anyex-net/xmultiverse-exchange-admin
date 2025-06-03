@@ -61,6 +61,7 @@ export default () => {
       if (response.code == 200) {
         dataList.value = response.data.records.map((i: any) => ({
           ...i,
+          settleDate: new Date(+i.settleDate).toLocaleString(),
           createTime: new Date(+i.createTime).toLocaleString(),
           updateTime: i.updateTime
             ? new Date(+i.updateTime).toLocaleString()

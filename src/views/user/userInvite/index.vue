@@ -6,7 +6,7 @@
       ref="queryRef"
       :inline="true"
       v-show="showSearch"
-      label-width="60px"
+      label-width="100px"
     >
       <el-form-item
         :label="i.title"
@@ -64,6 +64,7 @@
           v-for="i in titles"
           :key="i.name"
         />
+          <el-table-column label="创建时间" prop="createTime" min-width="150px" />
         <el-table-column
           label="操作"
           min-width="140px"
