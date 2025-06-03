@@ -157,10 +157,10 @@ export default () => {
         //     ElMessage.error('用户ID为必填项，请输入后重试');
         //     return; // 停止函数执行
         // }
-        // if (!queryParams.value.market) {
-        //     ElMessage.error('交易对为必填项，请输入后重试');
-        //     return; // 停止函数执行
-        // }
+        if (!queryParams.value.market) {
+            ElMessage.error('交易对为必填项，请输入后重试');
+            return; // 停止函数执行
+        }
         // if (!queryParams.value.limit) {
         //     ElMessage.error('数量限制为必填项，请输入后重试');
         //     return; // 停止函数执行

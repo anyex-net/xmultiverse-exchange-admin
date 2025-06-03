@@ -149,41 +149,31 @@
                   </el-link>
               </div>
 <!--              临时修改成3，本应4才对-->
-              <div v-if="scope.row.state === '4'">
-                  <el-link
-                      class="table_link_btn"
-                      :underline="false"
-                      type="success"
-                      @click="handleStatusChange(scope.row, '5')"
-                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
-                  >
-                      <span class="table_link_text">申购</span>
-                  </el-link>
-              </div>
-              <div v-if="scope.row.state === '5'">
-                  <!-- 待审核状态下的操作 -->
-                  <el-link
-                      class="table_link_btn"
-                      :underline="false"
-                      type="success"
-                      @click="handleStatusChange(scope.row, '7')"
-                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
-                  >
-                      <span class="table_link_text">运营</span>
-                  </el-link>
-              </div>
-              <div v-if="scope.row.state === '7'">
-                  <!-- 待审核状态下的操作 -->
-                  <el-link
-                      class="table_link_btn"
-                      :underline="false"
-                      type="success"
-                      @click="handleStatusChange(scope.row, '8')"
-                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"
-                  >
-                      <span class="table_link_text">已到期</span>
-                  </el-link>
-              </div>
+<!--              <div v-if="scope.row.state === '4'">-->
+<!--                  <el-link-->
+<!--                      class="table_link_btn"-->
+<!--                      :underline="false"-->
+<!--                      type="success"-->
+<!--                      @click="handleStatusChange(scope.row, '5')"-->
+<!--                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"-->
+<!--                  >-->
+<!--                      <span class="table_link_text">申购</span>-->
+<!--                  </el-link>-->
+<!--              </div>-->
+<!--              <div v-if="scope.row.state === '5'">-->
+<!--                  &lt;!&ndash; 待审核状态下的操作 &ndash;&gt;-->
+<!--                  <el-link-->
+<!--                      class="table_link_btn"-->
+<!--                      :underline="false"-->
+<!--                      type="success"-->
+<!--                      @click="handleStatusChange(scope.row, '7')"-->
+<!--                      v-hasPermi="['rwa:rwaInstSpvProduct:check']"-->
+<!--                  >-->
+<!--                      <span class="table_link_text">运营</span>-->
+<!--                  </el-link>-->
+<!--              </div>-->
+
+
           </template>
         </el-table-column>
       </el-table>
